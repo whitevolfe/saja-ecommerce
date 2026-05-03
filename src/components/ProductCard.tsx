@@ -32,7 +32,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
             className='w-full h-full object-cover group-hover:scale-105 transition-transform duration-300'
           />
           {product.featured && (
-            <div className='absolute top-3 right-3 bg-secondary text-secondary-foreground text-xs font-semibold px-3 py-1 rounded-full'>
+            <div className='absolute top-3 right-3 bg-secondary text-secondary-foreground text-white font-semibold px-3 py-1 rounded-full'>
               Featured
             </div>
           )}
@@ -51,7 +51,12 @@ const ProductCard = ({ product }: ProductCardProps) => {
               Rs. {product.price.toLocaleString()}
             </span>
             <div className='flex gap-2'>
-              <Button onClick={handleAddToCart} size='sm' className='gap-2'>
+              <Button
+                onClick={handleAddToCart}
+                size='sm'
+                variant='secondary'
+                className='gap-2 text-white'
+              >
                 <ShoppingCart className='w-4 h-4' />
                 Add
               </Button>

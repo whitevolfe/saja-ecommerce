@@ -144,7 +144,7 @@ const ProductDetail = () => {
                 <Button
                   onClick={handleAddToCart}
                   size='lg'
-                  className='w-full gap-2'
+                  className='w-full gap-2 text-white'
                 >
                   <ShoppingCart className='w-5 h-5' />
                   Add to Cart

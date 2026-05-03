@@ -589,7 +589,7 @@ Please confirm this order and provide delivery timeline.`;
               <Button
                 type='submit'
                 size='lg'
-                className='w-full bg-purple-600 hover:bg-purple-700'
+                className='w-full text-white bg-purple-600 hover:bg-purple-700'
                 disabled={isSubmitting}
               >
                 {isSubmitting ? 'Processing...' : 'Complete order'}

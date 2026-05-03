@@ -42,6 +42,7 @@ const Products = () => {
           <Button
             variant={selectedCategory === 'all' ? 'default' : 'outline'}
             onClick={() => handleCategoryChange('all')}
+            className='text-white'
           >
             All Products
           </Button>

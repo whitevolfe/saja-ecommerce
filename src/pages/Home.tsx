@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import BrandIconsCarousel from '@/components/BrandIconsCarousel';
 import {
   ArrowRight,
   ArrowLeft,
@@ -30,27 +31,27 @@ const Home = () => {
 
   const testimonials = [
     {
-      name: 'John Doe',
-      role: 'Fitness Enthusiast',
+      name: 'Gunapala Nanayakkara',
+      role: 'Prof',
       avatar: 'JD',
       rating: 5,
-      text: "The quality of supplements here is unmatched! I've been using their whey protein for 3 months and have seen incredible results in my muscle growth and recovery time.",
+      text: 'The soap produces a gentle, creamy lather that cleanses effectively without drying the skin. Its subtle, refreshing fragrance feels authentic rather than artificial. What stands out most is the soft and nourished feeling it leaves after each wash. In a market crowded with chemical-heavy products, this natural formulation offers a reassuring, high-quality alternative.',
       color: 'primary',
     },
     {
-      name: 'Anna Smith',
-      role: 'Athlete',
+      name: 'Dilnoza P.',
+      role: 'Verified Customer',
       avatar: 'AS',
       rating: 5,
-      text: 'Excellent customer service and fast delivery! The pre-workout gives me the perfect energy boost without any jitters. Will definitely be a returning customer.',
+      text: 'I have been using the Moringa shampoo for 3 months now. My hair is so much healthier and the natural fragrance is amazing. Best herbal shampoo I have ever tried!',
       color: 'secondary',
     },
     {
-      name: 'Mike Rodriguez',
-      role: 'Bodybuilder',
+      name: 'Amali S',
+      role: 'Pet Owner',
       avatar: 'MR',
       rating: 5,
-      text: "Best supplement store I've found! Their creatine monohydrate is pure and effective. My strength gains have been consistent since switching to their products.",
+      text: "The Doggy Bath Soap is a game changer! My golden retriever's coat is so shiny and the flea issue is completely resolved. Love that it is plant-based.",
       color: 'primary',
     },
   ];
@@ -78,6 +79,7 @@ const Home = () => {
   return (
     <div className='min-h-screen'>
       {/* Hero Section */}
+
       <section className='relative py-0 px-0'>
         <div className='relative w-full'>
           {/* Carousel */}
@@ -155,6 +157,7 @@ const Home = () => {
           </div>
         </div>
       </section>
+      <BrandIconsCarousel />
 
       {/* HAIR CARE Section */}
       <section className='py-16 px-4'>
@@ -216,35 +219,35 @@ const Home = () => {
           <div className='relative overflow-hidden'>
             <div className='flex gap-8 animate-scroll'>
               <div className='flex-shrink-0 text-white text-2xl md:text-4xl font-bold whitespace-nowrap'>
-                LIFTLAB LK HEALTH & FITNESS STORE
+                SAJ ASSOCIATE HERBAL PRODUCTS SHOPPING
               </div>
               <div className='flex-shrink-0 text-white text-2xl md:text-4xl font-bold whitespace-nowrap'>
-                LIFTLAB LK HEALTH & FITNESS STORE
+                SAJ ASSOCIATE HERBAL PRODUCTS SHOPPING
               </div>
               <div className='flex-shrink-0 text-white text-2xl md:text-4xl font-bold whitespace-nowrap'>
-                LIFTLAB LK HEALTH & FITNESS STORE
+                SAJ ASSOCIATE HERBAL PRODUCTS SHOPPING
               </div>
               <div className='flex-shrink-0 text-white text-2xl md:text-4xl font-bold whitespace-nowrap'>
-                LIFTLAB LK HEALTH & FITNESS STORE
+                SAJ ASSOCIATE HERBAL PRODUCTS SHOPPING
               </div>
               <div className='flex-shrink-0 text-white text-2xl md:text-4xl font-bold whitespace-nowrap'>
-                LIFTLAB LK HEALTH & FITNESS STORE
+                SAJ ASSOCIATE HERBAL PRODUCTS SHOPPING
               </div>
               {/* Duplicate for seamless loop */}
               <div className='flex-shrink-0 text-white text-2xl md:text-4xl font-bold whitespace-nowrap'>
-                LIFTLAB LK HEALTH & FITNESS STORE
+                SAJ ASSOCIATE HERBAL PRODUCTS SHOPPING
               </div>
               <div className='flex-shrink-0 text-white text-2xl md:text-4xl font-bold whitespace-nowrap'>
-                LIFTLAB LK HEALTH & FITNESS STORE
+                SAJ ASSOCIATE HERBAL PRODUCTS SHOPPING
               </div>
               <div className='flex-shrink-0 text-white text-2xl md:text-4xl font-bold whitespace-nowrap'>
-                LIFTLAB LK HEALTH & FITNESS STORE
+                SAJ ASSOCIATE HERBAL PRODUCTS SHOPPING
               </div>
               <div className='flex-shrink-0 text-white text-2xl md:text-4xl font-bold whitespace-nowrap'>
-                LIFTLAB LK HEALTH & FITNESS STORE
+                SAJ ASSOCIATE HERBAL PRODUCTS SHOPPING
               </div>
               <div className='flex-shrink-0 text-white text-2xl md:text-4xl font-bold whitespace-nowrap'>
-                LIFTLAB LK HEALTH & FITNESS STORE
+                SAJ ASSOCIATE HERBAL PRODUCTS SHOPPING
               </div>
             </div>
           </div>

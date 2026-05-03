@@ -137,7 +137,7 @@ const Cart = () => {
           </div>
 
           <div className='space-y-3'>
-            <Button asChild size='lg' className='w-full'>
+            <Button asChild size='lg' className='w-full text-white'>
               <Link to='/checkout'>Proceed to Checkout</Link>
             </Button>
 
