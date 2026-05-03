@@ -25,8 +25,8 @@ const Home = () => {
   const [currentTestimonialIndex, setCurrentTestimonialIndex] = useState(0);
   const carouselImages = [
     '/assets/Banner_image_1.jpeg',
-    '/assets/Banner_image_2.jpeg',
-    '/assets/Banner_image_1.jpeg',
+    '/assets/Banner_image_3.jpeg',
+    // '/assets/Banner_image_1.jpeg',
   ];
 
   const testimonials = [
