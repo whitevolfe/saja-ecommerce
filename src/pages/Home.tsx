@@ -20,14 +20,23 @@ const Home = () => {
   const FACECREAMS = products
     .filter((p) => p.category === 'FACECREAMS')
     .slice(0, 4);
+  const SOAPS = products.filter((p) => p.category === 'SOAPS').slice(0, 4);
+  const BODYCARE = products
+    .filter((p) => p.category === 'BODY CARE')
+    .slice(0, 4);
+  const PETCARE = products.filter((p) => p.category === 'PET CARE').slice(0, 4);
+  const MASSAGEOILS = products
+    .filter((p) => p.category === 'MASSAGE OILS')
+    .slice(0, 4);
+  const GIFTPACKS = products
+    .filter((p) => p.category === 'GIFT PACKS')
+    .slice(0, 4);
+  const FOODSUPPLEMENTS = products
+    .filter((p) => p.category === 'FOOD SUPPLEMENTS')
+    .slice(0, 4);
 
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [currentTestimonialIndex, setCurrentTestimonialIndex] = useState(0);
-  const carouselImages = [
-    '/assets/Banner_image_1.jpeg',
-    '/assets/Banner_image_3.jpeg',
-    // '/assets/Banner_image_1.jpeg',
-  ];
+  const heroImage = '/assets/Banner_image_1.jpeg';
 
   const testimonials = [
     {
@@ -58,16 +67,6 @@ const Home = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentImageIndex((prev) =>
-        prev === carouselImages.length - 1 ? 0 : prev + 1,
-      );
-    }, 3000); // Change image every 3 seconds
-
-    return () => clearInterval(interval);
-  }, [carouselImages.length]);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
       setCurrentTestimonialIndex((prev) =>
         prev === testimonials.length - 1 ? 0 : prev + 1,
       );
@@ -82,49 +81,14 @@ const Home = () => {
 
       <section className='relative py-0 px-0'>
         <div className='relative w-full'>
-          {/* Carousel */}
+          {/* Hero Image */}
           <div className='relative h-[400px] md:h-[500px] lg:h-[600px] overflow-hidden'>
-            <div className='absolute inset-0'>
-              {carouselImages.map((image, index) => (
-                <img
-                  key={index}
-                  src={image}
-                  alt={`Hero ${index + 1}`}
-                  className={`absolute inset-0 w-full h-full object-cover object-center transition-transform duration-1000 ${
-                    index === currentImageIndex
-                      ? 'translate-x-0'
-                      : index < currentImageIndex
-                        ? '-translate-x-full'
-                        : 'translate-x-full'
-                  }`}
-                />
-              ))}
-            </div>
-
+            <img
+              src={heroImage}
+              alt='Hero'
+              className='absolute inset-0 w-full h-full object-cover object-center'
+            />
             <div className='absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent' />
-
-            <button
-              onClick={() =>
-                setCurrentImageIndex((prev) =>
-                  prev === 0 ? carouselImages.length - 1 : prev - 1,
-                )
-              }
-              className='absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/40 text-white p-2 rounded-full transition-colors'
-              aria-label='Previous image'
-            >
-              <ArrowLeft className='w-6 h-6' />
-            </button>
-            <button
-              onClick={() =>
-                setCurrentImageIndex((prev) =>
-                  prev === carouselImages.length - 1 ? 0 : prev + 1,
-                )
-              }
-              className='absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/40 text-white p-2 rounded-full transition-colors'
-              aria-label='Next image'
-            >
-              <ArrowRightIcon className='w-6 h-6' />
-            </button>
 
             <div className='absolute bottom-8 left-8 text-white max-w-2xl'>
               <h1 className='text-4xl md:text-6xl font-bold mb-4'></h1>
@@ -141,19 +105,6 @@ const Home = () => {
                 </Button>
               </div>
             </div>
-          </div>
-
-          <div className='flex justify-center gap-2 mt-4'>
-            {carouselImages.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentImageIndex(index)}
-                className={`w-3 h-3 rounded-full transition-colors ${
-                  index === currentImageIndex ? 'bg-primary' : 'bg-primary/30'
-                }`}
-                aria-label={`Go to slide ${index + 1}`}
-              />
-            ))}
           </div>
         </div>
       </section>
@@ -207,6 +158,165 @@ const Home = () => {
             <Button asChild variant='outline'>
               <Link to='/products?category=FACECREAMS'>
                 View All FACECREAMS <ArrowRight className='w-4 h-4 ml-2' />
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* SOAPS Section */}
+      <section className='py-16 px-4'>
+        <div className='container mx-auto'>
+          <div className='flex items-center gap-3 mb-8'>
+            <Sparkles className='w-8 h-8 text-primary' />
+            <div>
+              <h2 className='text-3xl font-bold text-foreground'>SOAPS</h2>
+              <p className='text-muted-foreground'>Natural and gentle soaps</p>
+            </div>
+          </div>
+          <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'>
+            {SOAPS.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+          <div className='text-center mt-8'>
+            <Button asChild variant='outline'>
+              <Link to='/products?category=SOAPS'>
+                View All SOAPS <ArrowRight className='w-4 h-4 ml-2' />
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* BODY CARE Section */}
+      <section className='py-16 px-4 bg-muted/30'>
+        <div className='container mx-auto'>
+          <div className='flex items-center gap-3 mb-8'>
+            <Zap className='w-8 h-8 text-primary' />
+            <div>
+              <h2 className='text-3xl font-bold text-foreground'>BODY CARE</h2>
+              <p className='text-muted-foreground'>Body care essentials</p>
+            </div>
+          </div>
+          <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'>
+            {BODYCARE.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+          <div className='text-center mt-8'>
+            <Button asChild variant='outline'>
+              <Link to='/products?category=BODY CARE'>
+                View All BODY CARE <ArrowRight className='w-4 h-4 ml-2' />
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* PET CARE Section */}
+      <section className='py-16 px-4'>
+        <div className='container mx-auto'>
+          <div className='flex items-center gap-3 mb-8'>
+            <Zap className='w-8 h-8 text-secondary' />
+            <div>
+              <h2 className='text-3xl font-bold text-foreground'>PET CARE</h2>
+              <p className='text-muted-foreground'>Products for your pets</p>
+            </div>
+          </div>
+          <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'>
+            {PETCARE.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+          <div className='text-center mt-8'>
+            <Button asChild variant='outline'>
+              <Link to='/products?category=PET CARE'>
+                View All PET CARE <ArrowRight className='w-4 h-4 ml-2' />
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* MASSAGE OILS Section */}
+      <section className='py-16 px-4 bg-muted/30'>
+        <div className='container mx-auto'>
+          <div className='flex items-center gap-3 mb-8'>
+            <Zap className='w-8 h-8 text-primary' />
+            <div>
+              <h2 className='text-3xl font-bold text-foreground'>
+                MASSAGE OILS
+              </h2>
+              <p className='text-muted-foreground'>Relaxing massage oils</p>
+            </div>
+          </div>
+          <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'>
+            {MASSAGEOILS.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+          <div className='text-center mt-8'>
+            <Button asChild variant='outline'>
+              <Link to='/products?category=MASSAGE OILS'>
+                View All MASSAGE OILS <ArrowRight className='w-4 h-4 ml-2' />
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* GIFT PACKS Section */}
+      <section className='py-16 px-4'>
+        <div className='container mx-auto'>
+          <div className='flex items-center gap-3 mb-8'>
+            <Sparkles className='w-8 h-8 text-secondary' />
+            <div>
+              <h2 className='text-3xl font-bold text-foreground'>GIFT PACKS</h2>
+              <p className='text-muted-foreground'>
+                Perfect gifts for any occasion
+              </p>
+            </div>
+          </div>
+          <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'>
+            {GIFTPACKS.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+          <div className='text-center mt-8'>
+            <Button asChild variant='outline'>
+              <Link to='/products?category=GIFT PACKS'>
+                View All GIFT PACKS <ArrowRight className='w-4 h-4 ml-2' />
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* FOOD SUPPLEMENTS Section */}
+      <section className='py-16 px-4 bg-muted/30'>
+        <div className='container mx-auto'>
+          <div className='flex items-center gap-3 mb-8'>
+            <Zap className='w-8 h-8 text-primary' />
+            <div>
+              <h2 className='text-3xl font-bold text-foreground'>
+                FOOD SUPPLEMENTS
+              </h2>
+              <p className='text-muted-foreground'>
+                Health and nutrition supplements
+              </p>
+            </div>
+          </div>
+          <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'>
+            {FOODSUPPLEMENTS.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+          <div className='text-center mt-8'>
+            <Button asChild variant='outline'>
+              <Link to='/products?category=FOOD SUPPLEMENTS'>
+                View All FOOD SUPPLEMENTS{' '}
+                <ArrowRight className='w-4 h-4 ml-2' />
               </Link>
             </Button>
           </div>

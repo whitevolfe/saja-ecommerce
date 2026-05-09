@@ -2,7 +2,15 @@ export interface Product {
   id: string;
   name: string;
   price: number;
-  category: 'HAIR CARE' | 'FACECREAMS';
+  category:
+    | 'HAIR CARE'
+    | 'FACECREAMS'
+    | 'SOAPS'
+    | 'BODY CARE'
+    | 'PET CARE'
+    | 'MASSAGE OILS'
+    | 'GIFT PACKS'
+    | 'FOOD SUPPLEMENTS';
   image: string;
   description: string;
   featured?: boolean;
@@ -159,6 +167,216 @@ export const products: Product[] = [
     image: '/assets/Saffran shampoo.png',
     description:
       '250ml — Turmeric extract, Saffron oil, Cherry blossom oil. Brightening hair care. ',
+  },
+
+  // SOAPS
+  {
+    id: 's1',
+    name: 'Natural Herbal Soap',
+    price: 350,
+    category: 'SOAPS',
+    image: '/assets/natural-herbal-soap.png',
+    description: '100% natural herbal soap with essential oils',
+    featured: true,
+  },
+  {
+    id: 's2',
+    name: 'Aloe Vera Soap',
+    price: 380,
+    category: 'SOAPS',
+    image: '/assets/aloe-vera-soap.png',
+    description: 'Soothing aloe vera soap for sensitive skin',
+  },
+  {
+    id: 's3',
+    name: 'Neem Soap',
+    price: 370,
+    category: 'SOAPS',
+    image: '/assets/neem-soap.png',
+    description: 'Antiseptic neem soap for acne-prone skin',
+  },
+  {
+    id: 's4',
+    name: 'Turmeric Soap',
+    price: 390,
+    category: 'SOAPS',
+    image: '/assets/turmeric-soap.png',
+    description: 'Brightening turmeric soap for glowing skin',
+  },
+
+  // BODY CARE
+  {
+    id: 'b1',
+    name: 'Body Lotion',
+    price: 450,
+    category: 'BODY CARE',
+    image: '/assets/body-lotion.png',
+    description: 'Moisturizing body lotion with natural ingredients',
+    featured: true,
+  },
+  {
+    id: 'b2',
+    name: 'Body Wash',
+    price: 420,
+    category: 'BODY CARE',
+    image: '/assets/body-wash.png',
+    description: 'Gentle body wash for all skin types',
+  },
+  {
+    id: 'b3',
+    name: 'Body Scrub',
+    price: 480,
+    category: 'BODY CARE',
+    image: '/assets/body-scrub.png',
+    description: 'Exfoliating body scrub with natural extracts',
+  },
+  {
+    id: 'b4',
+    name: 'Hand Cream',
+    price: 320,
+    category: 'BODY CARE',
+    image: '/assets/hand-cream.png',
+    description: 'Nourishing hand cream with vitamin E',
+  },
+
+  // PET CARE
+  {
+    id: 'p1',
+    name: 'Pet Shampoo',
+    price: 650,
+    category: 'PET CARE',
+    image: '/assets/pet-shampoo.png',
+    description: 'Gentle shampoo for pets with natural ingredients',
+    featured: true,
+  },
+  {
+    id: 'p2',
+    name: 'Pet Conditioner',
+    price: 720,
+    category: 'PET CARE',
+    image: '/assets/pet-conditioner.png',
+    description: 'Moisturizing conditioner for pet coats',
+  },
+  {
+    id: 'p3',
+    name: 'Pet Wipes',
+    price: 180,
+    category: 'PET CARE',
+    image: '/assets/pet-wipes.png',
+    description: 'Convenient wipes for pet cleaning',
+  },
+  {
+    id: 'p4',
+    name: 'Pet Toothpaste',
+    price: 250,
+    category: 'PET CARE',
+    image: '/assets/pet-toothpaste.png',
+    description: 'Natural toothpaste for pet dental care',
+  },
+
+  // MASSAGE OILS
+  {
+    id: 'm1',
+    name: 'Massage Oil',
+    price: 850,
+    category: 'MASSAGE OILS',
+    image: '/assets/massage-oil.png',
+    description: 'Relaxing massage oil with essential oils',
+    featured: true,
+  },
+  {
+    id: 'm2',
+    name: 'Aromatherapy Oil',
+    price: 950,
+    category: 'MASSAGE OILS',
+    image: '/assets/aromatherapy-oil.png',
+    description: 'Therapeutic aromatherapy massage oil',
+  },
+  {
+    id: 'm3',
+    name: 'Herbal Massage Oil',
+    price: 780,
+    category: 'MASSAGE OILS',
+    image: '/assets/herbal-massage-oil.png',
+    description: 'Traditional herbal massage oil',
+  },
+  {
+    id: 'm4',
+    name: 'Cooling Massage Oil',
+    price: 820,
+    category: 'MASSAGE OILS',
+    image: '/assets/cooling-massage-oil.png',
+    description: 'Cooling massage oil for muscle relief',
+  },
+
+  // GIFT PACKS
+  {
+    id: 'g1',
+    name: 'Gift Pack 1',
+    price: 1200,
+    category: 'GIFT PACKS',
+    image: '/assets/gift-pack-1.png',
+    description: 'Premium gift pack with assorted herbal products',
+    featured: true,
+  },
+  {
+    id: 'g2',
+    name: 'Gift Pack 2',
+    price: 1500,
+    category: 'GIFT PACKS',
+    image: '/assets/gift-pack-2.png',
+    description: 'Deluxe gift pack with premium items',
+  },
+  {
+    id: 'g3',
+    name: 'Gift Pack 3',
+    price: 900,
+    category: 'GIFT PACKS',
+    image: '/assets/gift-pack-3.png',
+    description: 'Budget-friendly gift pack',
+  },
+  {
+    id: 'g4',
+    name: 'Gift Pack 4',
+    price: 1800,
+    category: 'GIFT PACKS',
+    image: '/assets/gift-pack-4.png',
+    description: 'Luxury gift pack with exclusive products',
+  },
+
+  // FOOD SUPPLEMENTS
+  {
+    id: 'f1',
+    name: 'Herbal Supplement',
+    price: 650,
+    category: 'FOOD SUPPLEMENTS',
+    image: '/assets/herbal-supplement.png',
+    description: 'Natural herbal supplement for wellness',
+    featured: true,
+  },
+  {
+    id: 'f2',
+    name: 'Vitamin C',
+    price: 450,
+    category: 'FOOD SUPPLEMENTS',
+    image: '/assets/vitamin-c.png',
+    description: 'High-quality vitamin C supplement',
+  },
+  {
+    id: 'f3',
+    name: 'Multivitamin',
+    price: 550,
+    category: 'FOOD SUPPLEMENTS',
+    image: '/assets/multivitamin.png',
+    description: 'Complete multivitamin supplement',
+  },
+  {
+    id: 'f4',
+    name: 'Probiotics',
+    price: 720,
+    category: 'FOOD SUPPLEMENTS',
+    image: '/assets/probiotics.png',
+    description: 'Natural probiotics for digestive health',
   },
   // {
   //   id: 'c12',

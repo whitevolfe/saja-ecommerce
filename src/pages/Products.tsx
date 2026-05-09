@@ -58,6 +58,40 @@ const Products = () => {
           >
             Face Creams
           </Button>
+          <Button
+            variant={
+              selectedCategory === 'FOOD SUPPLEMENTS' ? 'default' : 'outline'
+            }
+            onClick={() => handleCategoryChange('FOOD SUPPLEMENTS')}
+          >
+            Food Supplements
+          </Button>
+          <Button
+            variant={selectedCategory === 'BODY CARE' ? 'default' : 'outline'}
+            onClick={() => handleCategoryChange('BODY CARE')}
+          >
+            Body Care
+          </Button>
+          <Button
+            variant={selectedCategory === 'PET CARE' ? 'default' : 'outline'}
+            onClick={() => handleCategoryChange('PET CARE')}
+          >
+            Pet Care
+          </Button>
+          <Button
+            variant={
+              selectedCategory === 'MASSAGE OILS' ? 'default' : 'outline'
+            }
+            onClick={() => handleCategoryChange('MASSAGE OILS')}
+          >
+            Massage Oils
+          </Button>
+          <Button
+            variant={selectedCategory === 'GIFT PACKS' ? 'default' : 'outline'}
+            onClick={() => handleCategoryChange('GIFT PACKS')}
+          >
+            Gift Packs
+          </Button>
         </div>
 
         {/* Products Grid */}
