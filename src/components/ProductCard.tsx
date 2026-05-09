@@ -25,12 +25,13 @@ const ProductCard = ({ product }: ProductCardProps) => {
   return (
     <Link to={`/product/${product.id}`} className='block'>
       <div className='group bg-card rounded-xl overflow-hidden border border-border hover:shadow-[var(--shadow-card-hover)] transition-all duration-300'>
-        <div className='relative overflow-hidden aspect-square'>
+        <div className='relative overflow-hidden aspect-square bg-white'>
           <img
             src={product.image}
             alt={product.name}
-            className='w-full h-full object-cover group-hover:scale-105 transition-transform duration-300'
+            className='w-full h-full object-contain p-3 group-hover:scale-105 transition-transform duration-300'
           />
+
           {product.featured && (
             <div className='absolute top-3 right-3 bg-secondary text-secondary-foreground text-white font-semibold px-3 py-1 rounded-full'>
               Featured
@@ -42,6 +43,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
           <h3 className='font-semibold text-lg mb-1 text-card-foreground'>
             {product.name}
           </h3>
+
           <p className='text-sm text-muted-foreground mb-3 line-clamp-2'>
             {product.description}
           </p>
@@ -50,6 +52,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
             <span className='text-xl font-bold text-primary'>
               Rs. {product.price.toLocaleString()}
             </span>
+
             <div className='flex gap-2'>
               <Button
                 onClick={handleAddToCart}
@@ -60,6 +63,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
                 <ShoppingCart className='w-4 h-4' />
                 Add
               </Button>
+
               <Button asChild size='sm' variant='outline' className='gap-2'>
                 <Link to={`/product/${product.id}`}>Buy Now</Link>
               </Button>

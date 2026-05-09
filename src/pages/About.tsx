@@ -1,4 +1,5 @@
 import { Quote } from 'lucide-react';
+import founderimg from '../../public/assets/JBA .jpg';
 
 const About = () => {
   return (
@@ -56,6 +57,11 @@ const About = () => {
             <div>
               <h3 className='text-xl font-semibold text-[#1F3D2B] mb-2'>
                 Mr. Jayampathy Arambepola
+                <img
+                  src={founderimg}
+                  alt='Mr. Jayampathy Arambepola'
+                  className='w-72 h-72 rounded-3xl m-10 mr-2'
+                />
               </h3>
               <p className='text-primary font-medium mb-4'>
                 Founder & Managing Director
