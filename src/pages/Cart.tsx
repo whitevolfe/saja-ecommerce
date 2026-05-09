@@ -85,7 +85,7 @@ const Cart = () => {
                 >
                   {item.name}
                 </Link>
-                <p className='text-sm text-muted-foreground mb-2'>
+                <p className='text-sm text-muted mb-2'>
                   Rs. {item.price.toLocaleString()} each
                 </p>
 
@@ -120,7 +120,7 @@ const Cart = () => {
               </div>
 
               <div className='text-right'>
-                <p className='text-xl font-bold text-primary'>
+                <p className='text-xl font-bold text-muted'>
                   Rs. {(item.price * item.quantity).toLocaleString()}
                 </p>
               </div>

@@ -4,14 +4,14 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className='bg-card border-t border-border mt-16'>
+    <footer className='bg-[#1F3B2D] text-white border-t border-[#1F3B2D] mt-16'>
       <div className='container mx-auto px-4 py-8'>
         <div className='flex flex-col md:flex-row justify-between items-center gap-6'>
           <div className='text-center md:text-left'>
             <h3 className='text-xl font-bold text-primary mb-2'>
               SAJ Associates (Pvt) Ltd Herlbal Products Shopping
             </h3>
-            <p className='text-sm text-muted-foreground'>
+            <p className='text-sm text-white/80'>
               Your destination for premium HAIR CARE & Face creams. Quality,
               care, and beauty in every product.
             </p>
@@ -55,7 +55,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className='mt-8 pt-6 border-t border-border text-center text-sm text-muted-foreground'>
+        <div className='mt-8 pt-6 border-t border-white/20 text-center text-sm text-white/70'>
           © {currentYear} 2025 SAJ Associates (Pvt) Ltd. All Rights Reserved.
         </div>
       </div>

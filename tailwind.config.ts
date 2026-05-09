@@ -1,4 +1,4 @@
-import { Config } from 'tailwindcss';
+import type { Config } from 'tailwindcss';
 import animate from 'tailwindcss-animate';
 
 export default {
@@ -18,107 +18,87 @@ export default {
         '2xl': '1400px',
       },
     },
+
     extend: {
       colors: {
         primary: {
-          DEFAULT: '#1F3D2B',
-          LIGHT: '#4F7D4A',
+          DEFAULT: '#1F3A2E',
+          LIGHT: '#2E5A46',
+          DARK: '#0F1F18',
         },
+
         secondary: {
-          DEFAULT: '#2E5E3F',
+          DEFAULT: '#2E5A46',
         },
+
         accent: {
-          DEFAULT: '#D4AF37',
-          TURMERIC: '#C58A2B',
-          BROWN: '#8B5A2B',
+          DEFAULT: '#C8A24A',
+          LIGHT: '#D6B25E',
+          DARK: '#A8842F',
         },
+
         background: {
-          DEFAULT: '#F5F1E8',
-          MAIN: '#F5F1E8',
-          SECTION: '#E6D3B3',
-          DARK: '#0F2A1C',
+          DEFAULT: '#046e3f',
+          MAIN: '#046e3f',
+          SECTION: '#0F1F18',
+          CARD: '#046e3f',
+          SOFT: '#046e3f',
         },
-        text: {
-          PRIMARY: '#1A1A1A',
-          SECONDARY: '#5A5A5A',
-          LIGHT: '#FFFFFF',
-          MUTED: '#A3A3A3',
+
+        foreground: '#F3F4F2',
+
+        // =========================
+        // ONLY CHANGE IS HERE 👇
+        // =========================
+        card: {
+          DEFAULT: '#C8A24A',
+          FOREGROUND: '#0B1410',
         },
-        glass: {
-          WHITE: 'rgba(255, 255, 255, 0.25)',
-          BORDER: 'rgba(255, 255, 255, 0.4)',
-          SHADOW: 'rgba(0, 0, 0, 0.15)',
-          SHINE: 'rgba(255, 255, 255, 0.6)',
+
+        productCard: {
+          DEFAULT: 'rgba(255,255,255,0.06)',
+          HOVER: 'rgba(255,255,255,0.10)',
         },
-        gradients: {
-          GREEN: 'from-[#1F3D2B] to-[#2E5E3F]',
-        },
+
         border: {
-          DEFAULT: 'hsl(var(--border))',
+          DEFAULT: 'rgba(255,255,255,0.08)',
+          LIGHT: 'rgba(255,255,255,0.12)',
         },
-        foreground: '#1A1A1A',
+
+        glass: {
+          BASE: 'rgba(255, 255, 255, 0.06)',
+          SOFT: 'rgba(255, 255, 255, 0.08)',
+          ELEVATED: 'rgba(255, 255, 255, 0.12)',
+          GREEN_TINT: 'rgba(31, 58, 46, 0.35)',
+          BORDER_LIGHT: 'rgba(255, 255, 255, 0.14)',
+          BORDER_DARK: 'rgba(0, 0, 0, 0.25)',
+          SHINE: 'rgba(255, 255, 255, 0.18)',
+        },
       },
-      gradientColor: {
-        GREEN: 'from-[#1F3D2B] to-[#2E5E3F]',
+
+      backgroundImage: {
+        HERO: 'linear-gradient(135deg, #0B1410 0%, #13241C 50%, #1F3A2E 100%)',
+        GOLD: 'linear-gradient(135deg, #C8A24A 0%, #D6B25E 100%)',
       },
-      glassBadge: {
-        PILL: 'rounded-full',
-        GLASS: 'bg-opacity-25 backdrop-filter-blur-sm shadow-sm',
+
+      boxShadow: {
+        card: '0 8px 24px rgba(0,0,0,0.35)',
+        hover: '0 12px 40px rgba(0,0,0,0.5)',
+        gold: '0 4px 20px rgba(200,162,74,0.25)',
       },
-      buttonVariants: {
-        PRIMARY: 'bg-[#1F3D2B] hover:bg-[#4F7D4A]',
-        SECONDARY: 'bg-[#D4AF37] hover:bg-[#C58A2B]',
-      },
-      destructive: {
-        DEFAULT: 'hsl(var(--destructive))',
-        foreground: 'hsl(var(--destructive-foreground))',
-      },
-      muted: {
-        DEFAULT: 'hsl(var(--muted))',
-        foreground: 'hsl(var(--muted-foreground))',
-      },
-      accent: {
-        DEFAULT: 'hsl(var(--accent))',
-        foreground: 'hsl(var(--accent-foreground))',
-      },
-      popover: {
-        DEFAULT: 'hsl(var(--popover))',
-        foreground: 'hsl(var(--popover-foreground))',
-      },
-      card: {
-        DEFAULT: 'hsl(var(--card))',
-        foreground: 'hsl(var(--card-foreground))',
-      },
-      sidebar: {
-        DEFAULT: 'hsl(var(--sidebar-background))',
-        foreground: 'hsl(var(--sidebar-foreground))',
-        primary: 'hsl(var(--sidebar-primary))',
-        'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
-        accent: 'hsl(var(--sidebar-accent))',
-        'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
-        border: 'hsl(var(--sidebar-border))',
-        ring: 'hsl(var(--sidebar-ring))',
-      },
+
       borderRadius: {
-        lg: 'var(--radius)',
-        md: 'calc(var(--radius) - 2px)',
-        sm: 'calc(var(--radius) - 4px)',
+        lg: '1rem',
+        md: '0.75rem',
+        sm: '0.5rem',
       },
-      keyframes: {
-        'accordion-down': {
-          from: { height: '0' },
-          to: { height: 'var(--radix-accordion-content-height)' },
-        },
-        'accordion-up': {
-          from: { height: 'var(--radix-accordion-content-height)' },
-          to: { height: '0' },
-        },
-      },
+
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
       },
     },
   },
+
   plugins: [animate],
 } satisfies Config;

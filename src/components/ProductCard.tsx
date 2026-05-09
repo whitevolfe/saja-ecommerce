@@ -24,7 +24,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
 
   return (
     <Link to={`/product/${product.id}`} className='block'>
-      <div className='group bg-card rounded-xl overflow-hidden border border-border hover:shadow-[var(--shadow-card-hover)] transition-all duration-300'>
+      <div className='group bg-productCard rounded-xl overflow-hidden border border-border hover:shadow-[var(--shadow-card-hover)] transition-all duration-300'>
         <div className='relative overflow-hidden aspect-square bg-white'>
           <img
             src={product.image}
@@ -49,7 +49,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
           </p>
 
           <div className='flex items-center justify-between'>
-            <span className='text-xl font-bold text-primary'>
+            <span className='text-xl font-bold text-MUTED'>
               Rs. {product.price.toLocaleString()}
             </span>
 

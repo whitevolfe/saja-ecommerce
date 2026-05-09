@@ -7,13 +7,13 @@ const About = () => {
       <div className='container mx-auto max-w-5xl'>
         {/* HERO Section */}
         <div className='text-center mb-16'>
-          <p className='text-sm font-semibold text-primary uppercase tracking-wider mb-2'>
+          <p className='text-sm font-semibold text-muted uppercase tracking-wider mb-2'>
             Our Story
           </p>
-          <h1 className='text-5xl font-bold text-[#1F3D2B] mb-4'>
+          <h1 className='text-5xl font-bold text-muted mb-4'>
             From Sri Lanka's Farms to Your Skin
           </h1>
-          <p className='text-lg text-[#5A5A5A] max-w-2xl mx-auto'>
+          <p className='text-lg text-muted max-w-2xl mx-auto'>
             A decade of crafting herbal excellence — 100% natural, 100% Sri
             Lankan, 100% honest.
           </p>
@@ -21,10 +21,8 @@ const About = () => {
 
         {/* COMPANY STORY */}
         <div className='mb-16'>
-          <h2 className='text-3xl font-bold text-[#1F3D2B] mb-6'>
-            Company Story
-          </h2>
-          <div className='space-y-4 text-[#5A5A5A]'>
+          <h2 className='text-3xl font-bold text-muted mb-6'>Company Story</h2>
+          <div className='space-y-4 text-muted'>
             <p>
               SAJ Associates (Pvt) Ltd was incorporated on 2nd September 2015.
               The main objective of the formation of the company was to add
@@ -116,7 +114,7 @@ const About = () => {
 
         {/* OUR VALUES */}
         <div className='mb-16'>
-          <h2 className='text-3xl font-bold text-[#1F3D2B] mb-6'>Our Values</h2>
+          <h2 className='text-3xl font-bold text-muted mb-6'>Our Values</h2>
           <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-6'>
             {[
               {

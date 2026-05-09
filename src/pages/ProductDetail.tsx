@@ -106,7 +106,7 @@ const ProductDetail = () => {
           <div className='space-y-6'>
             <div>
               <h1 className='text-4xl font-bold mb-4'>{product.name}</h1>
-              <p className='text-2xl font-bold text-primary mb-4'>
+              <p className='text-2xl font-bold text-muted mb-4'>
                 Rs. {product.price.toLocaleString()}
               </p>
               <p className='text-lg text-muted-foreground leading-relaxed'>
