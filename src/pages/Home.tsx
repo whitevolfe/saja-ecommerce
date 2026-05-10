@@ -42,7 +42,7 @@ const Home = () => {
     {
       name: 'Gunapala Nanayakkara',
       role: 'Prof',
-      avatar: 'JD',
+      avatar: 'GN',
       rating: 5,
       text: 'The soap produces a gentle, creamy lather that cleanses effectively without drying the skin. Its subtle, refreshing fragrance feels authentic rather than artificial. What stands out most is the soft and nourished feeling it leaves after each wash. In a market crowded with chemical-heavy products, this natural formulation offers a reassuring, high-quality alternative.',
       color: 'primary',
@@ -50,7 +50,7 @@ const Home = () => {
     {
       name: 'Dilnoza P.',
       role: 'Verified Customer',
-      avatar: 'AS',
+      avatar: 'DP',
       rating: 5,
       text: 'I have been using the Moringa shampoo for 3 months now. My hair is so much healthier and the natural fragrance is amazing. Best herbal shampoo I have ever tried!',
       color: 'secondary',
@@ -58,7 +58,7 @@ const Home = () => {
     {
       name: 'Amali S',
       role: 'Pet Owner',
-      avatar: 'MR',
+      avatar: 'AS',
       rating: 5,
       text: "The Doggy Bath Soap is a game changer! My golden retriever's coat is so shiny and the flea issue is completely resolved. Love that it is plant-based.",
       color: 'primary',
@@ -377,73 +377,43 @@ const Home = () => {
           </div>
 
           <div className='max-w-6xl mx-auto'>
-            <div className='relative overflow-hidden'>
-              {/* Navigation Arrows */}
+            <div className='grid grid-cols-1 md:grid-cols-3 gap-8 px-4'>
+              {testimonials.map((testimonial, index) => (
+                <div
+                  key={index}
+                  className='bg-card rounded-xl p-6 shadow-lg border border-border'
+                >
+                  <div className='flex items-center gap-4 mb-4'>
+                    <div className='w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center'>
+                      <span className='text-primary font-bold text-lg'>
+                        {testimonial.avatar}
+                      </span>
+                    </div>
 
-              {/* Testimonial Cards */}
-              <div className='grid grid-cols-1 md:grid-cols-3 gap-8 px-4'>
-                {testimonials.map((testimonial, index) => {
-                  // Calculate position for 3-card layout
-                  const position =
-                    (index - currentTestimonialIndex + testimonials.length) %
-                    testimonials.length;
+                    <div>
+                      <h4 className='font-semibold text-foreground'>
+                        {testimonial.name}
+                      </h4>
 
-                  return (
-                    <div
-                      key={index}
-                      className={`bg-card rounded-xl p-6 shadow-lg border border-border hover:shadow-xl transition-all duration-1000 ${
-                        position === 0
-                          ? 'opacity-100 scale-100'
-                          : position === 1
-                            ? 'opacity-80 scale-95 translate-x-full'
-                            : 'opacity-60 scale-90 translate-x-full'
-                      }`}
-                    >
-                      <div className='flex items-center gap-4 mb-4'>
-                        <div className='w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center'>
-                          <span className='text-primary font-bold text-lg'>
-                            {testimonial.avatar}
-                          </span>
-                        </div>
-                        <div>
-                          <h4 className='font-semibold text-foreground'>
-                            {testimonial.name}
-                          </h4>
-                          <p className='text-sm text-muted-foreground'>
-                            {testimonial.role}
-                          </p>
-                        </div>
-                      </div>
-                      <div className='flex gap-1 mb-4'>
-                        {[...Array(5)].map((_, i) => (
-                          <span key={i} className='text-yellow-500'>
-                            ★
-                          </span>
-                        ))}
-                      </div>
-                      <p className='text-muted-foreground leading-relaxed text-sm'>
-                        "{testimonial.text}"
+                      <p className='text-sm text-muted-foreground'>
+                        {testimonial.role}
                       </p>
                     </div>
-                  );
-                })}
-              </div>
+                  </div>
 
-              {/* Testimonial Indicators */}
-              <div className='flex justify-center gap-3 mt-8'>
-                {testimonials.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setCurrentTestimonialIndex(index)}
-                    className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                      index === currentTestimonialIndex
-                        ? 'bg-primary w-8'
-                        : 'bg-primary/30 hover:bg-primary/50'
-                    }`}
-                    aria-label={`Go to testimonial ${index + 1}`}
-                  />
-                ))}
-              </div>
+                  <div className='flex gap-1 mb-4'>
+                    {[...Array(5)].map((_, i) => (
+                      <span key={i} className='text-yellow-500'>
+                        ★
+                      </span>
+                    ))}
+                  </div>
+
+                  <p className='text-muted-foreground leading-relaxed text-sm'>
+                    "{testimonial.text}"
+                  </p>
+                </div>
+              ))}
             </div>
           </div>
         </div>
