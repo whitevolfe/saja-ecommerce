@@ -3,14 +3,12 @@ export interface Product {
   name: string;
   price: number;
   category:
-    | 'HAIR CARE'
+    | 'CONDITIONER'
     | 'FACECREAMS'
-    | 'SOAPS'
-    | 'BODY CARE'
+    | 'SOAP'
+    | 'SHAMPOO'
     | 'PET CARE'
-    | 'MASSAGE OILS'
-    | 'GIFT PACKS'
-    | 'FOOD SUPPLEMENTS';
+    | 'MASSAGE OILS';
   image: string;
   description: string;
   featured?: boolean;
@@ -22,7 +20,7 @@ export const products: Product[] = [
     id: 'e1',
     name: 'cinnamon castile soap',
     price: 1750,
-    category: 'HAIR CARE',
+    category: 'SOAP',
     image: '/assets/cinnamon castile soap.png',
     description:
       'Medicinal Healthy Bar — Anti-bacterial, anti-fungal. Reduces acne, eczema, anti-septic',
@@ -32,7 +30,7 @@ export const products: Product[] = [
     id: 'e2',
     name: 'cinnamon hair conditioner',
     price: 1850,
-    category: 'HAIR CARE',
+    category: 'CONDITIONER',
     image: '/assets/cinnamon hair conditioner.png',
     description:
       '185ml — Cinnamon extract, Hydrolyzed keratin, Rosemary oil. Repairs and conditions.',
@@ -42,7 +40,7 @@ export const products: Product[] = [
     id: 'e3',
     name: 'cinnamon shampoo',
     price: 1950,
-    category: 'HAIR CARE',
+    category: 'SHAMPOO',
     image: '/assets/cinnamon shampoo.png',
     description:
       '185ml — Aloe vera gel, Cinnamon extract, Vitamin E, Tea Tree Oil. Nourishes & strengthens hair. ',
@@ -51,7 +49,7 @@ export const products: Product[] = [
     id: 'e4',
     name: 'Dog natral shampoo',
     price: 1850,
-    category: 'HAIR CARE',
+    category: 'SHAMPOO',
     image: '/assets/Doggy shampoo with magosa.JPG',
     description: 'Supports skin, coat, and overall health',
   },
@@ -59,7 +57,7 @@ export const products: Product[] = [
     id: 'e5',
     name: 'Doggy soap',
     price: 1000,
-    category: 'HAIR CARE',
+    category: 'SOAP',
     image: '/assets/Doggy soap.JPG',
     description:
       '100g — 90% plant oils. Keeps dogs healthy, cleansed, nourished. Fleas away. Great aroma. ',
@@ -68,7 +66,7 @@ export const products: Product[] = [
     id: 'e6',
     name: 'Lemon hair conditioner',
     price: 1850,
-    category: 'HAIR CARE',
+    category: 'CONDITIONER',
     image: '/assets/Lemon hair conditioner.png',
     description:
       '185ml — Lemongrass essential oil, Rosemary oil.Controls oil, conditions deeply.',
@@ -89,7 +87,7 @@ export const products: Product[] = [
     id: 'c2',
     name: 'lemongrass shampoo',
     price: 1950,
-    category: 'FACECREAMS',
+    category: 'SHAMPOO',
     image: '/assets/lemongrass shampoo.png',
     description:
       '185ml — Lemongrass extract, Vitamin E, Tea Tree Oil.Refreshes scalp, promotes hair growth.',
@@ -118,7 +116,7 @@ export const products: Product[] = [
     id: 'c6',
     name: 'moringa hair conditioner',
     price: 1850,
-    category: 'FACECREAMS',
+    category: 'CONDITIONER',
     image: '/assets/moringa hair conditioner.png',
     description:
       '185ml — Moringa leaf extract, Rosemary, Xanthan gum,Hydrolyzed keratin. ',
@@ -127,7 +125,7 @@ export const products: Product[] = [
     id: 'c7',
     name: 'moringa liquid soap',
     price: 1750,
-    category: 'FACECREAMS',
+    category: 'SOAP',
     image: '/assets/moringa liquid soap.png',
     description:
       'Nourishing Bar — Controls acne, increases skin complexion and smoothness, removes patches.',
@@ -136,7 +134,7 @@ export const products: Product[] = [
     id: 'c8',
     name: 'moringa shampoo',
     price: 1950,
-    category: 'FACECREAMS',
+    category: 'SHAMPOO',
     image: '/assets/moringa shampoo.png',
     description:
       '185ml — Moringa leaf extract, Lavender, Tea tree oil.Deep nourishment and shine.',
@@ -145,7 +143,7 @@ export const products: Product[] = [
     id: 'c9',
     name: 'Neem',
     price: 370,
-    category: 'FACECREAMS',
+    category: 'SOAP',
     image: '/assets/Neem.png',
     description:
       'Antiseptic Bar — Natural remedy for infection-free healthy skin. Gentle and purifying. ',
@@ -154,7 +152,7 @@ export const products: Product[] = [
     id: 'c10',
     name: 'Saffran hair conditioner',
     price: 1850,
-    category: 'FACECREAMS',
+    category: 'CONDITIONER',
     image: '/assets/Saffran hair conditioner.png',
     description:
       '185ml — Saffron, Rosemary & Helichrysum oil. Strengthens and adds shine. ',
@@ -163,27 +161,27 @@ export const products: Product[] = [
     id: 'c11',
     name: 'Saffran shampoo',
     price: 1950,
-    category: 'FACECREAMS',
+    category: 'SHAMPOO',
     image: '/assets/Saffran shampoo.png',
     description:
       '185ml — Turmeric extract, Saffron oil, Cherry blossom oil. Brightening hair care. ',
   },
 
   // SOAPS
-  {
-    id: 's1',
-    name: 'Neem Soap',
-    price: 1750,
-    category: 'SOAPS',
-    image: '/assets/Neem.png',
-    description: '100% natural herbal soap with essential oils',
-    featured: true,
-  },
+  // {
+  //   id: 's1',
+  //   name: 'Neem Soap',
+  //   price: 1750,
+  //   category: 'SOAPS',
+  //   image: '/assets/Neem.png',
+  //   description: '100% natural herbal soap with essential oils',
+  //   featured: true,
+  // },
   {
     id: 's2',
     name: 'Moringa Soap',
     price: 1750,
-    category: 'SOAPS',
+    category: 'SOAP',
     image: '/assets/moringa.png',
     description: 'Soothing aloe vera soap for sensitive skin',
   },
@@ -191,7 +189,7 @@ export const products: Product[] = [
     id: 's3',
     name: 'Lemongrass Soap',
     price: 1750,
-    category: 'SOAPS',
+    category: 'SOAP',
     image: '/assets/lemongrass.png',
     description: 'Antiseptic neem soap for acne-prone skin',
   },
@@ -199,7 +197,7 @@ export const products: Product[] = [
     id: 's4',
     name: 'Aloevera Soap',
     price: 1750,
-    category: 'SOAPS',
+    category: 'SOAP',
     image: '/assets/aloevera.png',
     description: 'Brightening turmeric soap for glowing skin',
   },
@@ -207,7 +205,7 @@ export const products: Product[] = [
     id: 's5',
     name: 'Cassia Alata Soap',
     price: 1750,
-    category: 'SOAPS',
+    category: 'SOAP',
     image: '/assets/cassia alata.png',
     description: 'Brightening turmeric soap for glowing skin',
   },
@@ -215,7 +213,7 @@ export const products: Product[] = [
     id: 's6',
     name: 'Goat Milk Soap',
     price: 1750,
-    category: 'SOAPS',
+    category: 'SOAP',
     image: '/assets/Goat milk.png',
     description: 'Brightening turmeric soap for glowing skin',
   },
@@ -223,7 +221,7 @@ export const products: Product[] = [
     id: 's7',
     name: 'Cinnamon Soap',
     price: 1750,
-    category: 'SOAPS',
+    category: 'SOAP',
     image: '/assets/Cinnamon.png',
     description: 'Brightening turmeric soap for glowing skin',
   },
@@ -231,45 +229,45 @@ export const products: Product[] = [
     id: 's8',
     name: 'Activated Charcoal Soap',
     price: 1750,
-    category: 'SOAPS',
+    category: 'SOAP',
     image: '/assets/activated charcoal.png',
     description: 'Brightening turmeric soap for glowing skin',
   },
 
   // BODY CARE
-  {
-    id: 'b1',
-    name: 'Body Lotion',
-    price: 450,
-    category: 'BODY CARE',
-    image: '/assets/body-lotion.png',
-    description: 'Moisturizing body lotion with natural ingredients',
-    featured: true,
-  },
-  {
-    id: 'b2',
-    name: 'Body Wash',
-    price: 420,
-    category: 'BODY CARE',
-    image: '/assets/body-wash.png',
-    description: 'Gentle body wash for all skin types',
-  },
-  {
-    id: 'b3',
-    name: 'Body Scrub',
-    price: 480,
-    category: 'BODY CARE',
-    image: '/assets/body-scrub.png',
-    description: 'Exfoliating body scrub with natural extracts',
-  },
-  {
-    id: 'b4',
-    name: 'Hand Cream',
-    price: 2750,
-    category: 'BODY CARE',
-    image: '/assets/hand-cream.png',
-    description: 'Nourishing hand cream with vitamin E',
-  },
+  // {
+  //   id: 'b1',
+  //   name: 'Body Lotion',
+  //   price: 450,
+  //   category: 'BODY CARE',
+  //   image: '/assets/body-lotion.png',
+  //   description: 'Moisturizing body lotion with natural ingredients',
+  //   featured: true,
+  // },
+  // {
+  //   id: 'b2',
+  //   name: 'Body Wash',
+  //   price: 420,
+  //   category: 'BODY CARE',
+  //   image: '/assets/body-wash.png',
+  //   description: 'Gentle body wash for all skin types',
+  // },
+  // {
+  //   id: 'b3',
+  //   name: 'Body Scrub',
+  //   price: 480,
+  //   category: 'BODY CARE',
+  //   image: '/assets/body-scrub.png',
+  //   description: 'Exfoliating body scrub with natural extracts',
+  // },
+  // {
+  //   id: 'b4',
+  //   name: 'Hand Cream',
+  //   price: 2750,
+  //   category: 'BODY CARE',
+  //   image: '/assets/hand-cream.png',
+  //   description: 'Nourishing hand cream with vitamin E',
+  // },
 
   // PET CARE
   {
@@ -341,75 +339,6 @@ export const products: Product[] = [
     description: 'Cooling massage oil for muscle relief',
   },
 
-  // GIFT PACKS
-  {
-    id: 'g1',
-    name: 'Gift Pack 1',
-    price: 1200,
-    category: 'GIFT PACKS',
-    image: '/assets/gift-pack-1.png',
-    description: 'Premium gift pack with assorted herbal products',
-    featured: true,
-  },
-  {
-    id: 'g2',
-    name: 'Gift Pack 2',
-    price: 1500,
-    category: 'GIFT PACKS',
-    image: '/assets/gift-pack-2.png',
-    description: 'Deluxe gift pack with premium items',
-  },
-  {
-    id: 'g3',
-    name: 'Gift Pack 3',
-    price: 900,
-    category: 'GIFT PACKS',
-    image: '/assets/gift-pack-3.png',
-    description: 'Budget-friendly gift pack',
-  },
-  {
-    id: 'g4',
-    name: 'Gift Pack 4',
-    price: 1800,
-    category: 'GIFT PACKS',
-    image: '/assets/gift-pack-4.png',
-    description: 'Luxury gift pack with exclusive products',
-  },
-
-  // FOOD SUPPLEMENTS
-  {
-    id: 'f1',
-    name: 'Herbal Supplement',
-    price: 650,
-    category: 'FOOD SUPPLEMENTS',
-    image: '/assets/herbal-supplement.png',
-    description: 'Natural herbal supplement for wellness',
-    featured: true,
-  },
-  {
-    id: 'f2',
-    name: 'Vitamin C',
-    price: 450,
-    category: 'FOOD SUPPLEMENTS',
-    image: '/assets/vitamin-c.png',
-    description: 'High-quality vitamin C supplement',
-  },
-  {
-    id: 'f3',
-    name: 'Multivitamin',
-    price: 550,
-    category: 'FOOD SUPPLEMENTS',
-    image: '/assets/multivitamin.png',
-    description: 'Complete multivitamin supplement',
-  },
-  {
-    id: 'f4',
-    name: 'Probiotics',
-    price: 720,
-    category: 'FOOD SUPPLEMENTS',
-    image: '/assets/probiotics.png',
-    description: 'Natural probiotics for digestive health',
-  },
   // {
   //   id: 'c12',
   //   name: 'Beef XP',

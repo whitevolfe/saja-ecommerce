@@ -78,20 +78,6 @@ const Products = () => {
           >
             Massage Oils
           </Button>
-          <Button
-            variant={
-              selectedCategory === 'MASSAGE OILS' ? 'default' : 'outline'
-            }
-            onClick={() => handleCategoryChange('MASSAGE OILS')}
-          >
-            Massage Oils
-          </Button>
-          <Button
-            variant={selectedCategory === 'GIFT PACKS' ? 'default' : 'outline'}
-            onClick={() => handleCategoryChange('GIFT PACKS')}
-          >
-            Gift Packs
-          </Button>
         </div>
 
         {/* Products Grid */}

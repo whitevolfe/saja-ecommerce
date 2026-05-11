@@ -14,25 +14,17 @@ import { useState, useEffect } from 'react';
 
 const Home = () => {
   const featuredProducts = products.filter((p) => p.featured);
-  const HAIRCARE = products
-    .filter((p) => p.category === 'HAIR CARE')
+  const CONDITIONER = products
+    .filter((p) => p.category === 'CONDITIONER')
     .slice(0, 4);
   const FACECREAMS = products
     .filter((p) => p.category === 'FACECREAMS')
     .slice(0, 4);
-  const SOAPS = products.filter((p) => p.category === 'SOAPS').slice(0, 4);
-  const BODYCARE = products
-    .filter((p) => p.category === 'BODY CARE')
-    .slice(0, 4);
+  const SOAPS = products.filter((p) => p.category === 'SOAP').slice(0, 4);
+
   const PETCARE = products.filter((p) => p.category === 'PET CARE').slice(0, 4);
   const MASSAGEOILS = products
     .filter((p) => p.category === 'MASSAGE OILS')
-    .slice(0, 4);
-  const GIFTPACKS = products
-    .filter((p) => p.category === 'GIFT PACKS')
-    .slice(0, 4);
-  const FOODSUPPLEMENTS = products
-    .filter((p) => p.category === 'FOOD SUPPLEMENTS')
     .slice(0, 4);
 
   const [currentTestimonialIndex, setCurrentTestimonialIndex] = useState(0);
@@ -116,21 +108,23 @@ const Home = () => {
           <div className='flex items-center gap-3 mb-8'>
             <Zap className='w-8 h-8 text-primary' />
             <div>
-              <h2 className='text-3xl font-bold text-foreground'>HAIR CARE</h2>
+              <h2 className='text-3xl font-bold text-foreground'>
+                CONDITIONER
+              </h2>
               <p className='text-muted-foreground'>
                 Latest tech gadgets and accessories
               </p>
             </div>
           </div>
           <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'>
-            {HAIRCARE.map((product) => (
+            {CONDITIONER.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
           </div>
           <div className='text-center mt-8'>
             <Button asChild variant='outline'>
-              <Link to='/products?category=HAIR CARE'>
-                View All HAIR CARE <ArrowRight className='w-4 h-4 ml-2' />
+              <Link to='/products?category=CONDITIONER'>
+                View All CONDITIONER <ArrowRight className='w-4 h-4 ml-2' />
               </Link>
             </Button>
           </div>
@@ -190,7 +184,7 @@ const Home = () => {
       </section>
 
       {/* BODY CARE Section */}
-      <section className='py-16 px-4 bg-muted/30'>
+      {/* <section className='py-16 px-4 bg-muted/30'>
         <div className='container mx-auto'>
           <div className='flex items-center gap-3 mb-8'>
             <Zap className='w-8 h-8 text-primary' />
@@ -212,10 +206,10 @@ const Home = () => {
             </Button>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* PET CARE Section */}
-      <section className='py-16 px-4'>
+      {/* <section className='py-16 px-4'>
         <div className='container mx-auto'>
           <div className='flex items-center gap-3 mb-8'>
             <Zap className='w-8 h-8 text-secondary' />
@@ -237,10 +231,10 @@ const Home = () => {
             </Button>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* MASSAGE OILS Section */}
-      <section className='py-16 px-4 bg-muted/30'>
+      {/* <section className='py-16 px-4 bg-muted/30'>
         <div className='container mx-auto'>
           <div className='flex items-center gap-3 mb-8'>
             <Zap className='w-8 h-8 text-primary' />
@@ -264,10 +258,10 @@ const Home = () => {
             </Button>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* GIFT PACKS Section */}
-      <section className='py-16 px-4'>
+      {/* <section className='py-16 px-4'>
         <div className='container mx-auto'>
           <div className='flex items-center gap-3 mb-8'>
             <Sparkles className='w-8 h-8 text-secondary' />
@@ -291,10 +285,10 @@ const Home = () => {
             </Button>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* FOOD SUPPLEMENTS Section */}
-      <section className='py-16 px-4 bg-muted/30'>
+      {/* <section className='py-16 px-4 bg-muted/30'>
         <div className='container mx-auto'>
           <div className='flex items-center gap-3 mb-8'>
             <Zap className='w-8 h-8 text-primary' />
@@ -321,7 +315,7 @@ const Home = () => {
             </Button>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Brand Titles Section */}
       <section className='py-8 px-4 bg-gradient-to-r from-primary to-secondary'>
