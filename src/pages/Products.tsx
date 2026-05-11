@@ -47,10 +47,22 @@ const Products = () => {
             All Products
           </Button>
           <Button
-            variant={selectedCategory === 'HAIR CARE' ? 'default' : 'outline'}
-            onClick={() => handleCategoryChange('HAIR CARE')}
+            variant={selectedCategory === 'SOAP' ? 'default' : 'outline'}
+            onClick={() => handleCategoryChange('SOAP')}
           >
-            HAIR CARE
+            Soap
+          </Button>
+          <Button
+            variant={selectedCategory === 'SHAMPOO' ? 'default' : 'outline'}
+            onClick={() => handleCategoryChange('SHAMPOO')}
+          >
+            Shampoo
+          </Button>
+          <Button
+            variant={selectedCategory === 'CONDITIONER' ? 'default' : 'outline'}
+            onClick={() => handleCategoryChange('CONDITIONER')}
+          >
+            Conditioner
           </Button>
           <Button
             variant={selectedCategory === 'FACECREAMS' ? 'default' : 'outline'}
@@ -60,23 +72,11 @@ const Products = () => {
           </Button>
           <Button
             variant={
-              selectedCategory === 'FOOD SUPPLEMENTS' ? 'default' : 'outline'
+              selectedCategory === 'MASSAGE OILS' ? 'default' : 'outline'
             }
-            onClick={() => handleCategoryChange('FOOD SUPPLEMENTS')}
+            onClick={() => handleCategoryChange('MASSAGE OILS')}
           >
-            Food Supplements
-          </Button>
-          <Button
-            variant={selectedCategory === 'BODY CARE' ? 'default' : 'outline'}
-            onClick={() => handleCategoryChange('BODY CARE')}
-          >
-            Body Care
-          </Button>
-          <Button
-            variant={selectedCategory === 'PET CARE' ? 'default' : 'outline'}
-            onClick={() => handleCategoryChange('PET CARE')}
-          >
-            Pet Care
+            Massage Oils
           </Button>
           <Button
             variant={

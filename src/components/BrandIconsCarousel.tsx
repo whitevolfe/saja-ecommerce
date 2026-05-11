@@ -4,10 +4,10 @@ const BrandIconsCarousel = () => {
   const brandIcons = [
     '/assets/brand-icons1-removebg.png',
     '/assets/brand-icon2-removebg.png',
-    '/assets/brand-icon4-removebg.png',
+    '/assets/Ayuvedic_handmade_logo.png',
     '/assets/brand-icon5-removebg.png',
-    '/assets/brand-icon6-removebg.png',
-    '/assets/brand-icon7-removebg.png',
+    // '/assets/brand-icon6-removebg.png',
+    // '/assets/brand-icon7-removebg.png',
   ];
 
   // Duplicate icons for seamless loop

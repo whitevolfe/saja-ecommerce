@@ -21,7 +21,7 @@ export const products: Product[] = [
   {
     id: 'e1',
     name: 'cinnamon castile soap',
-    price: 390,
+    price: 1750,
     category: 'HAIR CARE',
     image: '/assets/cinnamon castile soap.png',
     description:
@@ -31,26 +31,26 @@ export const products: Product[] = [
   {
     id: 'e2',
     name: 'cinnamon hair conditioner',
-    price: 890,
+    price: 1850,
     category: 'HAIR CARE',
     image: '/assets/cinnamon hair conditioner.png',
     description:
-      '250ml — Cinnamon extract, Hydrolyzed keratin, Rosemary oil. Repairs and conditions.',
+      '185ml — Cinnamon extract, Hydrolyzed keratin, Rosemary oil. Repairs and conditions.',
     featured: true,
   },
   {
     id: 'e3',
     name: 'cinnamon shampoo',
-    price: 890,
+    price: 1950,
     category: 'HAIR CARE',
     image: '/assets/cinnamon shampoo.png',
     description:
-      '250ml — Aloe vera gel, Cinnamon extract, Vitamin E, Tea Tree Oil. Nourishes & strengthens hair. ',
+      '185ml — Aloe vera gel, Cinnamon extract, Vitamin E, Tea Tree Oil. Nourishes & strengthens hair. ',
   },
   {
     id: 'e4',
     name: 'Dog natral shampoo',
-    price: 650,
+    price: 1850,
     category: 'HAIR CARE',
     image: '/assets/Doggy shampoo with magosa.JPG',
     description: 'Supports skin, coat, and overall health',
@@ -58,7 +58,7 @@ export const products: Product[] = [
   {
     id: 'e5',
     name: 'Doggy soap',
-    price: 650,
+    price: 1000,
     category: 'HAIR CARE',
     image: '/assets/Doggy soap.JPG',
     description:
@@ -67,18 +67,18 @@ export const products: Product[] = [
   {
     id: 'e6',
     name: 'Lemon hair conditioner',
-    price: 890,
+    price: 1850,
     category: 'HAIR CARE',
     image: '/assets/Lemon hair conditioner.png',
     description:
-      '250ml — Lemongrass essential oil, Rosemary oil.Controls oil, conditions deeply.',
+      '185ml — Lemongrass essential oil, Rosemary oil.Controls oil, conditions deeply.',
   },
 
   // FACECREAMS
   {
     id: 'c1',
     name: 'lemongrass castile soap',
-    price: 360,
+    price: 1750,
     category: 'FACECREAMS',
     image: '/assets/lemongrass castile soap.png',
     description:
@@ -88,17 +88,17 @@ export const products: Product[] = [
   {
     id: 'c2',
     name: 'lemongrass shampoo',
-    price: 890,
+    price: 1950,
     category: 'FACECREAMS',
     image: '/assets/lemongrass shampoo.png',
     description:
-      '250ml — Lemongrass extract, Vitamin E, Tea Tree Oil.Refreshes scalp, promotes hair growth.',
+      '185ml — Lemongrass extract, Vitamin E, Tea Tree Oil.Refreshes scalp, promotes hair growth.',
     featured: true,
   },
   {
     id: 'c3',
     name: 'Moringa Night Cream ',
-    price: 1450,
+    price: 2750,
     category: 'FACECREAMS',
     image: '/assets/Morin Night Cream .jpeg',
     description:
@@ -107,7 +107,7 @@ export const products: Product[] = [
   {
     id: 'c4',
     name: 'Moringa Day cream ',
-    price: 1380,
+    price: 2750,
     category: 'FACECREAMS',
     image: '/assets/Moringa Day cream .jpg',
     description:
@@ -117,16 +117,16 @@ export const products: Product[] = [
   {
     id: 'c6',
     name: 'moringa hair conditioner',
-    price: 950,
+    price: 1850,
     category: 'FACECREAMS',
     image: '/assets/moringa hair conditioner.png',
     description:
-      '250ml — Moringa leaf extract, Rosemary, Xanthan gum,Hydrolyzed keratin. ',
+      '185ml — Moringa leaf extract, Rosemary, Xanthan gum,Hydrolyzed keratin. ',
   },
   {
     id: 'c7',
     name: 'moringa liquid soap',
-    price: 380,
+    price: 1750,
     category: 'FACECREAMS',
     image: '/assets/moringa liquid soap.png',
     description:
@@ -135,11 +135,11 @@ export const products: Product[] = [
   {
     id: 'c8',
     name: 'moringa shampoo',
-    price: 950,
+    price: 1950,
     category: 'FACECREAMS',
     image: '/assets/moringa shampoo.png',
     description:
-      '250ml — Moringa leaf extract, Lavender, Tea tree oil.Deep nourishment and shine.',
+      '185ml — Moringa leaf extract, Lavender, Tea tree oil.Deep nourishment and shine.',
   },
   {
     id: 'c9',
@@ -153,27 +153,27 @@ export const products: Product[] = [
   {
     id: 'c10',
     name: 'Saffran hair conditioner',
-    price: 950,
+    price: 1850,
     category: 'FACECREAMS',
     image: '/assets/Saffran hair conditioner.png',
     description:
-      '250ml — Saffron, Rosemary & Helichrysum oil. Strengthens and adds shine. ',
+      '185ml — Saffron, Rosemary & Helichrysum oil. Strengthens and adds shine. ',
   },
   {
     id: 'c11',
     name: 'Saffran shampoo',
-    price: 950,
+    price: 1950,
     category: 'FACECREAMS',
     image: '/assets/Saffran shampoo.png',
     description:
-      '250ml — Turmeric extract, Saffron oil, Cherry blossom oil. Brightening hair care. ',
+      '185ml — Turmeric extract, Saffron oil, Cherry blossom oil. Brightening hair care. ',
   },
 
   // SOAPS
   {
     id: 's1',
     name: 'Neem Soap',
-    price: 350,
+    price: 1750,
     category: 'SOAPS',
     image: '/assets/Neem.png',
     description: '100% natural herbal soap with essential oils',
@@ -182,7 +182,7 @@ export const products: Product[] = [
   {
     id: 's2',
     name: 'Moringa Soap',
-    price: 380,
+    price: 1750,
     category: 'SOAPS',
     image: '/assets/moringa.png',
     description: 'Soothing aloe vera soap for sensitive skin',
@@ -190,7 +190,7 @@ export const products: Product[] = [
   {
     id: 's3',
     name: 'Lemongrass Soap',
-    price: 370,
+    price: 1750,
     category: 'SOAPS',
     image: '/assets/lemongrass.png',
     description: 'Antiseptic neem soap for acne-prone skin',
@@ -198,7 +198,7 @@ export const products: Product[] = [
   {
     id: 's4',
     name: 'Aloevera Soap',
-    price: 390,
+    price: 1750,
     category: 'SOAPS',
     image: '/assets/aloevera.png',
     description: 'Brightening turmeric soap for glowing skin',
@@ -206,7 +206,7 @@ export const products: Product[] = [
   {
     id: 's5',
     name: 'Cassia Alata Soap',
-    price: 390,
+    price: 1750,
     category: 'SOAPS',
     image: '/assets/cassia alata.png',
     description: 'Brightening turmeric soap for glowing skin',
@@ -214,7 +214,7 @@ export const products: Product[] = [
   {
     id: 's6',
     name: 'Goat Milk Soap',
-    price: 390,
+    price: 1750,
     category: 'SOAPS',
     image: '/assets/Goat milk.png',
     description: 'Brightening turmeric soap for glowing skin',
@@ -222,7 +222,7 @@ export const products: Product[] = [
   {
     id: 's7',
     name: 'Cinnamon Soap',
-    price: 390,
+    price: 1750,
     category: 'SOAPS',
     image: '/assets/Cinnamon.png',
     description: 'Brightening turmeric soap for glowing skin',
@@ -230,7 +230,7 @@ export const products: Product[] = [
   {
     id: 's8',
     name: 'Activated Charcoal Soap',
-    price: 390,
+    price: 1750,
     category: 'SOAPS',
     image: '/assets/activated charcoal.png',
     description: 'Brightening turmeric soap for glowing skin',
@@ -265,7 +265,7 @@ export const products: Product[] = [
   {
     id: 'b4',
     name: 'Hand Cream',
-    price: 320,
+    price: 2750,
     category: 'BODY CARE',
     image: '/assets/hand-cream.png',
     description: 'Nourishing hand cream with vitamin E',
@@ -275,7 +275,7 @@ export const products: Product[] = [
   {
     id: 'p1',
     name: 'Pet Shampoo',
-    price: 650,
+    price: 1850,
     category: 'PET CARE',
     image: '/assets/pet-shampoo.png',
     description: 'Gentle shampoo for pets with natural ingredients',
@@ -284,7 +284,7 @@ export const products: Product[] = [
   {
     id: 'p2',
     name: 'Pet Conditioner',
-    price: 720,
+    price: 1850,
     category: 'PET CARE',
     image: '/assets/pet-conditioner.png',
     description: 'Moisturizing conditioner for pet coats',
@@ -310,7 +310,7 @@ export const products: Product[] = [
   {
     id: 'm1',
     name: 'Massage Oil',
-    price: 850,
+    price: 2950,
     category: 'MASSAGE OILS',
     image: '/assets/massage-oil.png',
     description: 'Relaxing massage oil with essential oils',
@@ -327,7 +327,7 @@ export const products: Product[] = [
   {
     id: 'm3',
     name: 'Herbal Massage Oil',
-    price: 780,
+    price: 2950,
     category: 'MASSAGE OILS',
     image: '/assets/herbal-massage-oil.png',
     description: 'Traditional herbal massage oil',
@@ -335,7 +335,7 @@ export const products: Product[] = [
   {
     id: 'm4',
     name: 'Cooling Massage Oil',
-    price: 820,
+    price: 2950,
     category: 'MASSAGE OILS',
     image: '/assets/cooling-massage-oil.png',
     description: 'Cooling massage oil for muscle relief',
