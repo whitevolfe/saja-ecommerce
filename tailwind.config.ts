@@ -51,7 +51,7 @@ export default {
         // ONLY CHANGE IS HERE 👇
         // =========================
         card: {
-          DEFAULT: '#C8A24A',
+          DEFAULT: '#ffffff',
           FOREGROUND: '#0B1410',
         },
 

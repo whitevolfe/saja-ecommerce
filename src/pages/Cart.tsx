@@ -64,13 +64,13 @@ const Cart = () => {
   return (
     <div className='min-h-screen py-8 px-4'>
       <div className='container mx-auto max-w-4xl'>
-        <h1 className='text-4xl font-bold mb-8'>Shopping Cart</h1>
+        <h1 className='text-4xl font-bold mb-8 text-white'>Shopping Cart</h1>
 
         <div className='space-y-4 mb-8'>
           {cart.map((item) => (
             <div
               key={item.id}
-              className='bg-card border border-border rounded-xl p-4 flex gap-4'
+              className='bg-white border border-gray-200 rounded-xl p-4 flex gap-4 text-black'
             >
               <img
                 src={item.image}
@@ -81,28 +81,35 @@ const Cart = () => {
               <div className='flex-1'>
                 <Link
                   to={`/product/${item.id}`}
-                  className='font-semibold text-lg mb-1 hover:text-primary transition-colors block'
+                  className='font-semibold text-lg mb-1 hover:text-primary transition-colors block text-black'
                 >
                   {item.name}
                 </Link>
-                <p className='text-sm text-muted mb-2'>
+
+                <p className='text-sm text-gray-600 mb-2'>
                   Rs. {item.price.toLocaleString()} each
                 </p>
 
                 <div className='flex items-center gap-3'>
-                  <div className='flex items-center gap-2 bg-muted rounded-lg'>
+                  <div className='flex items-center gap-2 bg-gray-100 rounded-lg'>
                     <Button
                       variant='ghost'
                       size='sm'
                       onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                      className='text-black hover:bg-gray-200'
                     >
                       <Minus className='w-4 h-4' />
                     </Button>
-                    <span className='px-3 font-medium'>{item.quantity}</span>
+
+                    <span className='px-3 font-medium text-black'>
+                      {item.quantity}
+                    </span>
+
                     <Button
                       variant='ghost'
                       size='sm'
                       onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                      className='text-black hover:bg-gray-200'
                     >
                       <Plus className='w-4 h-4' />
                     </Button>
@@ -112,7 +119,7 @@ const Cart = () => {
                     variant='ghost'
                     size='sm'
                     onClick={() => removeFromCart(item.id)}
-                    className='text-destructive hover:text-destructive'
+                    className='text-red-500 hover:text-red-600 hover:bg-red-50'
                   >
                     <Trash2 className='w-4 h-4' />
                   </Button>
@@ -120,7 +127,7 @@ const Cart = () => {
               </div>
 
               <div className='text-right'>
-                <p className='text-xl font-bold text-muted'>
+                <p className='text-xl font-bold text-black'>
                   Rs. {(item.price * item.quantity).toLocaleString()}
                 </p>
               </div>
@@ -128,9 +135,12 @@ const Cart = () => {
           ))}
         </div>
 
-        <div className='bg-gradient-to-br from-primary/5 to-secondary/5 rounded-xl p-6 border border-border'>
+        <div className='bg-white rounded-xl p-6 border border-gray-200 text-black'>
           <div className='flex justify-between items-center mb-6'>
-            <span className='text-xl font-semibold'>Total Amount:</span>
+            <span className='text-xl font-semibold text-black'>
+              Total Amount:
+            </span>
+
             <span className='text-3xl font-bold text-primary'>
               Rs. {getTotalAmount().toLocaleString()}
             </span>
@@ -145,13 +155,13 @@ const Cart = () => {
               onClick={handleBuyNow}
               variant='outline'
               size='lg'
-              className='w-full'
+              className='w-full text-black border-gray-300 hover:bg-gray-100'
             >
               Buy Now via WhatsApp
             </Button>
           </div>
 
-          <p className='text-sm text-muted-foreground text-center mt-4'>
+          <p className='text-sm text-gray-600 text-center mt-4'>
             Choose checkout for detailed order form or WhatsApp for quick order
           </p>
         </div>

@@ -368,10 +368,11 @@ const Home = () => {
       <section className='py-16 px-4 bg-gradient-to-br from-muted/50 to-background'>
         <div className='container mx-auto'>
           <div className='text-center mb-12'>
-            <h2 className='text-3xl md:text-4xl font-bold text-foreground mb-4'>
+            <h2 className='text-3xl md:text-4xl font-bold text-white mb-4'>
               What Our Customers Say
             </h2>
-            <p className='text-muted-foreground text-lg'>
+
+            <p className='text-gray-300 text-lg'>
               Real reviews from satisfied customers
             </p>
           </div>
@@ -381,7 +382,7 @@ const Home = () => {
               {testimonials.map((testimonial, index) => (
                 <div
                   key={index}
-                  className='bg-card rounded-xl p-6 shadow-lg border border-border'
+                  className='bg-white rounded-xl p-6 shadow-lg border border-gray-200 text-black'
                 >
                   <div className='flex items-center gap-4 mb-4'>
                     <div className='w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center'>
@@ -391,11 +392,11 @@ const Home = () => {
                     </div>
 
                     <div>
-                      <h4 className='font-semibold text-foreground'>
+                      <h4 className='font-semibold text-black'>
                         {testimonial.name}
                       </h4>
 
-                      <p className='text-sm text-muted-foreground'>
+                      <p className='text-sm text-gray-600'>
                         {testimonial.role}
                       </p>
                     </div>
@@ -409,7 +410,7 @@ const Home = () => {
                     ))}
                   </div>
 
-                  <p className='text-muted-foreground leading-relaxed text-sm'>
+                  <p className='text-gray-700 leading-relaxed text-sm'>
                     "{testimonial.text}"
                   </p>
                 </div>
