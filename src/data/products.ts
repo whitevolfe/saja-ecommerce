@@ -6,6 +6,7 @@ export interface Product {
     | 'CONDITIONER'
     | 'FACECREAMS'
     | 'SOAP'
+    | 'LIQUID SOAP'
     | 'SHAMPOO'
     | 'PET CARE'
     | 'MASSAGE OILS';
@@ -20,7 +21,7 @@ export const products: Product[] = [
     id: 'e1',
     name: 'cinnamon castile soap',
     price: 1750,
-    category: 'SOAP',
+    category: 'LIQUID SOAP',
     image: '/assets/cinnamon castile soap.png',
     description:
       'Medicinal Healthy Bar — Anti-bacterial, anti-fungal. Reduces acne, eczema, anti-septic',
@@ -125,7 +126,7 @@ export const products: Product[] = [
     id: 'c7',
     name: 'moringa liquid soap',
     price: 1750,
-    category: 'SOAP',
+    category: 'LIQUID SOAP',
     image: '/assets/moringa liquid soap.png',
     description:
       'Nourishing Bar — Controls acne, increases skin complexion and smoothness, removes patches.',

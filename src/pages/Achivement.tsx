@@ -2,6 +2,7 @@ import { Award } from 'lucide-react';
 
 import founderImage from '../../public/assets/JBA .jpg';
 import newsArticleImage from '../../public/assets/news-article.jpeg';
+import cicvetcareImage from '../../public/assets/cic-vetcare.png';
 
 const Achivement = () => {
   return (
@@ -149,6 +150,15 @@ const Achivement = () => {
             <img
               src={newsArticleImage}
               alt='News Article'
+              className='w-full rounded-2xl object-cover'
+            />
+          </div>
+        </div>
+        <div className='container mt-20 mx-auto max-w-5xl'>
+          <div className='bg-card/90 backdrop-blur-sm border border-border rounded-3xl p-6 shadow-lg'>
+            <img
+              src={cicvetcareImage}
+              alt='CIC VETCARE'
               className='w-full rounded-2xl object-cover'
             />
           </div>

@@ -21,7 +21,11 @@ const Home = () => {
     .filter((p) => p.category === 'FACECREAMS')
     .slice(0, 4);
   const SOAPS = products.filter((p) => p.category === 'SOAP').slice(0, 4);
+  const SHAMPOO = products.filter((p) => p.category === 'SHAMPOO').slice(0, 4);
 
+  const LIQUIDSOAP = products
+    .filter((p) => p.category === 'LIQUID SOAP')
+    .slice(0, 4);
   const PETCARE = products.filter((p) => p.category === 'PET CARE').slice(0, 4);
   const MASSAGEOILS = products
     .filter((p) => p.category === 'MASSAGE OILS')
@@ -102,6 +106,58 @@ const Home = () => {
       </section>
       <BrandIconsCarousel />
 
+      {/* SOAPS Section */}
+      <section className='py-16 px-4'>
+        <div className='container mx-auto'>
+          <div className='flex items-center gap-3 mb-8'>
+            <Sparkles className='w-8 h-8 text-primary' />
+            <div>
+              <h2 className='text-3xl font-bold text-foreground'>SOAPS</h2>
+              <p className='text-muted-foreground'>Natural and gentle soaps</p>
+            </div>
+          </div>
+          <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'>
+            {SOAPS.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+          <div className='text-center mt-8'>
+            <Button asChild variant='outline'>
+              <Link to='/products?category=SOAPS'>
+                View All SOAPS <ArrowRight className='w-4 h-4 ml-2' />
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* HAIR CARE Section */}
+      <section className='py-16 px-4'>
+        <div className='container mx-auto'>
+          <div className='flex items-center gap-3 mb-8'>
+            <Zap className='w-8 h-8 text-primary' />
+            <div>
+              <h2 className='text-3xl font-bold text-foreground'>SHAMPOOS</h2>
+              <p className='text-muted-foreground'>
+                Nourishing shampoos for healthy hair
+              </p>
+            </div>
+          </div>
+          <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'>
+            {SHAMPOO.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+          <div className='text-center mt-8'>
+            <Button asChild variant='outline'>
+              <Link to='/products?category=SHAMPOO'>
+                View All SHAMPOO <ArrowRight className='w-4 h-4 ml-2' />
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
       {/* HAIR CARE Section */}
       <section className='py-16 px-4'>
         <div className='container mx-auto'>
@@ -112,7 +168,7 @@ const Home = () => {
                 CONDITIONER
               </h2>
               <p className='text-muted-foreground'>
-                Latest tech gadgets and accessories
+                Nourishing conditioners for healthy hair
               </p>
             </div>
           </div>
@@ -125,6 +181,35 @@ const Home = () => {
             <Button asChild variant='outline'>
               <Link to='/products?category=CONDITIONER'>
                 View All CONDITIONER <ArrowRight className='w-4 h-4 ml-2' />
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* LIQUID SOAPS Section */}
+      <section className='py-16 px-4'>
+        <div className='container mx-auto'>
+          <div className='flex items-center gap-3 mb-8'>
+            <Zap className='w-8 h-8 text-primary' />
+            <div>
+              <h2 className='text-3xl font-bold text-foreground'>
+                LIQUID SOAPS
+              </h2>
+              <p className='text-muted-foreground'>
+                Nourishing liquid soaps for clean and healthy skin
+              </p>
+            </div>
+          </div>
+          <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'>
+            {LIQUIDSOAP.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+          <div className='text-center mt-8'>
+            <Button asChild variant='outline'>
+              <Link to='/products?category=LIQUID SOAP'>
+                View All LIQUID SOAP <ArrowRight className='w-4 h-4 ml-2' />
               </Link>
             </Button>
           </div>
@@ -158,25 +243,27 @@ const Home = () => {
         </div>
       </section>
 
-      {/* SOAPS Section */}
-      <section className='py-16 px-4'>
+      {/* MASSAGE OILS Section */}
+      <section className='py-16 px-4 bg-muted/30'>
         <div className='container mx-auto'>
           <div className='flex items-center gap-3 mb-8'>
-            <Sparkles className='w-8 h-8 text-primary' />
+            <Zap className='w-8 h-8 text-primary' />
             <div>
-              <h2 className='text-3xl font-bold text-foreground'>SOAPS</h2>
-              <p className='text-muted-foreground'>Natural and gentle soaps</p>
+              <h2 className='text-3xl font-bold text-foreground'>
+                MASSAGE OILS
+              </h2>
+              <p className='text-muted-foreground'>Relaxing massage oils</p>
             </div>
           </div>
           <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'>
-            {SOAPS.map((product) => (
+            {MASSAGEOILS.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
           </div>
           <div className='text-center mt-8'>
             <Button asChild variant='outline'>
-              <Link to='/products?category=SOAPS'>
-                View All SOAPS <ArrowRight className='w-4 h-4 ml-2' />
+              <Link to='/products?category=MASSAGE OILS'>
+                View All MASSAGE OILS <ArrowRight className='w-4 h-4 ml-2' />
               </Link>
             </Button>
           </div>
@@ -227,33 +314,6 @@ const Home = () => {
             <Button asChild variant='outline'>
               <Link to='/products?category=PET CARE'>
                 View All PET CARE <ArrowRight className='w-4 h-4 ml-2' />
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </section> */}
-
-      {/* MASSAGE OILS Section */}
-      {/* <section className='py-16 px-4 bg-muted/30'>
-        <div className='container mx-auto'>
-          <div className='flex items-center gap-3 mb-8'>
-            <Zap className='w-8 h-8 text-primary' />
-            <div>
-              <h2 className='text-3xl font-bold text-foreground'>
-                MASSAGE OILS
-              </h2>
-              <p className='text-muted-foreground'>Relaxing massage oils</p>
-            </div>
-          </div>
-          <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'>
-            {MASSAGEOILS.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
-          <div className='text-center mt-8'>
-            <Button asChild variant='outline'>
-              <Link to='/products?category=MASSAGE OILS'>
-                View All MASSAGE OILS <ArrowRight className='w-4 h-4 ml-2' />
               </Link>
             </Button>
           </div>

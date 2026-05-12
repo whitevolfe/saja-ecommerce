@@ -65,6 +65,12 @@ const Products = () => {
             Conditioner
           </Button>
           <Button
+            variant={selectedCategory === 'LIQUID SOAP' ? 'default' : 'outline'}
+            onClick={() => handleCategoryChange('LIQUID SOAP')}
+          >
+            Liquid Soap
+          </Button>
+          <Button
             variant={selectedCategory === 'FACECREAMS' ? 'default' : 'outline'}
             onClick={() => handleCategoryChange('FACECREAMS')}
           >
