@@ -47,7 +47,7 @@ const Achivement = () => {
       </section>
 
       {/* Article Section */}
-      <section className='py-16 px-4'>
+      {/* <section className='py-16 px-4'>
         <div className='container mx-auto max-w-5xl'>
           <div className='bg-white border border-border rounded-3xl p-6 md:p-10 shadow-lg space-y-8'>
             <p className='text-lg text-black leading-relaxed'>
@@ -141,7 +141,7 @@ const Achivement = () => {
             </p>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* News Article Image Section */}
       <section className='pb-20 px-4'>
