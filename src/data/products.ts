@@ -8,7 +8,7 @@ export interface Product {
     | 'SOAP'
     | 'LIQUID SOAP'
     | 'SHAMPOO'
-    | 'PET CARE'
+    | 'DOGGY PRODUCTS'
     | 'MASSAGE OILS';
   image: string;
   description: string;
@@ -50,7 +50,7 @@ export const products: Product[] = [
     id: 'e4',
     name: 'Dog natral shampoo',
     price: 1850,
-    category: 'SHAMPOO',
+    category: 'DOGGY PRODUCTS',
     image: '/assets/Doggy shampoo with magosa.JPG',
     description: 'Supports skin, coat, and overall health',
   },
@@ -58,7 +58,7 @@ export const products: Product[] = [
     id: 'e5',
     name: 'Doggy soap',
     price: 1000,
-    category: 'SOAP',
+    category: 'DOGGY PRODUCTS',
     image: '/assets/Doggy soap.JPG',
     description:
       '100g — 90% plant oils. Keeps dogs healthy, cleansed, nourished. Fleas away. Great aroma. ',
@@ -78,7 +78,7 @@ export const products: Product[] = [
     id: 'c1',
     name: 'lemongrass castile soap',
     price: 1750,
-    category: 'FACECREAMS',
+    category: 'LIQUID SOAP',
     image: '/assets/lemongrass castile soap.png',
     description:
       'Wellness Bar — Anti-inflammatory. Reduces redness,itching. Soft, toned, glowing skin',
@@ -271,39 +271,39 @@ export const products: Product[] = [
   // },
 
   // PET CARE
-  {
-    id: 'p1',
-    name: 'Pet Shampoo',
-    price: 1850,
-    category: 'PET CARE',
-    image: '/assets/pet-shampoo.png',
-    description: 'Gentle shampoo for pets with natural ingredients',
-    featured: true,
-  },
-  {
-    id: 'p2',
-    name: 'Pet Conditioner',
-    price: 1850,
-    category: 'PET CARE',
-    image: '/assets/pet-conditioner.png',
-    description: 'Moisturizing conditioner for pet coats',
-  },
-  {
-    id: 'p3',
-    name: 'Pet Wipes',
-    price: 180,
-    category: 'PET CARE',
-    image: '/assets/pet-wipes.png',
-    description: 'Convenient wipes for pet cleaning',
-  },
-  {
-    id: 'p4',
-    name: 'Pet Toothpaste',
-    price: 250,
-    category: 'PET CARE',
-    image: '/assets/pet-toothpaste.png',
-    description: 'Natural toothpaste for pet dental care',
-  },
+  // {
+  //   id: 'p1',
+  //   name: 'Pet Shampoo',
+  //   price: 1850,
+  //   category: 'PET CARE',
+  //   image: '/assets/pet-shampoo.png',
+  //   description: 'Gentle shampoo for pets with natural ingredients',
+  //   featured: true,
+  // },
+  // {
+  //   id: 'p2',
+  //   name: 'Pet Conditioner',
+  //   price: 1850,
+  //   category: 'PET CARE',
+  //   image: '/assets/pet-conditioner.png',
+  //   description: 'Moisturizing conditioner for pet coats',
+  // },
+  // {
+  //   id: 'p3',
+  //   name: 'Pet Wipes',
+  //   price: 180,
+  //   category: 'PET CARE',
+  //   image: '/assets/pet-wipes.png',
+  //   description: 'Convenient wipes for pet cleaning',
+  // },
+  // {
+  //   id: 'p4',
+  //   name: 'Pet Toothpaste',
+  //   price: 250,
+  //   category: 'PET CARE',
+  //   image: '/assets/pet-toothpaste.png',
+  //   description: 'Natural toothpaste for pet dental care',
+  // },
 
   // MASSAGE OILS
   {

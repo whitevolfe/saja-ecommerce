@@ -39,13 +39,13 @@ const Products = () => {
 
         {/* Category Filter */}
         <div className='flex flex-wrap gap-3 mb-8'>
-          <Button
+          {/* <Button
             variant={selectedCategory === 'all' ? 'default' : 'outline'}
             onClick={() => handleCategoryChange('all')}
             className='text-white'
           >
             All Products
-          </Button>
+          </Button> */}
           <Button
             variant={selectedCategory === 'SOAP' ? 'default' : 'outline'}
             onClick={() => handleCategoryChange('SOAP')}
@@ -57,6 +57,14 @@ const Products = () => {
             onClick={() => handleCategoryChange('SHAMPOO')}
           >
             Shampoo
+          </Button>
+          <Button
+            variant={
+              selectedCategory === 'DOGGY PRODUCTS' ? 'default' : 'outline'
+            }
+            onClick={() => handleCategoryChange('DOGGY PRODUCTS')}
+          >
+            Doggy Products
           </Button>
           <Button
             variant={selectedCategory === 'CONDITIONER' ? 'default' : 'outline'}

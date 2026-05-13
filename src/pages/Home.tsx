@@ -26,13 +26,13 @@ const Home = () => {
   const LIQUIDSOAP = products
     .filter((p) => p.category === 'LIQUID SOAP')
     .slice(0, 4);
-  const PETCARE = products.filter((p) => p.category === 'PET CARE').slice(0, 4);
+  // const PETCARE = products.filter((p) => p.category === 'PET CARE').slice(0, 4);
   const MASSAGEOILS = products
     .filter((p) => p.category === 'MASSAGE OILS')
     .slice(0, 4);
 
   const [currentTestimonialIndex, setCurrentTestimonialIndex] = useState(0);
-  const heroImage = '/assets/Banner_image_1.jpeg';
+  const heroImage = '/assets/Banner_image_1.png';
 
   const testimonials = [
     {
