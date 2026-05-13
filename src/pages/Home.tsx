@@ -6,6 +6,14 @@ import {
   ArrowRight as ArrowRightIcon,
   Sparkles,
   Zap,
+  Leaf,
+  ShieldCheck,
+  FlaskConical,
+  HeartHandshake,
+  BadgeCheck,
+  CheckCircle2,
+  Award,
+  Truck,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import ProductCard from '@/components/ProductCard';
@@ -106,276 +114,109 @@ const Home = () => {
       </section>
       <BrandIconsCarousel />
 
-      {/* SOAPS Section */}
-      {/* <section className='py-16 px-4'>
+      {/* What We Offer Section */}
+      <section className='py-20 px-4 bg-gradient-to-b from-background to-muted/30'>
         <div className='container mx-auto'>
-          <div className='flex items-center gap-3 mb-8'>
-            <Sparkles className='w-8 h-8 text-primary' />
-            <div>
-              <h2 className='text-3xl font-bold text-foreground'>SOAPS</h2>
-              <p className='text-muted-foreground'>Natural and gentle soaps</p>
+          <div className='text-center mb-14'>
+            <div className='inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/20 bg-primary/10 text-white text-sm font-medium mb-5'>
+              <Sparkles className='w-4 h-4' />
+              Premium Herbal Care
             </div>
-          </div>
-          <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'>
-            {SOAPS.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
-          <div className='text-center mt-8'>
-            <Button asChild variant='outline'>
-              <Link to='/products?category=SOAPS'>
-                View All SOAPS <ArrowRight className='w-4 h-4 ml-2' />
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </section> */}
 
-      {/* HAIR CARE Section */}
-      {/* <section className='py-16 px-4'>
-        <div className='container mx-auto'>
-          <div className='flex items-center gap-3 mb-8'>
-            <Zap className='w-8 h-8 text-primary' />
-            <div>
-              <h2 className='text-3xl font-bold text-foreground'>SHAMPOOS</h2>
-              <p className='text-muted-foreground'>
-                Nourishing shampoos for healthy hair
-              </p>
-            </div>
-          </div>
-          <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'>
-            {SHAMPOO.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
-          <div className='text-center mt-8'>
-            <Button asChild variant='outline'>
-              <Link to='/products?category=SHAMPOO'>
-                View All SHAMPOO <ArrowRight className='w-4 h-4 ml-2' />
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </section> */}
+            <h2 className='text-3xl md:text-5xl font-bold text-white mb-5'>
+              What We Offer
+            </h2>
 
-      {/* HAIR CARE Section */}
-      {/* <section className='py-16 px-4'>
-        <div className='container mx-auto'>
-          <div className='flex items-center gap-3 mb-8'>
-            <Zap className='w-8 h-8 text-primary' />
-            <div>
-              <h2 className='text-3xl font-bold text-foreground'>
-                CONDITIONER
-              </h2>
-              <p className='text-muted-foreground'>
-                Nourishing conditioners for healthy hair
-              </p>
-            </div>
+            <p className='text-gray-300 max-w-2xl mx-auto text-lg leading-relaxed'>
+              Discover a premium collection of natural herbal products crafted
+              with care to support healthy skin, hair, and wellness using
+              trusted plant-based ingredients.
+            </p>
           </div>
-          <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'>
-            {CONDITIONER.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
-          <div className='text-center mt-8'>
-            <Button asChild variant='outline'>
-              <Link to='/products?category=CONDITIONER'>
-                View All CONDITIONER <ArrowRight className='w-4 h-4 ml-2' />
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </section> */}
 
-      {/* LIQUID SOAPS Section */}
-      {/* <section className='py-16 px-4'>
-        <div className='container mx-auto'>
-          <div className='flex items-center gap-3 mb-8'>
-            <Zap className='w-8 h-8 text-primary' />
-            <div>
-              <h2 className='text-3xl font-bold text-foreground'>
-                LIQUID SOAPS
-              </h2>
-              <p className='text-muted-foreground'>
-                Nourishing liquid soaps for clean and healthy skin
-              </p>
-            </div>
-          </div>
-          <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'>
-            {LIQUIDSOAP.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
-          <div className='text-center mt-8'>
-            <Button asChild variant='outline'>
-              <Link to='/products?category=LIQUID SOAP'>
-                View All LIQUID SOAP <ArrowRight className='w-4 h-4 ml-2' />
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </section> */}
+          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8'>
+            {/* Card 1 */}
+            <div className='group relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-sm p-8 hover:border-primary/40 transition-all duration-300 hover:-translate-y-2'>
+              <div className='absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300' />
 
-      {/* FACECREAMS Section */}
-      {/* <section className='py-16 px-4 bg-muted/30'>
-        <div className='container mx-auto'>
-          <div className='flex items-center gap-3 mb-8'>
-            <Sparkles className='w-8 h-8 text-secondary' />
-            <div>
-              <h2 className='text-3xl font-bold text-foreground'>FACECREAMS</h2>
-              <p className='text-muted-foreground'>
-                Premium beauty and skincare products
-              </p>
-            </div>
-          </div>
-          <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'>
-            {FACECREAMS.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
-          <div className='text-center mt-8'>
-            <Button asChild variant='outline'>
-              <Link to='/products?category=FACECREAMS'>
-                View All FACECREAMS <ArrowRight className='w-4 h-4 ml-2' />
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </section> */}
+              <div className='relative z-10'>
+                <div className='w-16 h-16 rounded-2xl bg-primary/20 flex items-center justify-center mb-6'>
+                  <Leaf className='w-8 h-8 text-white' />
+                </div>
 
-      {/* MASSAGE OILS Section */}
-      {/* <section className='py-16 px-4 bg-muted/30'>
-        <div className='container mx-auto'>
-          <div className='flex items-center gap-3 mb-8'>
-            <Zap className='w-8 h-8 text-primary' />
-            <div>
-              <h2 className='text-3xl font-bold text-foreground'>
-                MASSAGE OILS
-              </h2>
-              <p className='text-muted-foreground'>Relaxing massage oils</p>
-            </div>
-          </div>
-          <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'>
-            {MASSAGEOILS.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
-          <div className='text-center mt-8'>
-            <Button asChild variant='outline'>
-              <Link to='/products?category=MASSAGE OILS'>
-                View All MASSAGE OILS <ArrowRight className='w-4 h-4 ml-2' />
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </section> */}
+                <h3 className='text-2xl font-bold text-white mb-4'>
+                  Herbal Products
+                </h3>
 
-      {/* BODY CARE Section */}
-      {/* <section className='py-16 px-4 bg-muted/30'>
-        <div className='container mx-auto'>
-          <div className='flex items-center gap-3 mb-8'>
-            <Zap className='w-8 h-8 text-primary' />
-            <div>
-              <h2 className='text-3xl font-bold text-foreground'>BODY CARE</h2>
-              <p className='text-muted-foreground'>Body care essentials</p>
+                <p className='text-gray-300 leading-relaxed'>
+                  Natural soaps, shampoos, creams, oils, and wellness products
+                  made from carefully selected herbal ingredients.
+                </p>
+              </div>
             </div>
-          </div>
-          <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'>
-            {BODYCARE.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
-          <div className='text-center mt-8'>
-            <Button asChild variant='outline'>
-              <Link to='/products?category=BODY CARE'>
-                View All BODY CARE <ArrowRight className='w-4 h-4 ml-2' />
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </section> */}
 
-      {/* PET CARE Section */}
-      {/* <section className='py-16 px-4'>
-        <div className='container mx-auto'>
-          <div className='flex items-center gap-3 mb-8'>
-            <Zap className='w-8 h-8 text-secondary' />
-            <div>
-              <h2 className='text-3xl font-bold text-foreground'>PET CARE</h2>
-              <p className='text-muted-foreground'>Products for your pets</p>
-            </div>
-          </div>
-          <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'>
-            {PETCARE.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
-          <div className='text-center mt-8'>
-            <Button asChild variant='outline'>
-              <Link to='/products?category=PET CARE'>
-                View All PET CARE <ArrowRight className='w-4 h-4 ml-2' />
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </section> */}
+            {/* Card 2 */}
+            <div className='group relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-sm p-8 hover:border-primary/40 transition-all duration-300 hover:-translate-y-2'>
+              <div className='absolute inset-0 bg-gradient-to-br from-secondary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300' />
 
-      {/* GIFT PACKS Section */}
-      {/* <section className='py-16 px-4'>
-        <div className='container mx-auto'>
-          <div className='flex items-center gap-3 mb-8'>
-            <Sparkles className='w-8 h-8 text-secondary' />
-            <div>
-              <h2 className='text-3xl font-bold text-foreground'>GIFT PACKS</h2>
-              <p className='text-muted-foreground'>
-                Perfect gifts for any occasion
-              </p>
-            </div>
-          </div>
-          <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'>
-            {GIFTPACKS.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
-          <div className='text-center mt-8'>
-            <Button asChild variant='outline'>
-              <Link to='/products?category=GIFT PACKS'>
-                View All GIFT PACKS <ArrowRight className='w-4 h-4 ml-2' />
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </section> */}
+              <div className='relative z-10'>
+                <div className='w-16 h-16 rounded-2xl bg-secondary/20 flex items-center justify-center mb-6'>
+                  <ShieldCheck className='w-8 h-8 text-white' />
+                </div>
 
-      {/* FOOD SUPPLEMENTS Section */}
-      {/* <section className='py-16 px-4 bg-muted/30'>
-        <div className='container mx-auto'>
-          <div className='flex items-center gap-3 mb-8'>
-            <Zap className='w-8 h-8 text-primary' />
-            <div>
-              <h2 className='text-3xl font-bold text-foreground'>
-                FOOD SUPPLEMENTS
-              </h2>
-              <p className='text-muted-foreground'>
-                Health and nutrition supplements
-              </p>
+                <h3 className='text-2xl font-bold text-white mb-4'>
+                  Safe Ingredients
+                </h3>
+
+                <p className='text-gray-300 leading-relaxed'>
+                  Free from harsh chemicals and crafted with gentle formulations
+                  suitable for everyday use and healthy skincare routines.
+                </p>
+              </div>
+            </div>
+
+            {/* Card 3 */}
+            <div className='group relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-sm p-8 hover:border-primary/40 transition-all duration-300 hover:-translate-y-2'>
+              <div className='absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300' />
+
+              <div className='relative z-10'>
+                <div className='w-16 h-16 rounded-2xl bg-primary/20 flex items-center justify-center mb-6'>
+                  <FlaskConical className='w-8 h-8 text-white' />
+                </div>
+
+                <h3 className='text-2xl font-bold text-white mb-4'>
+                  Quality Production
+                </h3>
+
+                <p className='text-gray-300 leading-relaxed'>
+                  Every product is developed with attention to quality,
+                  consistency, and customer satisfaction from start to finish.
+                </p>
+              </div>
+            </div>
+
+            {/* Card 4 */}
+            <div className='group relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-sm p-8 hover:border-primary/40 transition-all duration-300 hover:-translate-y-2'>
+              <div className='absolute inset-0 bg-gradient-to-br from-secondary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300' />
+
+              <div className='relative z-10'>
+                <div className='w-16 h-16 rounded-2xl bg-secondary/20 flex items-center justify-center mb-6'>
+                  <HeartHandshake className='w-8 h-8 text-white' />
+                </div>
+
+                <h3 className='text-2xl font-bold text-white mb-4'>
+                  Customer Care
+                </h3>
+
+                <p className='text-gray-300 leading-relaxed'>
+                  We are committed to delivering trusted herbal solutions with
+                  excellent service and long-term customer satisfaction.
+                </p>
+              </div>
             </div>
           </div>
-          <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'>
-            {FOODSUPPLEMENTS.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
-          <div className='text-center mt-8'>
-            <Button asChild variant='outline'>
-              <Link to='/products?category=FOOD SUPPLEMENTS'>
-                View All FOOD SUPPLEMENTS{' '}
-                <ArrowRight className='w-4 h-4 ml-2' />
-              </Link>
-            </Button>
-          </div>
         </div>
-      </section> */}
+      </section>
 
       {/* Brand Titles Section */}
       <section className='py-8 px-4 bg-gradient-to-r from-primary to-secondary'>
@@ -412,6 +253,145 @@ const Home = () => {
               </div>
               <div className='flex-shrink-0 text-white text-2xl md:text-4xl font-bold whitespace-nowrap'>
                 SAJ ASSOCIATE HERBAL PRODUCTS SHOPPING
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Why Choose Us Section */}
+      <section className='py-20 px-4 bg-gradient-to-br from-primary/5 via-background to-secondary/5'>
+        <div className='container mx-auto'>
+          <div className='grid lg:grid-cols-2 gap-16 items-center'>
+            {/* Left Content */}
+            <div>
+              <div className='inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/20 bg-primary/10 text-white text-sm font-medium mb-6'>
+                <BadgeCheck className='w-4 h-4' />
+                Trusted Herbal Brand
+              </div>
+
+              <h2 className='text-3xl md:text-5xl font-bold text-white leading-tight mb-6'>
+                Why Choose Us
+              </h2>
+
+              <p className='text-gray-300 text-lg leading-relaxed mb-8'>
+                We combine natural herbal ingredients, quality manufacturing,
+                and customer-focused service to deliver premium wellness and
+                personal care products you can trust every day.
+              </p>
+
+              <div className='space-y-5'>
+                <div className='flex items-start gap-4'>
+                  <div className='w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0'>
+                    <CheckCircle2 className='w-5 h-5 text-white' />
+                  </div>
+
+                  <div>
+                    <h4 className='text-white font-semibold text-lg mb-1'>
+                      100% Herbal Ingredients
+                    </h4>
+
+                    <p className='text-gray-400'>
+                      Carefully selected natural ingredients for safe and
+                      effective daily care.
+                    </p>
+                  </div>
+                </div>
+
+                <div className='flex items-start gap-4'>
+                  <div className='w-10 h-10 rounded-full bg-secondary/20 flex items-center justify-center flex-shrink-0'>
+                    <Award className='w-5 h-5 text-white' />
+                  </div>
+
+                  <div>
+                    <h4 className='text-white font-semibold text-lg mb-1'>
+                      Premium Quality Products
+                    </h4>
+
+                    <p className='text-gray-400'>
+                      Every product is created with strict quality standards and
+                      customer satisfaction in mind.
+                    </p>
+                  </div>
+                </div>
+
+                <div className='flex items-start gap-4'>
+                  <div className='w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0'>
+                    <Truck className='w-5 h-5 text-white' />
+                  </div>
+
+                  <div>
+                    <h4 className='text-white font-semibold text-lg mb-1'>
+                      Reliable Delivery
+                    </h4>
+
+                    <p className='text-gray-400'>
+                      Fast and secure delivery to ensure your products arrive
+                      safely and on time.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Side Cards */}
+            <div className='grid grid-cols-1 sm:grid-cols-2 gap-6'>
+              <div className='rounded-3xl border border-white/10 bg-white/5 backdrop-blur-md p-8 hover:border-primary/40 transition-all duration-300 hover:-translate-y-2'>
+                <div className='w-16 h-16 rounded-2xl bg-primary/20 flex items-center justify-center mb-6'>
+                  <Leaf className='w-8 h-8 text-white' />
+                </div>
+
+                <h3 className='text-2xl font-bold text-white mb-3'>
+                  Natural Care
+                </h3>
+
+                <p className='text-gray-300 leading-relaxed'>
+                  Plant-based formulas designed to support healthy skin and hair
+                  naturally.
+                </p>
+              </div>
+
+              <div className='rounded-3xl border border-white/10 bg-white/5 backdrop-blur-md p-8 hover:border-secondary/40 transition-all duration-300 hover:-translate-y-2 mt-0 sm:mt-10'>
+                <div className='w-16 h-16 rounded-2xl bg-secondary/20 flex items-center justify-center mb-6'>
+                  <ShieldCheck className='w-8 h-8 text-white' />
+                </div>
+
+                <h3 className='text-2xl font-bold text-white mb-3'>
+                  Safe Formula
+                </h3>
+
+                <p className='text-gray-300 leading-relaxed'>
+                  Gentle formulations without harsh chemicals for everyday use.
+                </p>
+              </div>
+
+              <div className='rounded-3xl border border-white/10 bg-white/5 backdrop-blur-md p-8 hover:border-primary/40 transition-all duration-300 hover:-translate-y-2'>
+                <div className='w-16 h-16 rounded-2xl bg-primary/20 flex items-center justify-center mb-6'>
+                  <HeartHandshake className='w-8 h-8 text-white' />
+                </div>
+
+                <h3 className='text-2xl font-bold text-white mb-3'>
+                  Trusted Support
+                </h3>
+
+                <p className='text-gray-300 leading-relaxed'>
+                  Dedicated customer support focused on long-term satisfaction.
+                </p>
+              </div>
+
+              <div className='rounded-3xl border border-white/10 bg-white/5 backdrop-blur-md p-8 hover:border-secondary/40 transition-all duration-300 hover:-translate-y-2 mt-0 sm:mt-10'>
+                <div className='w-16 h-16 rounded-2xl bg-secondary/20 flex items-center justify-center mb-6'>
+                  <Zap className='w-8 h-8 text-white' />
+                </div>
+
+                <h3 className='text-2xl font-bold text-white mb-3'>
+                  Fast Results
+                </h3>
+
+                <p className='text-gray-300 leading-relaxed'>
+                  High-quality herbal solutions designed for visible and
+                  effective results.
+                </p>
               </div>
             </div>
           </div>
