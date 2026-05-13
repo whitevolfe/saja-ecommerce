@@ -107,7 +107,7 @@ const Home = () => {
       <BrandIconsCarousel />
 
       {/* SOAPS Section */}
-      <section className='py-16 px-4'>
+      {/* <section className='py-16 px-4'>
         <div className='container mx-auto'>
           <div className='flex items-center gap-3 mb-8'>
             <Sparkles className='w-8 h-8 text-primary' />
@@ -129,10 +129,10 @@ const Home = () => {
             </Button>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* HAIR CARE Section */}
-      <section className='py-16 px-4'>
+      {/* <section className='py-16 px-4'>
         <div className='container mx-auto'>
           <div className='flex items-center gap-3 mb-8'>
             <Zap className='w-8 h-8 text-primary' />
@@ -156,10 +156,10 @@ const Home = () => {
             </Button>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* HAIR CARE Section */}
-      <section className='py-16 px-4'>
+      {/* <section className='py-16 px-4'>
         <div className='container mx-auto'>
           <div className='flex items-center gap-3 mb-8'>
             <Zap className='w-8 h-8 text-primary' />
@@ -185,10 +185,10 @@ const Home = () => {
             </Button>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* LIQUID SOAPS Section */}
-      <section className='py-16 px-4'>
+      {/* <section className='py-16 px-4'>
         <div className='container mx-auto'>
           <div className='flex items-center gap-3 mb-8'>
             <Zap className='w-8 h-8 text-primary' />
@@ -214,10 +214,10 @@ const Home = () => {
             </Button>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* FACECREAMS Section */}
-      <section className='py-16 px-4 bg-muted/30'>
+      {/* <section className='py-16 px-4 bg-muted/30'>
         <div className='container mx-auto'>
           <div className='flex items-center gap-3 mb-8'>
             <Sparkles className='w-8 h-8 text-secondary' />
@@ -241,10 +241,10 @@ const Home = () => {
             </Button>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* MASSAGE OILS Section */}
-      <section className='py-16 px-4 bg-muted/30'>
+      {/* <section className='py-16 px-4 bg-muted/30'>
         <div className='container mx-auto'>
           <div className='flex items-center gap-3 mb-8'>
             <Zap className='w-8 h-8 text-primary' />
@@ -268,7 +268,7 @@ const Home = () => {
             </Button>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* BODY CARE Section */}
       {/* <section className='py-16 px-4 bg-muted/30'>

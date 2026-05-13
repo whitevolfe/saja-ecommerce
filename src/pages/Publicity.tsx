@@ -29,6 +29,23 @@ const Achivement = () => {
         </div>
       </section>
 
+      {/* Founder Section */}
+      <section className='pb-16 px-4'>
+        <div className='container mx-auto max-w-4xl'>
+          <div className='bg-card/90 backdrop-blur-sm border border-border rounded-3xl p-8 text-center shadow-lg'>
+            <img
+              src={founderImage}
+              alt='SAJ Associates Founder Jayampathy Arambepola'
+              className='w-64 h-64 object-cover rounded-full mx-auto mb-6 border-4 border-primary/20 shadow-lg'
+            />
+
+            <h2 className='text-2xl md:text-3xl font-bold text-black'>
+              SAJ Associates Founder Jayampathy Arambepola
+            </h2>
+          </div>
+        </div>
+      </section>
+
       {/* Article Section */}
       <section className='py-16 px-4'>
         <div className='container mx-auto max-w-5xl'>
@@ -122,23 +139,6 @@ const Achivement = () => {
               to the NCP farmers who grow the ingredients will certainly have a
               huge economic advantage,” Arambepola added.
             </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Founder Section */}
-      <section className='pb-16 px-4'>
-        <div className='container mx-auto max-w-4xl'>
-          <div className='bg-card/90 backdrop-blur-sm border border-border rounded-3xl p-8 text-center shadow-lg'>
-            <img
-              src={founderImage}
-              alt='SAJ Associates Founder Jayampathy Arambepola'
-              className='w-64 h-64 object-cover rounded-full mx-auto mb-6 border-4 border-primary/20 shadow-lg'
-            />
-
-            <h2 className='text-2xl md:text-3xl font-bold text-black'>
-              SAJ Associates Founder Jayampathy Arambepola
-            </h2>
           </div>
         </div>
       </section>
