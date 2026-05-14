@@ -148,7 +148,9 @@ const Contact = () => {
 
                   <div>
                     <p className='font-medium text-black'>Address</p>
-                    <p className='text-gray-700'>Colombo, Sri Lanka</p>
+                    <p className='text-gray-700'>
+                      55 subasadaka mawatha hokandara, Sri Lanka
+                    </p>
                   </div>
                 </div>
               </div>

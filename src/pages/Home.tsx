@@ -21,6 +21,16 @@ import { products } from '@/data/products';
 import { useState, useEffect } from 'react';
 
 const Home = () => {
+  const [expandedCards, setExpandedCards] = useState<number[]>([]);
+
+  const toggleReadMore = (index: number) => {
+    setExpandedCards((prev) =>
+      prev.includes(index)
+        ? prev.filter((item) => item !== index)
+        : [...prev, index],
+    );
+  };
+
   const featuredProducts = products.filter((p) => p.featured);
   const CONDITIONER = products
     .filter((p) => p.category === 'CONDITIONER')
@@ -48,15 +58,15 @@ const Home = () => {
       role: 'Prof',
       avatar: 'GN',
       rating: 5,
-      text: 'The soap produces a gentle, creamy lather that cleanses effectively without drying the skin. Its subtle, refreshing fragrance feels authentic rather than artificial. What stands out most is the soft and nourished feeling it leaves after each wash. In a market crowded with chemical-heavy products, this natural formulation offers a reassuring, high-quality alternative.',
+      text: 'My wife and I recently had the opportunity to use this new soap brands of SAJ made with natural ingredients, and I must say the experience has been truly impressive. The soap produces a gentle, creamy lather that cleanses effectively without drying the skin. Its subtle, refreshing fragrance feels authentic rather than artificial, reflecting the purity of its ingredients. What stands out most is the soft and nourished feeling it leaves after each wash, suggesting a careful balance between cleansing and skin care. In a market crowded with chemical-heavy products, this natural formulation offers a reassuring, high-quality alternative for those who value both wellness and authenticity in their daily personal care.',
       color: 'primary',
     },
     {
-      name: 'Dilnoza P.',
+      name: 'MR Nalaka Hewamasuma',
       role: 'Verified Customer',
-      avatar: 'DP',
+      avatar: 'NH',
       rating: 5,
-      text: 'I have been using the Moringa shampoo for 3 months now. My hair is so much healthier and the natural fragrance is amazing. Best herbal shampoo I have ever tried!',
+      text: 'After nearly 10 years of using Dove, I rarely change my skincare products. But recently my friend Jayantha Arambepola sent me a sample of his Lemongrass Wellness Bar by SAJ Skincare, and I must say I was genuinely impressed.The soap has a very soothing feel on the skin, a refreshing natural fragrance, and leaves the skin soft, clean, and energized. What I appreciate most is that it is a natural handmade glycerine bar enriched with plant-based oils and herbal ingredients, which makes the experience feel both gentle and authentic.Sometimes the best products are not the big global brands we see every day, but passionate creations from local entrepreneurs who truly care about quality.Wishing my friend Arambe great success with this wonderful product. If you enjoy natural, herbal skincare, this Lemongrass Wellness Bar is definitely worth trying.',
       color: 'secondary',
     },
     {
@@ -399,8 +409,9 @@ const Home = () => {
       </section>
 
       {/* Testimonials Section */}
-      <section className='py-16 px-4 bg-gradient-to-br from-muted/50 to-background'>
-        <div className='container mx-auto'>
+      {/* Testimonials Section */}
+      <section className='py-16 px-6 bg-gradient-to-br from-muted/50 to-background'>
+        <div className='max-w-[1800px] mx-auto'>
           <div className='text-center mb-12'>
             <h2 className='text-3xl md:text-4xl font-bold text-white mb-4'>
               What Our Customers Say
@@ -411,45 +422,66 @@ const Home = () => {
             </p>
           </div>
 
-          <div className='max-w-6xl mx-auto'>
-            <div className='grid grid-cols-1 md:grid-cols-3 gap-8 px-4'>
-              {testimonials.map((testimonial, index) => (
+          <div className='grid grid-cols-1 md:grid-cols-3 gap-10'>
+            {testimonials.map((testimonial, index) => {
+              const isExpanded = expandedCards.includes(index);
+
+              return (
                 <div
                   key={index}
-                  className='bg-white rounded-xl p-6 shadow-lg border border-gray-200 text-black'
+                  className='bg-white rounded-2xl p-8 shadow-xl border border-gray-200 text-black h-[560px] flex flex-col'
                 >
-                  <div className='flex items-center gap-4 mb-4'>
-                    <div className='w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center'>
-                      <span className='text-primary font-bold text-lg'>
+                  {/* Header */}
+                  <div className='flex items-center gap-4 mb-5'>
+                    <div className='w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center shrink-0'>
+                      <span className='text-primary font-bold text-xl'>
                         {testimonial.avatar}
                       </span>
                     </div>
 
                     <div>
-                      <h4 className='font-semibold text-black'>
+                      <h4 className='font-semibold text-black text-xl'>
                         {testimonial.name}
                       </h4>
 
-                      <p className='text-sm text-gray-600'>
+                      <p className='text-sm text-gray-600 mt-1'>
                         {testimonial.role}
                       </p>
                     </div>
                   </div>
 
-                  <div className='flex gap-1 mb-4'>
-                    {[...Array(5)].map((_, i) => (
-                      <span key={i} className='text-yellow-500'>
+                  {/* Stars */}
+                  <div className='flex gap-1 mb-5'>
+                    {[...Array(testimonial.rating)].map((_, i) => (
+                      <span key={i} className='text-yellow-500 text-lg'>
                         ★
                       </span>
                     ))}
                   </div>
 
-                  <p className='text-gray-700 leading-relaxed text-sm'>
-                    "{testimonial.text}"
-                  </p>
+                  {/* Review Text */}
+                  <div className='flex-grow overflow-hidden'>
+                    <p
+                      className={`text-gray-700 leading-8 text-[16px] ${
+                        !isExpanded ? 'line-clamp-9' : ''
+                      }`}
+                    >
+                      "{testimonial.text}"
+                    </p>
+                  </div>
+
+                  {/* Read More */}
+                  {testimonial.text.length > 250 && (
+                    <button
+                      onClick={() => toggleReadMore(index)}
+                      className='mt-4 text-primary font-semibold hover:underline text-sm self-start'
+                    >
+                      {isExpanded ? 'Read Less' : 'Read More'}
+                    </button>
+                  )}
                 </div>
-              ))}
-            </div>
+              );
+            })}
           </div>
         </div>
       </section>
