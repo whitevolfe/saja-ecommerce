@@ -47,14 +47,6 @@ export const products: Product[] = [
       '185ml — Aloe vera gel, Cinnamon extract, Vitamin E, Tea Tree Oil. Nourishes & strengthens hair. ',
   },
   {
-    id: 'e4',
-    name: 'Dog natral shampoo',
-    price: 1850,
-    category: 'DOGGY PRODUCTS',
-    image: '/assets/Doggy shampoo with magosa.JPG',
-    description: 'Supports skin, coat, and overall health',
-  },
-  {
     id: 'e5',
     name: 'Doggy soap',
     price: 1000,
@@ -63,6 +55,15 @@ export const products: Product[] = [
     description:
       '100g — 90% plant oils. Keeps dogs healthy, cleansed, nourished. Fleas away. Great aroma. ',
   },
+  {
+    id: 'e4',
+    name: 'Dog natral shampoo',
+    price: 1850,
+    category: 'DOGGY PRODUCTS',
+    image: '/assets/Doggy shampoo with magosa.JPG',
+    description: 'Supports skin, coat, and overall health',
+  },
+
   {
     id: 'e6',
     name: 'Lemon hair conditioner',
@@ -143,7 +144,7 @@ export const products: Product[] = [
   {
     id: 'c9',
     name: 'Neem',
-    price: 370,
+    price: 1750,
     category: 'SOAP',
     image: '/assets/Neem.png',
     description:

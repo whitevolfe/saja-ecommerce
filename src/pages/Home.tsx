@@ -62,7 +62,7 @@ const Home = () => {
       color: 'primary',
     },
     {
-      name: 'MR Nalaka Hewamasuma',
+      name: 'MR Nalaka Hewamaduma',
       role: 'Verified Customer',
       avatar: 'NH',
       rating: 5,

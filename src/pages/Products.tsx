@@ -51,44 +51,21 @@ const Products = () => {
           </Button>
 
           <Button
-            variant={
-              selectedCategory === 'DOGGY PRODUCTS'
-                ? 'default'
-                : 'outline'
-            }
-            onClick={() => handleCategoryChange('DOGGY PRODUCTS')}
-          >
-            Doggy Products
-          </Button>
-
-          <Button
-            variant={
-              selectedCategory === 'CONDITIONER'
-                ? 'default'
-                : 'outline'
-            }
+            variant={selectedCategory === 'CONDITIONER' ? 'default' : 'outline'}
             onClick={() => handleCategoryChange('CONDITIONER')}
           >
             Conditioner
           </Button>
 
           <Button
-            variant={
-              selectedCategory === 'LIQUID SOAP'
-                ? 'default'
-                : 'outline'
-            }
+            variant={selectedCategory === 'LIQUID SOAP' ? 'default' : 'outline'}
             onClick={() => handleCategoryChange('LIQUID SOAP')}
           >
             Liquid Soap
           </Button>
 
           <Button
-            variant={
-              selectedCategory === 'FACECREAMS'
-                ? 'default'
-                : 'outline'
-            }
+            variant={selectedCategory === 'FACECREAMS' ? 'default' : 'outline'}
             onClick={() => handleCategoryChange('FACECREAMS')}
           >
             Face Creams
@@ -96,13 +73,19 @@ const Products = () => {
 
           <Button
             variant={
-              selectedCategory === 'MASSAGE OILS'
-                ? 'default'
-                : 'outline'
+              selectedCategory === 'MASSAGE OILS' ? 'default' : 'outline'
             }
             onClick={() => handleCategoryChange('MASSAGE OILS')}
           >
             Massage Oils
+          </Button>
+          <Button
+            variant={
+              selectedCategory === 'DOGGY PRODUCTS' ? 'default' : 'outline'
+            }
+            onClick={() => handleCategoryChange('DOGGY PRODUCTS')}
+          >
+            Doggy Products
           </Button>
         </div>
 
