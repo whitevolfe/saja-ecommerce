@@ -17,7 +17,7 @@ const BrandIconsCarousel = () => {
   const allIcons = [...brandIcons, ...brandIcons];
 
   return (
-    <section className='py-7 px-4 bg-white overflow-hidden'>
+    <section className='py-7 px-4 overflow-hidden bg-green-500 '>
       <div className='container mx-auto'>
         <div className='relative'>
           <div
@@ -29,7 +29,7 @@ const BrandIconsCarousel = () => {
             {allIcons.map((icon, index) => (
               <div
                 key={index}
-                className='flex-shrink-0 w-32 h-32 md:w-40 md:h-40 flex items-center justify-center'
+                className='flex-shrink-0 w-32 h-32 md:w-40 md:h-40  flex items-center justify-center'
               >
                 <img
                   src={icon}
