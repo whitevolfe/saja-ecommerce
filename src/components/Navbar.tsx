@@ -22,17 +22,24 @@ const Navbar = () => {
   return (
     <nav className='sticky top-0 z-50 bg-[#F5F1E8]/95 backdrop-blur-sm border-b border-[#E6D3B3] shadow-sm'>
       <div className='container mx-auto px-4'>
-        <div className='flex items-center justify-between h-16'>
-          <Link to='/' className='flex items-center'>
+        <div className='flex items-center justify-between md:h-16 h-auto'>
+          <Link
+            to='/'
+            className='flex items-center flex-col md:flex-row md:items-center'
+          >
             <img
               src='/assets/Ayuvedic_handmade_logo.png'
               alt='Ayuvedic_handmade saja Logo'
               className='h-14 w-20'
             />
-            <h2 className='text-1xl font-bold text-[#1F3D2B]'>
-              SAJ Associates | Herbal · Natural · 100% Sri Lankan
+            <h2 className='text-1xl font-bold text-[#1F3D2B] mt-2 md:mt-0 md:ml-4 text-center md:text-left'>
+              SAJ Associates
+              <br />
+              <span className='text-sm font-normal'>
+                Herbal · Natural · 100% Sri Lankan
+              </span>
             </h2>
-            <h2 className='text-1xl ml-10 font-bold text-[#1F3D2B]'>
+            <h2 className='text-1xl hidden md:block md:ml-10 font-bold text-[#1F3D2B]'>
               <a
                 href='tel:0714550555'
                 target='_blank'
@@ -72,7 +79,7 @@ const Navbar = () => {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className='md:hidden p-2 hover:bg-[#E6D3B3] rounded-lg transition-colors'
+            className='md:hidden p-4 hover:bg-[#E6D3B3] rounded-lg transition-colors'
           >
             {isOpen ? (
               <X className='w-6 h-6 text-[#1F3D2B]' />
@@ -90,7 +97,7 @@ const Navbar = () => {
                 key={link.path}
                 to={link.path}
                 onClick={() => setIsOpen(false)}
-                className={`block py-3 px-4 rounded-lg transition-colors ${
+                className={`block w-full py-3 px-4 rounded-lg transition-colors ${
                   isActive(link.path)
                     ? 'bg-[#1F3D2B]/10 text-[#1F3D2B] font-medium'
                     : 'text-[#5A5A5A] hover:bg-[#E6D3B3]'
