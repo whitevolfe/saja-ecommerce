@@ -21,13 +21,11 @@ import { products } from '@/data/products';
 import { useState, useEffect } from 'react';
 
 const Home = () => {
-  const [expandedCards, setExpandedCards] = useState<number[]>([]);
+  const [expandedCards, setExpandedCards] = useState([]);
 
-  const toggleReadMore = (index: number) => {
+  const toggleReadMore = (index) => {
     setExpandedCards((prev) =>
-      prev.includes(index)
-        ? prev.filter((item) => item !== index)
-        : [...prev, index],
+      prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index],
     );
   };
 
@@ -62,7 +60,7 @@ const Home = () => {
       color: 'primary',
     },
     {
-      name: 'MR Nalaka Hewamaduma',
+      name: 'Mr Nalaka Hewamaduma',
       role: 'Verified Customer',
       avatar: 'NH',
       rating: 5,
@@ -429,7 +427,10 @@ const Home = () => {
               return (
                 <div
                   key={index}
-                  className='bg-white rounded-2xl p-8 shadow-xl border border-gray-200 text-black h-[560px] flex flex-col'
+                  className='bg-white rounded-2xl p-8 shadow-xl border border-gray-200 text-black flex flex-col transition-all duration-300'
+                  style={{
+                    minHeight: isExpanded ? 'auto' : '320px',
+                  }}
                 >
                   {/* Header */}
                   <div className='flex items-center gap-4 mb-5'>
@@ -460,21 +461,21 @@ const Home = () => {
                   </div>
 
                   {/* Review Text */}
-                  <div className='flex-grow overflow-hidden'>
+                  <div className='flex-grow'>
                     <p
-                      className={`text-gray-700 leading-8 text-[16px] ${
-                        !isExpanded ? 'line-clamp-9' : ''
+                      className={`text-gray-700 leading-7 text-[16px] transition-all duration-300 ${
+                        !isExpanded ? 'line-clamp-6' : ''
                       }`}
                     >
                       "{testimonial.text}"
                     </p>
                   </div>
 
-                  {/* Read More */}
-                  {testimonial.text.length > 250 && (
+                  {/* Read More Button */}
+                  {testimonial.text.length > 180 && (
                     <button
                       onClick={() => toggleReadMore(index)}
-                      className='mt-4 text-primary font-semibold hover:underline text-sm self-start'
+                      className='mt-5 text-primary font-semibold hover:underline text-sm self-start transition'
                     >
                       {isExpanded ? 'Read Less' : 'Read More'}
                     </button>

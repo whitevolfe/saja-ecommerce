@@ -130,7 +130,7 @@ const About = () => {
               {
                 title: 'Farmer-First',
                 description:
-                  "We support over 750 farmers in Sri Lanka's dry zone who grow our herbal ingredients. Buying SAJ products directly improves their livelihoods.",
+                  "We support over 750 farmers in Sri Lanka's dry zone who grow our herbal ingredients. Buying SAJ products directly Improves their livelihoods.",
               },
               {
                 title: 'Internationally Certified',

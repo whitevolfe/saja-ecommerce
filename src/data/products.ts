@@ -144,7 +144,7 @@ export const products: Product[] = [
   {
     id: 'c9',
     name: 'Neem',
-    price: 1750,
+    price: 1000,
     category: 'SOAP',
     image: '/assets/Neem.png',
     description:
@@ -182,7 +182,7 @@ export const products: Product[] = [
   {
     id: 's2',
     name: 'Moringa Soap',
-    price: 1750,
+    price: 1000,
     category: 'SOAP',
     image: '/assets/moringa.png',
     description: 'Soothing aloe vera soap for sensitive skin',
@@ -190,7 +190,7 @@ export const products: Product[] = [
   {
     id: 's3',
     name: 'Lemongrass Soap',
-    price: 1750,
+    price: 1000,
     category: 'SOAP',
     image: '/assets/lemongrass.png',
     description: 'Antiseptic neem soap for acne-prone skin',
@@ -198,7 +198,7 @@ export const products: Product[] = [
   {
     id: 's4',
     name: 'Aloevera Soap',
-    price: 1750,
+    price: 1000,
     category: 'SOAP',
     image: '/assets/aloevera.png',
     description: 'Brightening turmeric soap for glowing skin',
@@ -206,7 +206,7 @@ export const products: Product[] = [
   {
     id: 's5',
     name: 'Cassia Alata Soap',
-    price: 1750,
+    price: 1000,
     category: 'SOAP',
     image: '/assets/cassia alata.png',
     description: 'Brightening turmeric soap for glowing skin',
@@ -214,7 +214,7 @@ export const products: Product[] = [
   {
     id: 's6',
     name: 'Goat Milk Soap',
-    price: 1750,
+    price: 1000,
     category: 'SOAP',
     image: '/assets/Goat milk.png',
     description: 'Brightening turmeric soap for glowing skin',
@@ -222,7 +222,7 @@ export const products: Product[] = [
   {
     id: 's7',
     name: 'Cinnamon Soap',
-    price: 1750,
+    price: 1000,
     category: 'SOAP',
     image: '/assets/Cinnamon.png',
     description: 'Brightening turmeric soap for glowing skin',
@@ -230,7 +230,7 @@ export const products: Product[] = [
   {
     id: 's8',
     name: 'Activated Charcoal Soap',
-    price: 1750,
+    price: 1000,
     category: 'SOAP',
     image: '/assets/activated charcoal.png',
     description: 'Brightening turmeric soap for glowing skin',
