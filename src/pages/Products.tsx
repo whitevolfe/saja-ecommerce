@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import ProductCard from '@/components/ProductCard';
 import { products } from '@/data/products';
 import { Button } from '@/components/ui/button';
+import CategoryCard from '@/components/CategoryCard';
 
 const Products = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -34,80 +35,65 @@ const Products = () => {
           Discover our complete collection of premium products
         </p>
 
-        {/* Category Filter */}
-        <div className='flex flex-wrap gap-3 mb-8'>
-          <Button
-            variant={selectedCategory === 'SOAP' ? 'default' : 'outline'}
-            onClick={() => handleCategoryChange('SOAP')}
-          >
-            Soap
-          </Button>
-
-          <Button
-            variant={selectedCategory === 'SHAMPOO' ? 'default' : 'outline'}
-            onClick={() => handleCategoryChange('SHAMPOO')}
-          >
-            Shampoo
-          </Button>
-
-          <Button
-            variant={selectedCategory === 'CONDITIONER' ? 'default' : 'outline'}
-            onClick={() => handleCategoryChange('CONDITIONER')}
-          >
-            Conditioner
-          </Button>
-
-          <Button
-            variant={selectedCategory === 'LIQUID SOAP' ? 'default' : 'outline'}
-            onClick={() => handleCategoryChange('LIQUID SOAP')}
-          >
-            Liquid Soap
-          </Button>
-
-          <Button
-            variant={selectedCategory === 'FACECREAMS' ? 'default' : 'outline'}
-            onClick={() => handleCategoryChange('FACECREAMS')}
-          >
-            Face Creams
-          </Button>
-
-          <Button
-            variant={
-              selectedCategory === 'MASSAGE OILS' ? 'default' : 'outline'
-            }
-            onClick={() => handleCategoryChange('MASSAGE OILS')}
-          >
-            Massage Oils
-          </Button>
-          <Button
-            variant={
-              selectedCategory === 'DOGGY PRODUCTS' ? 'default' : 'outline'
-            }
-            onClick={() => handleCategoryChange('DOGGY PRODUCTS')}
-          >
-            Doggy Products
-          </Button>
-        </div>
-
-        {/* Products Grid */}
-        <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'>
-          {filteredProducts.map((product) => (
-            <ProductCard key={product.id} product={product} />
+        {/* Category Filter - replaced with image cards */}
+        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8'>
+          {[
+            {
+              name: 'SOAP',
+              description: 'Natural soaps for gentle cleansing',
+              image: '/assets/Neem.png',
+            },
+            {
+              name: 'SHAMPOO',
+              description: 'Herbal shampoos for healthy hair',
+              image: '/assets/cinnamon shampoo.png',
+            },
+            {
+              name: 'CONDITIONER',
+              description: 'Conditioners to nourish your hair',
+              image: '/assets/cinnamon hair conditioner.png',
+            },
+            {
+              name: 'LIQUID SOAP',
+              description: 'Liquid soaps for refreshing wash',
+              image: '/assets/cinnamon castile soap.png',
+            },
+            {
+              name: 'FACECREAMS',
+              description: 'Face creams for radiant skin',
+              image: '/assets/Morin Night Cream .jpeg',
+            },
+            {
+              name: 'MASSAGE OILS',
+              description: 'Massage oils for relaxation',
+              image: '/assets/cinnamon body massage oil.png',
+            },
+            {
+              name: 'DOGGY PRODUCTS',
+              description: 'Pet care products for your furry friends',
+              image: '/assets/Doggy soap.JPG',
+            },
+          ].map((cat) => (
+            <CategoryCard
+              key={cat.name}
+              category={cat}
+              onClick={() => handleCategoryChange(cat.name)}
+            />
           ))}
         </div>
 
-        {!selectedCategory && (
-          <div className='text-center py-12'>
-            <p className='text-muted-foreground'>
-              Please select a category to view products.
-            </p>
+        {filteredProducts.length > 0 ? (
+          <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'>
+            {filteredProducts.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
           </div>
-        )}
-
-        {selectedCategory && filteredProducts.length === 0 && (
+        ) : (
           <div className='text-center py-12'>
             <p className='text-muted-foreground'>
-              No products found in this category.
+              {selectedCategory
+                ? 'No products found in this category.'
+                : 'Please select a category to view products.'}
             </p>
           </div>
         )}
