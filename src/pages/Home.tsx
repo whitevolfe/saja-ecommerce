@@ -133,7 +133,7 @@ const Home = () => {
                   100% Natural
                 </h2>
 
-                <p className='text-lg md:text-2xl leading-relaxed text-white/95 mb-8 font-semibold'>
+                <p className='text-lg md:text-2xl leading-relaxed text-white/400 mb-8 font-semibold'>
                   From the farms of Sri Lanka to your home handcrafted ayurvedic
                   skincare, haircare and wellness products made with the finest
                   natural herbs and plant-based oils.
