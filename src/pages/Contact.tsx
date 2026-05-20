@@ -149,7 +149,7 @@ const Contact = () => {
                   <div>
                     <p className='font-medium text-black'>Address</p>
                     <p className='text-gray-700'>
-                      55, Subasadaka Mawatha, Hokandara, Sri Lanka
+                      55,Subasadaka Mawatha, Hokandara ,Sri Lanka
                     </p>
                   </div>
                 </div>
