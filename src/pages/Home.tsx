@@ -75,6 +75,14 @@ const Home = () => {
       text: "The Doggy Bath Soap is a game changer! My golden retriever's coat is so shiny and the flea issue is completely resolved. Love that it is plant-based.",
       color: 'primary',
     },
+    {
+      name: 'K. Sameera',
+      role: 'Customer Since 2023',
+      avatar: 'KS',
+      rating: 5,
+      text: 'I have been using this Moringa Mild Shampoo for years, and it has reduced my daily hair fall. It gently cleanses the scalp, leaving hair feeling healthier. Highly recommended.',
+      color: 'primary',
+    },
   ];
 
   useEffect(() => {
@@ -445,7 +453,7 @@ const Home = () => {
 
       {/* Testimonials Section */}
       {/* Testimonials Section */}
-      <section className='py-16 px-6 bg-gradient-to-br from-muted/50 to-background'>
+      <section className='py-16 px-4 md:px-8 lg:px-12 bg-gradient-to-br from-muted/50 to-background'>
         <div className='max-w-[1800px] mx-auto'>
           <div className='text-center mb-12'>
             <h2 className='text-3xl md:text-4xl font-bold text-white mb-4'>
@@ -457,7 +465,7 @@ const Home = () => {
             </p>
           </div>
 
-          <div className='grid grid-cols-1 md:grid-cols-3 gap-10'>
+          <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 px-2 md:px-4'>
             {testimonials.map((testimonial, index) => {
               const isExpanded = expandedCards.includes(index);
 
