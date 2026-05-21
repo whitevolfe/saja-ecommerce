@@ -3,6 +3,7 @@ import { Award } from 'lucide-react';
 import founderImage from '../../public/assets/JBA .jpg';
 import newsArticleImage from '../../public/assets/news-article.jpeg';
 import newsArticleImage2 from '../../public/assets/news-article2.png';
+import newsArticleImage3 from '../../public/assets/news-article3.png';
 import cicvetcareImage from '../../public/assets/cic-vetcare.png';
 
 const Achivement = () => {
@@ -146,6 +147,15 @@ const Achivement = () => {
 
       {/* News Article Image Section */}
       <section className='pb-20 px-4'>
+        <div className='container mx-auto max-w-5xl mb-20'>
+          <div className='bg-card/90 backdrop-blur-sm border border-border rounded-3xl p-6 shadow-lg'>
+            <img
+              src={newsArticleImage3}
+              alt='News Article'
+              className='w-full rounded-2xl object-cover'
+            />
+          </div>
+        </div>
         <div className='container mx-auto max-w-5xl'>
           <div className='bg-card/90 backdrop-blur-sm border border-border rounded-3xl p-6 shadow-lg'>
             <img
