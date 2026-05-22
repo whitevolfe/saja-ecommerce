@@ -3,13 +3,13 @@ import { Link } from 'react-router-dom';
 
 const brands = [
   {
-    name: 'DermaTreat',
+    name: 'Dermatreat',
     subtitle: 'Glycerin Soap',
     image: '/assets/otherbrands-img1.png',
   },
   {
     name: 'Lavish',
-    subtitle: 'Glycerin Soap for George Stuart Health',
+    subtitle: 'Glycerin Medicated Soap for George Stuart Health',
     image: '/assets/otherbrands-img2.png',
   },
   {
@@ -18,12 +18,12 @@ const brands = [
     image: '/assets/otherbrands-img3.png',
   },
   {
-    name: 'LakSALA',
+    name: 'Laksala',
     subtitle: 'Souvenir boutique products',
     image: '/assets/otherbrands-img4.png',
   },
   {
-    name: 'LAKARCADE',
+    name: 'Lackarchade',
     subtitle: 'Herbal products',
     image: '/assets/otherbrands-img5.png',
   },
