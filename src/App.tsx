@@ -14,6 +14,7 @@ import Checkout from './pages/Checkout';
 import Contact from './pages/Contact';
 import Publicity from './pages/Publicity';
 import About from './pages/About';
+import OtherBrands from './pages/OtherBrands';
 import NotFound from './pages/NotFound';
 import ScrollToTop from './components/ScrollToTop';
 import Achivement from './pages/Publicity';
@@ -39,6 +40,7 @@ const App = () => (
                 <Route path='/checkout' element={<Checkout />} />
                 <Route path='/contact' element={<Contact />} />
                 <Route path='/publicity' element={<Publicity />} />
+                <Route path='/other-brands' element={<OtherBrands />} />
                 <Route path='/about' element={<About />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path='*' element={<NotFound />} />
