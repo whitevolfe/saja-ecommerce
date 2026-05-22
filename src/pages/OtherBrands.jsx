@@ -23,9 +23,14 @@ const brands = [
     image: '/assets/otherbrands-img4.png',
   },
   {
-    name: 'CIC Vetcare',
+    name: 'LAKARCADE',
     subtitle: 'Herbal products',
     image: '/assets/otherbrands-img5.png',
+  },
+  {
+    name: 'CIC Vetcare',
+    subtitle: 'Herbal products',
+    image: '/assets/otherbrands-img6.png',
   },
 ];
 
