@@ -109,8 +109,11 @@ const Home = () => {
               className='absolute inset-0 w-full h-full object-cover object-center'
             />
 
+            {/* Dark Gradient Overlay */}
+            <div className='absolute inset-0 bg-gradient-to-r from-black/75 via-black/40 to-transparent z-0'></div>
+
             {/* Content */}
-            <div className='absolute inset-0 flex items-center'>
+            <div className='absolute inset-0 flex items-center z-10'>
               <div className='px-6 md:px-12 lg:px-20 max-w-3xl text-white'>
                 <h1
                   className='
@@ -120,12 +123,13 @@ const Home = () => {
               font-bold
               leading-tight
               mt-6
+              drop-shadow-xl
             '
                   style={{ fontFamily: "'Playfair Display', serif" }}
                 >
                   Discover the Essence
                   <br />
-                  of Nature – 100% Srilankan.
+                  of Nature – 100% Sri Lankan.
                 </h1>
 
                 <h2
@@ -135,31 +139,51 @@ const Home = () => {
               lg:text-5xl
               font-semibold
               mb-6
+              text-[#d7ff72]
+              drop-shadow-lg
             '
                   style={{ fontFamily: "'Playfair Display', serif" }}
                 >
                   100% Natural
                 </h2>
 
-                <p className='text-lg md:text-2xl leading-relaxed text-white/400 mb-8 font-semibold'>
-                  From the farms of Sri Lanka to your home handcrafted ayurvedic
-                  skincare, haircare and wellness products made with the finest
-                  natural herbs and plant-based oils.
-                  <br />
-                  Zero chemicals. Just pure nature.
-                </p>
+                {/* Improved Description Box */}
+                <div
+                  className='
+    bg-black/40
+    backdrop-blur-md
+    border-l-4
+    border-[#d7ff72]
+    rounded-xl
+    p-4
+    md:p-5
+    max-w-xl
+    shadow-2xl
+    mb-8
+  '
+                >
+                  <p className='text-sm md:text-lg leading-relaxed text-white font-medium'>
+                    Handcrafted Ayurvedic skincare, haircare, and wellness
+                    products made from Sri Lanka’s finest herbs and plant-based
+                    oils.
+                  </p>
 
-                <div className='flex flex-col sm:flex-row gap-4'>
+                  <p className='mt-2 text-[#d7ff72] text-base md:text-xl font-bold'>
+                    Zero chemicals. Pure nature.
+                  </p>
+                </div>
+
+                {/* <div className='flex flex-col sm:flex-row gap-4'>
                   <Button
                     asChild
                     size='lg'
-                    className='gap-2 bg-white text-black hover:bg-white/90 px-8 py-6 text-lg'
+                    className='gap-2 bg-white text-black hover:bg-white/90 px-8 py-6 text-lg rounded-xl'
                   >
                     <Link to='/products'>
                       Shop Now <ArrowRight className='w-5 h-5' />
                     </Link>
                   </Button>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
