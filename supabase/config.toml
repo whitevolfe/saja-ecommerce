@@ -1,0 +1,7 @@
+project_id = "YOUR_PROJECT_REF"
+
+[functions.create-order]
+verify_jwt = false
+
+[functions.verify-payment]
+verify_jwt = false

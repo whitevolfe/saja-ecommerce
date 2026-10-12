@@ -3,7 +3,6 @@ import { useState } from 'react';
 import {
   ArrowLeft,
   ShoppingCart,
-  MessageCircle,
   Star,
   Plus,
   Minus,
@@ -64,11 +63,7 @@ const ProductDetail = () => {
     navigate('/checkout');
   };
 
-  const handleWhatsApp = () => {
-    const message = `Hi! I'm interested in this product:\n\n*${product.name}*\nPrice: Rs. ${product.price.toLocaleString()}\n\n${product.description}\n\nCan you provide more details?`;
-    const whatsappUrl = `https://wa.me/94777383471?text=${encodeURIComponent(message)}`;
-    window.open(whatsappUrl, '_blank');
-  };
+
 
   return (
     <div className='min-h-screen py-8 px-4'>
@@ -150,7 +145,7 @@ const ProductDetail = () => {
                   Add to Cart
                 </Button>
 
-                <div className='grid grid-cols-1 sm:grid-cols-2 gap-3'>
+                <div className='grid grid-cols-1 gap-3'>
                   <Button
                     onClick={handleBuyNow}
                     variant='outline'
@@ -160,15 +155,7 @@ const ProductDetail = () => {
                     Buy Now
                   </Button>
 
-                  <Button
-                    onClick={handleWhatsApp}
-                    variant='outline'
-                    size='lg'
-                    className='gap-2'
-                  >
-                    <MessageCircle className='w-5 h-5' />
-                    WhatsApp
-                  </Button>
+
                 </div>
               </div>
 
