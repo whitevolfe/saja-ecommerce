@@ -235,6 +235,14 @@ export const products: Product[] = [
     image: '/assets/activated charcoal.png',
     description: 'Brightening turmeric soap for glowing skin',
   },
+  {
+    id: 's9',
+    name: 'Activated Charcoal sulfate free Soap',
+    price: 1000,
+    category: 'SOAP',
+    image: '/assets/activated charcoal salfatefree.png',
+    description: 'Brightening turmeric soap for glowing skin',
+  },
 
   // BODY CARE
   // {
