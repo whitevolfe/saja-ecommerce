@@ -147,8 +147,9 @@ export const products: Product[] = [
     price: 1000,
     category: 'SOAP',
     image: '/assets/Neem.png',
+
     description:
-      'Antiseptic Bar — Natural remedy for infection-free healthy skin. Gentle and purifying. ',
+      'Discover refreshing botanical cleansing with the Neem Antiseptic Bar. Enriched with neem, also known as Kohomba, and essential oils, this handmade soap helps remove everyday dirt and excess oil from the skin. Suitable for a regular cleansing routine, it leaves your skin feeling clean and refreshed while bringing the traditional appeal of neem-based skincare to your daily bath.',
   },
   {
     id: 'c10',
@@ -185,7 +186,9 @@ export const products: Product[] = [
     price: 1000,
     category: 'SOAP',
     image: '/assets/moringa.png',
-    description: 'Soothing aloe vera soap for sensitive skin',
+
+    description:
+      'Nourish your daily skincare routine with the Moringa Nourishing Bar. Enriched with moringa leaf extract, moringa leaf powder, and lavender essential oil, this glycerine soap gently cleanses the skin while helping maintain moisture. Enjoy a refreshing wash that leaves your skin feeling soft, smooth, and revitalized, complemented by the calming aroma of lavender.',
   },
   {
     id: 's3',
@@ -193,7 +196,9 @@ export const products: Product[] = [
     price: 1000,
     category: 'SOAP',
     image: '/assets/lemongrass.png',
-    description: 'Antiseptic neem soap for acne-prone skin',
+
+    description:
+      'Revitalize your bathing routine with the Lemongrass Wellness Bar, scented with refreshing lemongrass essential oil. This handmade cleansing soap helps remove everyday impurities while leaving the skin feeling clean and refreshed. Its fresh citrus aroma creates an uplifting bathing experience, making it an excellent choice for anyone who enjoys botanical-inspired skincare products.',
   },
   {
     id: 's4',
@@ -201,7 +206,9 @@ export const products: Product[] = [
     price: 1000,
     category: 'SOAP',
     image: '/assets/aloevera.png',
-    description: 'Brightening turmeric soap for glowing skin',
+
+    description:
+      'Keep your skin feeling soft and refreshed with the Aloe Vera Moisturizing Bar. Enriched with aloe vera, also known as Komarika, and essential oils, this cleansing bar helps remove everyday impurities while maintaining skin moisture. Its gentle formula makes it a suitable choice for daily cleansing, leaving your skin feeling clean, smooth, and hydrated.',
   },
   {
     id: 's5',
@@ -209,7 +216,9 @@ export const products: Product[] = [
     price: 1000,
     category: 'SOAP',
     image: '/assets/cassia alata.png',
-    description: 'Brightening turmeric soap for glowing skin',
+
+    description:
+      'Discover botanical-inspired cleansing with the Cassia Alata (Aththora) Antifungal Bar. Enriched with cassia alata, clove, ginger, and essential oils, this handmade soap is designed to cleanse the skin and remove everyday dirt and impurities. Its refreshing formula helps leave your skin feeling clean and comfortable, making it a distinctive addition to your regular skincare routine.',
   },
   {
     id: 's6',
@@ -217,7 +226,9 @@ export const products: Product[] = [
     price: 1000,
     category: 'SOAP',
     image: '/assets/Goat milk.png',
-    description: 'Brightening turmeric soap for glowing skin',
+
+    description:
+      'Treat your skin to gentle cleansing with the Goat Milk Beauty Bar. Enriched with goat milk and essential oils, this cleansing bar helps remove dirt and everyday impurities while maintaining skin moisture. Its skin-softening formula is ideal for those looking for a nourishing addition to their daily bathing routine, leaving the skin feeling smooth, clean, and refreshed.',
   },
   {
     id: 's7',
@@ -225,7 +236,9 @@ export const products: Product[] = [
     price: 1000,
     category: 'SOAP',
     image: '/assets/Cinnamon.png',
-    description: 'Brightening turmeric soap for glowing skin',
+
+    description:
+      'Add a touch of warmth to your daily skincare routine with the Cinnamon Medicinal Healthy Bar. Infused with cinnamon bark oil and glycerine, this handmade soap gently cleanses the skin while providing a refreshing cinnamon fragrance. Its cleansing formula helps remove everyday dirt and impurities, leaving your skin feeling clean, soft, and refreshed.',
   },
   {
     id: 's8',
@@ -233,7 +246,9 @@ export const products: Product[] = [
     price: 1000,
     category: 'SOAP',
     image: '/assets/activated charcoal.png',
-    description: 'Brightening turmeric soap for glowing skin',
+
+    description:
+      'Experience a refreshing cleanse with the Activated Charcoal and Tea Tree Oil Detox Bar. Formulated with activated charcoal and tea tree oil, this handmade cleansing bar helps remove dirt, impurities, and excess oil from the skin. Its cleansing formula leaves your skin feeling fresh, clean, and smooth, making it a great addition to your daily skincare routine.',
   },
   {
     id: 's9',
@@ -243,78 +258,37 @@ export const products: Product[] = [
     image: '/assets/activated charcoal salfatefree.png',
     description: 'Brightening turmeric soap for glowing skin',
   },
+  {
+    id: 's10',
+    name: 'Shea glow Soap',
+    price: 1000,
+    category: 'SOAP',
+    image: '/assets/shea glow.png',
 
-  // BODY CARE
-  // {
-  //   id: 'b1',
-  //   name: 'Body Lotion',
-  //   price: 450,
-  //   category: 'BODY CARE',
-  //   image: '/assets/body-lotion.png',
-  //   description: 'Moisturizing body lotion with natural ingredients',
-  //   featured: true,
-  // },
-  // {
-  //   id: 'b2',
-  //   name: 'Body Wash',
-  //   price: 420,
-  //   category: 'BODY CARE',
-  //   image: '/assets/body-wash.png',
-  //   description: 'Gentle body wash for all skin types',
-  // },
-  // {
-  //   id: 'b3',
-  //   name: 'Body Scrub',
-  //   price: 480,
-  //   category: 'BODY CARE',
-  //   image: '/assets/body-scrub.png',
-  //   description: 'Exfoliating body scrub with natural extracts',
-  // },
-  // {
-  //   id: 'b4',
-  //   name: 'Hand Cream',
-  //   price: 2750,
-  //   category: 'BODY CARE',
-  //   image: '/assets/hand-cream.png',
-  //   description: 'Nourishing hand cream with vitamin E',
-  // },
+    description:
+      'Give your skin a touch of everyday luxury with the Shea Glow Beauty Bar. Enriched with shea butter and skin-loving natural oils, this cleansing bar helps moisturize and soften the skin while gently removing everyday impurities. Its creamy lather leaves your skin feeling smooth, nourished, and refreshed, making it a wonderful addition to your daily skincare routine.',
+  },
+  {
+    id: 's11',
+    name: 'aloevera hibiscus Soap',
+    price: 1000,
+    category: 'SOAP',
+    image: '/assets/aloevera hibiscus.png',
 
-  // PET CARE
-  // {
-  //   id: 'p1',
-  //   name: 'Pet Shampoo',
-  //   price: 1850,
-  //   category: 'PET CARE',
-  //   image: '/assets/pet-shampoo.png',
-  //   description: 'Gentle shampoo for pets with natural ingredients',
-  //   featured: true,
-  // },
-  // {
-  //   id: 'p2',
-  //   name: 'Pet Conditioner',
-  //   price: 1850,
-  //   category: 'PET CARE',
-  //   image: '/assets/pet-conditioner.png',
-  //   description: 'Moisturizing conditioner for pet coats',
-  // },
-  // {
-  //   id: 'p3',
-  //   name: 'Pet Wipes',
-  //   price: 180,
-  //   category: 'PET CARE',
-  //   image: '/assets/pet-wipes.png',
-  //   description: 'Convenient wipes for pet cleaning',
-  // },
-  // {
-  //   id: 'p4',
-  //   name: 'Pet Toothpaste',
-  //   price: 250,
-  //   category: 'PET CARE',
-  //   image: '/assets/pet-toothpaste.png',
-  //   description: 'Natural toothpaste for pet dental care',
-  // },
+    description:
+      'Enjoy gentle cleansing and everyday moisture with the Aloe Vera and Hibiscus Moisturizing Bar. This sulfate-free soap combines aloe vera and hibiscus to help cleanse the skin without stripping away its natural oils. Ideal for those seeking a refreshing skincare routine, it leaves the skin feeling soft, smooth, and moisturized after every wash.',
+  },
+  {
+    id: 's12',
+    name: 'moringa & lavender Soap',
+    price: 1000,
+    category: 'SOAP',
+    image: '/assets/moringa & lavender.png',
 
-  // MASSAGE OILS
+    description:
+      'Experience a refreshing and nourishing cleanse with the Moringa and Lavender Nourishing Bar. This sulfate-free soap combines moringa with the soothing fragrance of lavender to create a pleasant daily bathing experience. Its cleansing formula helps remove impurities while maintaining skin moisture, leaving your skin feeling soft, smooth, and refreshed with a delicate floral aroma.',
+  },
+
   {
     id: 'm1',
     name: 'cinnamon body massage oil',
@@ -332,77 +306,4 @@ export const products: Product[] = [
     image: '/assets/relaxa body massage oil.png',
     description: 'Relaxing massage oil for stress relief',
   },
-  // {
-  //   id: 'm3',
-  //   name: 'Herbal Massage Oil',
-  //   price: 2950,
-  //   category: 'MASSAGE OILS',
-  //   image: '/assets/herbal-massage-oil.png',
-  //   description: 'Traditional herbal massage oil',
-  // },
-  // {
-  //   id: 'm4',
-  //   name: 'cinnamon body massage oil',
-  //   price: 2950,
-  //   category: 'MASSAGE OILS',
-  //   image: '/assets/cinnamon body massage oil.png',
-  //   description: 'Cooling massage oil for muscle relief',
-  // },
-
-  // {
-  //   id: 'c12',
-  //   name: 'Beef XP',
-  //   price: 26900,
-  //   category: 'gym',
-  //   image: '/assets/beef-xp.jpg',
-  //   description: 'Relaxation and wellness with natural oils',
-  // },
-  // {
-  //   id: 'c13',
-  //   name: 'CC CLA',
-  //   price: 8600,
-  //   category: 'gym',
-  //   image: '/assets/CC-CLA.jpg',
-  //   description: 'Relaxation and wellness with natural oils',
-  // },
-  // {
-  //   id: 'c14',
-  //   name: 'CC Joint Support',
-  //   price: 6900,
-  //   category: 'gym',
-  //   image: '/assets/cc-jointsupport.jpg',
-  //   description: 'Relaxation and wellness with natural oils',
-  // },
-  // {
-  //   id: 'c15',
-  //   name: 'Applied Vitamin D3',
-  //   price: 6900,
-  //   category: 'gym',
-  //   image: '/assets/appliedvitamin-d3.jpg',
-  //   description: 'Relaxation and wellness with natural oils',
-  // },
-  // {
-  //   id: 'c16',
-  //   name: 'Dexter L Carnitine',
-  //   price: 9000,
-  //   category: 'gym',
-  //   image: '/assets/dexter-l-carnitine.jpg',
-  //   description: 'Relaxation and wellness with natural oils',
-  // },
-  // {
-  //   id: 'c17',
-  //   name: 'Gold Creatine',
-  //   price: 8000,
-  //   category: 'gym',
-  //   image: '/assets/gold-creatine.jpg',
-  //   description: 'Relaxation and wellness with natural oils',
-  // },
-  // {
-  //   id: 'c18',
-  //   name: 'Applied Flvaoured Creatine',
-  //   price: 8800,
-  //   category: 'gym',
-  //   image: '/assets/applied-flavoured-creatine.jpg',
-  //   description: 'Relaxation and wellness with natural oils',
-  // },
 ];
