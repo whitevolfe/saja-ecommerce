@@ -251,14 +251,6 @@ export const products: Product[] = [
       'Experience a refreshing cleanse with the Activated Charcoal and Tea Tree Oil Detox Bar. Formulated with activated charcoal and tea tree oil, this handmade cleansing bar helps remove dirt, impurities, and excess oil from the skin. Its cleansing formula leaves your skin feeling fresh, clean, and smooth, making it a great addition to your daily skincare routine.',
   },
   {
-    id: 's9',
-    name: 'Activated Charcoal sulfate free Soap',
-    price: 1000,
-    category: 'SOAP',
-    image: '/assets/activated charcoal salfatefree.png',
-    description: 'Brightening turmeric soap for glowing skin',
-  },
-  {
     id: 's10',
     name: 'Shea glow Soap',
     price: 1000,
