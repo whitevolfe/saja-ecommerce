@@ -15,10 +15,6 @@ const Checkout = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState<'cod' | 'online'>('cod');
 
-  const shippingCost = 400;
-  const subtotal = getTotalAmount();
-  const total = subtotal + shippingCost;
-
   const [formData, setFormData] = useState({
     email: '',
     firstName: '',
@@ -31,6 +27,11 @@ const Checkout = () => {
     deliveryNote: '',
   });
 
+  const isInColombo = formData.city.trim().toLowerCase() === 'colombo';
+  const shippingCost = isInColombo ? 400 : 500;
+  const subtotal = getTotalAmount();
+  const total = subtotal + shippingCost;
+
   const handleInputChange = (field: string, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
@@ -39,7 +40,11 @@ const Checkout = () => {
     event.preventDefault();
 
     if (cart.length === 0) {
-      toast({ title: 'Cart is empty', description: 'Please add products first.', variant: 'destructive' });
+      toast({
+        title: 'Cart is empty',
+        description: 'Please add products first.',
+        variant: 'destructive',
+      });
       return;
     }
 
@@ -75,8 +80,13 @@ const Checkout = () => {
       });
       navigate('/products');
     } catch (error) {
-      const message = error instanceof Error ? error.message : 'Something went wrong.';
-      toast({ title: 'Order failed', description: message, variant: 'destructive' });
+      const message =
+        error instanceof Error ? error.message : 'Something went wrong.';
+      toast({
+        title: 'Order failed',
+        description: message,
+        variant: 'destructive',
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -86,7 +96,9 @@ const Checkout = () => {
     return (
       <div className='min-h-screen flex items-center justify-center text-center px-4'>
         <div>
-          <h1 className='text-3xl font-bold text-white mb-4'>Your cart is empty</h1>
+          <h1 className='text-3xl font-bold text-white mb-4'>
+            Your cart is empty
+          </h1>
           <Button asChild>
             <Link to='/products'>Continue Shopping</Link>
           </Button>
@@ -98,7 +110,11 @@ const Checkout = () => {
   return (
     <div className='min-h-screen py-10 px-4'>
       <div className='container mx-auto max-w-6xl'>
-        <Button variant='ghost' onClick={() => navigate(-1)} className='mb-6 text-white gap-2'>
+        <Button
+          variant='ghost'
+          onClick={() => navigate(-1)}
+          className='mb-6 text-white gap-2'
+        >
           <ArrowLeft className='w-4 h-4' />
           Back
         </Button>
@@ -132,21 +148,65 @@ const Checkout = () => {
                 <h2 className='text-xl font-semibold mb-4'>Delivery</h2>
 
                 <div className='grid md:grid-cols-2 gap-4'>
-                  <Input required placeholder='First name *' value={formData.firstName} className='text-black' onChange={(e) => handleInputChange('firstName', e.target.value)} />
-                  <Input required placeholder='Last name *' value={formData.lastName} className='text-black' onChange={(e) => handleInputChange('lastName', e.target.value)} />
+                  <Input
+                    required
+                    placeholder='First name *'
+                    value={formData.firstName}
+                    className='text-black'
+                    onChange={(e) =>
+                      handleInputChange('firstName', e.target.value)
+                    }
+                  />
+                  <Input
+                    required
+                    placeholder='Last name *'
+                    value={formData.lastName}
+                    className='text-black'
+                    onChange={(e) =>
+                      handleInputChange('lastName', e.target.value)
+                    }
+                  />
                 </div>
 
-                <Input required className='mt-4 text-black' placeholder='Delivery address *' value={formData.address} onChange={(e) => handleInputChange('address', e.target.value)} />
+                <Input
+                  required
+                  className='mt-4 text-black'
+                  placeholder='Delivery address *'
+                  value={formData.address}
+                  onChange={(e) => handleInputChange('address', e.target.value)}
+                />
 
                 <div className='grid md:grid-cols-3 gap-4 mt-4'>
-                  <Input required placeholder='City *' value={formData.city} className='text-black' onChange={(e) => handleInputChange('city', e.target.value)} />
-                  <Input placeholder='Province' value={formData.province} className='text-black' onChange={(e) => handleInputChange('province', e.target.value)} />
-                  <Input placeholder='Postal code' value={formData.postalCode} className='text-black' onChange={(e) => handleInputChange('postalCode', e.target.value)} />
+                  <Input
+                    required
+                    placeholder='City *'
+                    value={formData.city}
+                    className='text-black'
+                    onChange={(e) => handleInputChange('city', e.target.value)}
+                  />
+                  <Input
+                    placeholder='Province'
+                    value={formData.province}
+                    className='text-black'
+                    onChange={(e) =>
+                      handleInputChange('province', e.target.value)
+                    }
+                  />
+                  <Input
+                    placeholder='Postal code'
+                    value={formData.postalCode}
+                    className='text-black'
+                    onChange={(e) =>
+                      handleInputChange('postalCode', e.target.value)
+                    }
+                  />
                 </div>
 
                 <textarea
                   value={formData.deliveryNote}
-                  onChange={(e) => handleInputChange('deliveryNote', e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange('deliveryNote', e.target.value)
+                  }
                   placeholder='Delivery note (optional)'
                   className='mt-4 w-full min-h-24 rounded-md border border-input bg-background px-3 py-2 text-sm text-black outline-none focus:ring-2 focus:ring-ring'
                 />
@@ -169,12 +229,21 @@ const Checkout = () => {
                   Payment
                 </h2>
 
-                <RadioGroup value={paymentMethod} onValueChange={(value) => setPaymentMethod(value as 'cod' | 'online')}>
+                <RadioGroup
+                  value={paymentMethod}
+                  onValueChange={(value) =>
+                    setPaymentMethod(value as 'cod' | 'online')
+                  }
+                >
                   <label className='flex items-start gap-3 rounded-lg border border-gray-200 p-4 cursor-pointer hover:bg-gray-50'>
                     <RadioGroupItem value='cod' className='mt-1' />
                     <span>
-                      <span className='font-medium flex items-center gap-2'><Banknote className='w-4 h-4' /> Cash on Delivery</span>
-                      <span className='text-sm text-gray-500 block mt-1'>Pay when your order is delivered.</span>
+                      <span className='font-medium flex items-center gap-2'>
+                        <Banknote className='w-4 h-4' /> Cash on Delivery
+                      </span>
+                      <span className='text-sm text-gray-500 block mt-1'>
+                        Pay when your order is delivered.
+                      </span>
                     </span>
                   </label>
 
@@ -182,18 +251,32 @@ const Checkout = () => {
                     <RadioGroupItem value='online' className='mt-1' />
                     <span>
                       <span className='font-medium'>Pay Online by Card</span>
-                      <span className='text-sm text-gray-500 block mt-1'>Secure payment through MarxPay. Visa, Mastercard, UnionPay and supported cards.</span>
+                      <span className='text-sm text-gray-500 block mt-1'>
+                        Secure payment through MarxPay. Visa, Mastercard,
+                        UnionPay and supported cards.
+                      </span>
                     </span>
                   </label>
                 </RadioGroup>
               </div>
 
-              <Button type='submit' className='w-full text-white' disabled={isSubmitting} size='lg'>
-                {isSubmitting ? 'Processing...' : paymentMethod === 'online' ? `Pay Rs. ${total.toLocaleString()}` : 'Place Order'}
+              <Button
+                type='submit'
+                className='w-full text-white'
+                disabled={isSubmitting}
+                size='lg'
+              >
+                {isSubmitting
+                  ? 'Processing...'
+                  : paymentMethod === 'online'
+                    ? `Pay Rs. ${total.toLocaleString()}`
+                    : 'Place Order'}
               </Button>
 
               {paymentMethod === 'online' && (
-                <p className='text-center text-white/80 text-sm'>You will be redirected to MarxPay's secure payment page.</p>
+                <p className='text-center text-white/80 text-sm'>
+                  You will be redirected to MarxPay's secure payment page.
+                </p>
               )}
             </form>
           </div>
@@ -204,20 +287,34 @@ const Checkout = () => {
             <div className='space-y-4'>
               {cart.map((item) => (
                 <div key={item.id} className='flex items-center gap-3'>
-                  <img src={item.image} alt={item.name} className='w-14 h-14 object-cover rounded-lg border' />
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    className='w-14 h-14 object-cover rounded-lg border'
+                  />
                   <div className='flex-1'>
                     <p className='text-sm font-medium'>{item.name}</p>
-                    <p className='text-xs text-gray-600'>Qty: {item.quantity}</p>
+                    <p className='text-xs text-gray-600'>
+                      Qty: {item.quantity}
+                    </p>
                   </div>
-                  <p className='text-sm font-semibold'>Rs. {(item.price * item.quantity).toLocaleString()}</p>
+                  <p className='text-sm font-semibold'>
+                    Rs. {(item.price * item.quantity).toLocaleString()}
+                  </p>
                 </div>
               ))}
             </div>
 
             <hr className='border-gray-200 my-4' />
             <div className='space-y-2 text-sm'>
-              <div className='flex justify-between'><span>Subtotal</span><span>Rs. {subtotal.toLocaleString()}</span></div>
-              <div className='flex justify-between'><span>Delivery</span><span>Rs. {shippingCost.toLocaleString()}</span></div>
+              <div className='flex justify-between'>
+                <span>Subtotal</span>
+                <span>Rs. {subtotal.toLocaleString()}</span>
+              </div>
+              <div className='flex justify-between'>
+                <span>Delivery</span>
+                <span>Rs. {shippingCost.toLocaleString()}</span>
+              </div>
             </div>
             <hr className='border-gray-200 my-4' />
             <div className='flex justify-between font-bold text-lg'>
