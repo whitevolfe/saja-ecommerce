@@ -27,6 +27,10 @@ const Checkout = () => {
     deliveryNote: '',
   });
 
+  // Validation errors
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  // ORIGINAL SHIPPING CALCULATION - UNCHANGED
   const isInColombo = formData.city.trim().toLowerCase() === 'colombo';
   const shippingCost = isInColombo ? 400 : 500;
   const subtotal = getTotalAmount();
@@ -34,10 +38,98 @@ const Checkout = () => {
 
   const handleInputChange = (field: string, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
+
+    // Clear the error when the customer edits the field
+    setErrors((prev) => ({
+      ...prev,
+      [field]: '',
+    }));
+  };
+
+  // VALIDATE CHECKOUT FORM
+  const validateForm = () => {
+    const newErrors: Record<string, string> = {};
+
+    // 1. EMAIL VALIDATION
+    const email = formData.email.trim();
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+    if (!email) {
+      newErrors.email = 'Email address is required.';
+    } else if (!emailPattern.test(email)) {
+      newErrors.email = 'Please enter a valid email address.';
+    }
+
+    // 2. SRI LANKAN PHONE NUMBER VALIDATION
+    const phone = formData.phone.replace(/[\s-]/g, '');
+
+    const phonePattern = /^(?:0\d{9}|\+94\d{9})$/;
+
+    if (!phone) {
+      newErrors.phone = 'Phone number is required.';
+    } else if (!phonePattern.test(phone)) {
+      newErrors.phone =
+        'Enter a valid Sri Lankan phone number (0771234567 or +94771234567).';
+    }
+
+    // 3. FIRST NAME AND LAST NAME VALIDATION
+    const namePattern = /^[\p{L}\p{M}][\p{L}\p{M}\s'.-]*$/u;
+
+    if (!formData.firstName.trim()) {
+      newErrors.firstName = 'First name is required.';
+    } else if (!namePattern.test(formData.firstName.trim())) {
+      newErrors.firstName = 'Please enter a valid first name.';
+    }
+
+    if (!formData.lastName.trim()) {
+      newErrors.lastName = 'Last name is required.';
+    } else if (!namePattern.test(formData.lastName.trim())) {
+      newErrors.lastName = 'Please enter a valid last name.';
+    }
+
+    // 4. ADDRESS VALIDATION
+    if (formData.address.trim().length < 5) {
+      newErrors.address = 'Please enter a valid delivery address.';
+    }
+
+    // CITY VALIDATION
+    if (!formData.city.trim()) {
+      newErrors.city = 'City is required.';
+    } else if (!/^[\p{L}\p{M}\s'.-]+$/u.test(formData.city.trim())) {
+      newErrors.city = 'Please enter a valid city.';
+    }
+
+    // 5. POSTAL CODE VALIDATION (OPTIONAL)
+    const postalCode = formData.postalCode.trim();
+
+    if (postalCode && !/^[A-Za-z0-9][A-Za-z0-9\s-]{1,11}$/.test(postalCode)) {
+      newErrors.postalCode = 'Please enter a valid postal code.';
+    }
+
+    return newErrors;
   };
 
   const onSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+
+    // Validate customer details before submitting
+    const validationErrors = validateForm();
+
+    setErrors(validationErrors);
+
+    if (Object.keys(validationErrors).length > 0) {
+      toast({
+        title: 'Invalid Details',
+        description: 'Please correct the highlighted fields and try again.',
+        variant: 'destructive',
+      });
+
+      const firstError = Object.keys(validationErrors)[0];
+
+      document.getElementById(firstError)?.focus();
+
+      return;
+    }
 
     if (cart.length === 0) {
       toast({
@@ -59,7 +151,10 @@ const Checkout = () => {
       }>('create-order', {
         paymentMethod,
         customer: formData,
-        items: cart.map((item) => ({ id: item.id, quantity: item.quantity })),
+        items: cart.map((item) => ({
+          id: item.id,
+          quantity: item.quantity,
+        })),
         shippingCost,
       });
 
@@ -68,20 +163,24 @@ const Checkout = () => {
       }
 
       if (paymentMethod === 'online' && result.payUrl) {
-        // MarxPay handles card entry and 3DS. The customer returns to /payment-result afterwards.
+        // MarxPay handles card entry and 3DS.
+        // Customer returns to /payment-result afterwards.
         window.location.assign(result.payUrl);
         return;
       }
 
       clearCart();
+
       toast({
         title: 'Order placed successfully',
         description: `Your order ${result.orderNumber} has been received.`,
       });
+
       navigate('/products');
     } catch (error) {
       const message =
         error instanceof Error ? error.message : 'Something went wrong.';
+
       toast({
         title: 'Order failed',
         description: message,
@@ -91,6 +190,18 @@ const Checkout = () => {
       setIsSubmitting(false);
     }
   };
+
+  // Reusable error message
+  const showError = (field: string) =>
+    errors[field] ? (
+      <p className='text-red-600 text-sm mt-1' role='alert'>
+        {errors[field]}
+      </p>
+    ) : null;
+
+  // Reusable input styling
+  const inputClass = (field: string) =>
+    `text-black ${errors[field] ? 'border-red-500 focus-visible:ring-red-500' : ''}`;
 
   if (cart.length === 0) {
     return (
@@ -121,87 +232,149 @@ const Checkout = () => {
 
         <div className='grid grid-cols-1 lg:grid-cols-3 gap-8'>
           <div className='lg:col-span-2 space-y-6'>
-            <form onSubmit={onSubmit} className='space-y-6'>
+            <form onSubmit={onSubmit} noValidate className='space-y-6'>
+              {/* CONTACT */}
               <div className='bg-white text-black border border-gray-200 rounded-xl p-6'>
                 <h2 className='text-xl font-semibold mb-4'>Contact</h2>
+
                 <div className='grid md:grid-cols-2 gap-4'>
-                  <Input
-                    required
-                    type='email'
-                    placeholder='Email address *'
-                    value={formData.email}
-                    onChange={(e) => handleInputChange('email', e.target.value)}
-                    className='text-black'
-                  />
-                  <Input
-                    required
-                    type='tel'
-                    placeholder='Phone number *'
-                    value={formData.phone}
-                    onChange={(e) => handleInputChange('phone', e.target.value)}
-                    className='text-black'
-                  />
+                  {/* EMAIL */}
+                  <div>
+                    <Input
+                      id='email'
+                      required
+                      type='email'
+                      placeholder='Email address *'
+                      value={formData.email}
+                      onChange={(e) =>
+                        handleInputChange('email', e.target.value)
+                      }
+                      className={inputClass('email')}
+                      aria-invalid={!!errors.email}
+                    />
+                    {showError('email')}
+                  </div>
+
+                  {/* PHONE */}
+                  <div>
+                    <Input
+                      id='phone'
+                      required
+                      type='tel'
+                      placeholder='Phone number *'
+                      value={formData.phone}
+                      onChange={(e) =>
+                        handleInputChange('phone', e.target.value)
+                      }
+                      className={inputClass('phone')}
+                      aria-invalid={!!errors.phone}
+                    />
+                    {showError('phone')}
+                  </div>
                 </div>
               </div>
 
+              {/* DELIVERY */}
               <div className='bg-white text-black border border-gray-200 rounded-xl p-6'>
                 <h2 className='text-xl font-semibold mb-4'>Delivery</h2>
 
                 <div className='grid md:grid-cols-2 gap-4'>
-                  <Input
-                    required
-                    placeholder='First name *'
-                    value={formData.firstName}
-                    className='text-black'
-                    onChange={(e) =>
-                      handleInputChange('firstName', e.target.value)
-                    }
-                  />
-                  <Input
-                    required
-                    placeholder='Last name *'
-                    value={formData.lastName}
-                    className='text-black'
-                    onChange={(e) =>
-                      handleInputChange('lastName', e.target.value)
-                    }
-                  />
+                  {/* FIRST NAME */}
+                  <div>
+                    <Input
+                      id='firstName'
+                      required
+                      placeholder='First name *'
+                      value={formData.firstName}
+                      className={inputClass('firstName')}
+                      onChange={(e) =>
+                        handleInputChange('firstName', e.target.value)
+                      }
+                      aria-invalid={!!errors.firstName}
+                    />
+                    {showError('firstName')}
+                  </div>
+
+                  {/* LAST NAME */}
+                  <div>
+                    <Input
+                      id='lastName'
+                      required
+                      placeholder='Last name *'
+                      value={formData.lastName}
+                      className={inputClass('lastName')}
+                      onChange={(e) =>
+                        handleInputChange('lastName', e.target.value)
+                      }
+                      aria-invalid={!!errors.lastName}
+                    />
+                    {showError('lastName')}
+                  </div>
                 </div>
 
-                <Input
-                  required
-                  className='mt-4 text-black'
-                  placeholder='Delivery address *'
-                  value={formData.address}
-                  onChange={(e) => handleInputChange('address', e.target.value)}
-                />
+                {/* ADDRESS */}
+                <div className='mt-4'>
+                  <Input
+                    id='address'
+                    required
+                    className={inputClass('address')}
+                    placeholder='Delivery address *'
+                    value={formData.address}
+                    onChange={(e) =>
+                      handleInputChange('address', e.target.value)
+                    }
+                    aria-invalid={!!errors.address}
+                  />
+                  {showError('address')}
+                </div>
 
+                {/* CITY, PROVINCE, POSTAL CODE */}
                 <div className='grid md:grid-cols-3 gap-4 mt-4'>
-                  <Input
-                    required
-                    placeholder='City *'
-                    value={formData.city}
-                    className='text-black'
-                    onChange={(e) => handleInputChange('city', e.target.value)}
-                  />
-                  <Input
-                    placeholder='Province'
-                    value={formData.province}
-                    className='text-black'
-                    onChange={(e) =>
-                      handleInputChange('province', e.target.value)
-                    }
-                  />
-                  <Input
-                    placeholder='Postal code'
-                    value={formData.postalCode}
-                    className='text-black'
-                    onChange={(e) =>
-                      handleInputChange('postalCode', e.target.value)
-                    }
-                  />
+                  {/* CITY */}
+                  <div>
+                    <Input
+                      id='city'
+                      required
+                      placeholder='City *'
+                      value={formData.city}
+                      className={inputClass('city')}
+                      onChange={(e) =>
+                        handleInputChange('city', e.target.value)
+                      }
+                      aria-invalid={!!errors.city}
+                    />
+                    {showError('city')}
+                  </div>
+
+                  {/* PROVINCE */}
+                  <div>
+                    <Input
+                      placeholder='Province'
+                      value={formData.province}
+                      className='text-black'
+                      onChange={(e) =>
+                        handleInputChange('province', e.target.value)
+                      }
+                    />
+                  </div>
+
+                  {/* POSTAL CODE */}
+                  <div>
+                    <Input
+                      id='postalCode'
+                      placeholder='Postal code'
+                      value={formData.postalCode}
+                      className={inputClass('postalCode')}
+                      onChange={(e) =>
+                        handleInputChange('postalCode', e.target.value)
+                      }
+                      aria-invalid={!!errors.postalCode}
+                    />
+                    {showError('postalCode')}
+                  </div>
                 </div>
 
+                {/* DELIVERY NOTE */}
                 <textarea
                   value={formData.deliveryNote}
                   onChange={(e) =>
@@ -212,17 +385,20 @@ const Checkout = () => {
                 />
               </div>
 
+              {/* SHIPPING METHOD - UNCHANGED */}
               <div className='bg-white text-black border border-gray-200 rounded-xl p-6'>
                 <h2 className='text-xl font-semibold flex items-center gap-2 mb-4'>
                   <Truck className='w-5 h-5 text-primary' />
                   Shipping Method
                 </h2>
+
                 <div className='p-4 rounded-lg border border-gray-300 bg-gray-50 flex justify-between'>
                   <span>Standard Delivery</span>
                   <strong>Rs. {shippingCost.toLocaleString()}</strong>
                 </div>
               </div>
 
+              {/* PAYMENT - UNCHANGED */}
               <div className='bg-white text-black border border-gray-200 rounded-xl p-6'>
                 <h2 className='text-xl font-semibold flex items-center gap-2 mb-4'>
                   <CreditCard className='w-5 h-5 text-primary' />
@@ -237,10 +413,13 @@ const Checkout = () => {
                 >
                   <label className='flex items-start gap-3 rounded-lg border border-gray-200 p-4 cursor-pointer hover:bg-gray-50'>
                     <RadioGroupItem value='cod' className='mt-1' />
+
                     <span>
                       <span className='font-medium flex items-center gap-2'>
-                        <Banknote className='w-4 h-4' /> Cash on Delivery
+                        <Banknote className='w-4 h-4' />
+                        Cash on Delivery
                       </span>
+
                       <span className='text-sm text-gray-500 block mt-1'>
                         Pay when your order is delivered.
                       </span>
@@ -249,8 +428,10 @@ const Checkout = () => {
 
                   <label className='flex items-start gap-3 rounded-lg border border-gray-200 p-4 mt-3 cursor-pointer hover:bg-gray-50'>
                     <RadioGroupItem value='online' className='mt-1' />
+
                     <span>
                       <span className='font-medium'>Pay Online by Card</span>
+
                       <span className='text-sm text-gray-500 block mt-1'>
                         Secure payment through MarxPay. Visa, Mastercard,
                         UnionPay and supported cards.
@@ -260,6 +441,7 @@ const Checkout = () => {
                 </RadioGroup>
               </div>
 
+              {/* SUBMIT ORDER */}
               <Button
                 type='submit'
                 className='w-full text-white'
@@ -281,6 +463,7 @@ const Checkout = () => {
             </form>
           </div>
 
+          {/* ORDER SUMMARY - UNCHANGED */}
           <div className='bg-white text-black border border-gray-200 rounded-xl p-6 sticky top-6 h-fit'>
             <h2 className='text-xl font-semibold mb-4'>Order Summary</h2>
 
@@ -292,12 +475,14 @@ const Checkout = () => {
                     alt={item.name}
                     className='w-14 h-14 object-cover rounded-lg border'
                   />
+
                   <div className='flex-1'>
                     <p className='text-sm font-medium'>{item.name}</p>
                     <p className='text-xs text-gray-600'>
                       Qty: {item.quantity}
                     </p>
                   </div>
+
                   <p className='text-sm font-semibold'>
                     Rs. {(item.price * item.quantity).toLocaleString()}
                   </p>
@@ -306,17 +491,21 @@ const Checkout = () => {
             </div>
 
             <hr className='border-gray-200 my-4' />
+
             <div className='space-y-2 text-sm'>
               <div className='flex justify-between'>
                 <span>Subtotal</span>
                 <span>Rs. {subtotal.toLocaleString()}</span>
               </div>
+
               <div className='flex justify-between'>
                 <span>Delivery</span>
                 <span>Rs. {shippingCost.toLocaleString()}</span>
               </div>
             </div>
+
             <hr className='border-gray-200 my-4' />
+
             <div className='flex justify-between font-bold text-lg'>
               <span>Total</span>
               <span className='text-primary'>Rs. {total.toLocaleString()}</span>

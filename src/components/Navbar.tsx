@@ -34,7 +34,7 @@ const Navbar = () => {
               className='h-14 w-20'
             />
             <h2 className='text-1xl font-bold text-[#1F3D2B] mt-2 md:mt-0 md:ml-4 text-center md:text-left'>
-              SAJ Associates
+              SAJ Skincare
               <br />
               <span className='text-sm font-normal'>
                 Herbal · Natural · 100% Sri Lankan
