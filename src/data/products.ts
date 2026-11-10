@@ -280,6 +280,16 @@ export const products: Product[] = [
     description:
       'Experience a refreshing and nourishing cleanse with the Moringa and Lavender Nourishing Bar. This sulfate-free soap combines moringa with the soothing fragrance of lavender to create a pleasant daily bathing experience. Its cleansing formula helps remove impurities while maintaining skin moisture, leaving your skin feeling soft, smooth, and refreshed with a delicate floral aroma.',
   },
+  {
+    id: 's13',
+    name: 'Sandalwood Skin Softening Soap',
+    price: 1000,
+    category: 'SOAP',
+    image: '/assets/sandalwood.jpeg',
+
+    description:
+      'Experience a luxurious bathing experience and soothe the skin with Sandalwood Skin Softening Bar. This natural handmade glycerine bar combines the classic, grounding aroma of sandalwood oil with herbal powders to improve skin appearance and help balance oily skin. Enriched with plant-based oils, its deeply refreshing fragrance creates a pleasant daily ritual that cleanses gently while unlocking a smooth, radiant, and completely revitalized complexion.',
+  },
 
   {
     id: 'm1',
