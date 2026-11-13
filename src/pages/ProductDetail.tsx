@@ -1,12 +1,6 @@
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import {
-  ArrowLeft,
-  ShoppingCart,
-  Star,
-  Plus,
-  Minus,
-} from 'lucide-react';
+import { ArrowLeft, ShoppingCart, Star, Plus, Minus } from 'lucide-react';
 import { useCart } from '@/contexts/CartContext';
 import { products, Product } from '@/data/products';
 import { Button } from '@/components/ui/button';
@@ -63,8 +57,6 @@ const ProductDetail = () => {
     navigate('/checkout');
   };
 
-
-
   return (
     <div className='min-h-screen py-8 px-4'>
       <div className='container mx-auto max-w-6xl'>
@@ -86,7 +78,7 @@ const ProductDetail = () => {
               <img
                 src={product.image}
                 alt={product.name}
-                className='w-full h-full object-cover'
+                className='w-full h-full object-contain'
               />
             </div>
             {product.featured && (
@@ -154,8 +146,6 @@ const ProductDetail = () => {
                   >
                     Buy Now
                   </Button>
-
-
                 </div>
               </div>
 

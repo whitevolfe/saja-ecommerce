@@ -24,7 +24,7 @@ const CategoryCard = ({ category, isOpen, onClick }: CategoryCardProps) => {
             <img
               src={category.image}
               alt={category.name}
-              className='w-full h-full object-cover p-1 group-hover:scale-105 transition-transform duration-300'
+              className='w-full h-full object-contain p-1 group-hover:scale-105 transition-transform duration-300'
             />
           </div>
 
