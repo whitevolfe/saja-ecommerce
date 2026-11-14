@@ -110,12 +110,12 @@ const Home = () => {
             />
 
             {/* Dark Gradient Overlay */}
-            <div className='absolute inset-0 bg-gradient-to-r from-black/75 via-black/40 to-transparent z-0'></div>
+            {/* <div className='absolute inset-0 bg-gradient-to-r from-black/75 via-black/40 to-transparent z-0'></div> */}
 
             {/* Content */}
             <div className='absolute inset-0 flex items-center z-10'>
               <div className='px-6 md:px-12 lg:px-20 max-w-3xl text-white'>
-                <h1
+                {/* <h1
                   className='
               text-4xl
               md:text-5xl
@@ -145,10 +145,10 @@ const Home = () => {
                   style={{ fontFamily: "'Playfair Display', serif" }}
                 >
                   100% Natural
-                </h2>
+                </h2> */}
 
                 {/* Improved Description Box */}
-                <div
+                {/* <div
                   className='
     bg-black/40
     backdrop-blur-md
@@ -171,7 +171,7 @@ const Home = () => {
                   <p className='mt-2 text-[#d7ff72] text-base md:text-xl font-bold'>
                     Zero chemicals. Pure nature.
                   </p>
-                </div>
+                </div> */}
 
                 {/* <div className='flex flex-col sm:flex-row gap-4'>
                   <Button
