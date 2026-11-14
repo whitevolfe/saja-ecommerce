@@ -48,7 +48,7 @@ const Home = () => {
     .slice(0, 4);
 
   const [currentTestimonialIndex, setCurrentTestimonialIndex] = useState(0);
-  const heroImage = '/assets/Banner_image_1.jpeg';
+  const heroImage = '/assets/Banner_image_1.png';
 
   const testimonials = [
     {
