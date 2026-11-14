@@ -21,6 +21,10 @@ const json = (body: unknown, status = 200) =>
     },
   });
 
+// --------------------------------------------------
+// WEB3FORMS EMAIL NOTIFICATION
+// --------------------------------------------------
+
 const sendWeb3Forms = async (
   subject: string,
   message: string,
@@ -51,14 +55,18 @@ const sendWeb3Forms = async (
   }
 };
 
+// --------------------------------------------------
+// ORDER EMAIL FORMAT
+// --------------------------------------------------
+
 const formatOrderMessage = (order: any) => {
   const itemLines = (order.items || [])
     .map(
       (item: any) =>
         `• ${item.name}\n` +
-        `  Qty: ${item.quantity}\n` +
-        `  Unit Price: Rs. ${Number(item.unitPrice).toLocaleString()}\n` +
-        `  Line Total: Rs. ${Number(item.lineTotal).toLocaleString()}`,
+        `Qty: ${item.quantity}\n` +
+        `Unit Price: Rs. ${Number(item.unitPrice).toLocaleString()}\n` +
+        `Line Total: Rs. ${Number(item.lineTotal).toLocaleString()}`,
     )
     .join('\n\n');
 
@@ -86,6 +94,260 @@ ${order.city}${order.province ? `, ${order.province}` : ''}${order.postal_code ?
 ${order.delivery_note ? `\nDelivery Note: ${order.delivery_note}` : ''}`;
 };
 
+// --------------------------------------------------
+// META CONVERSIONS API HELPERS
+// --------------------------------------------------
+
+const sha256 = async (value: string): Promise<string> => {
+  const data = new TextEncoder().encode(value);
+
+  const hash = await crypto.subtle.digest('SHA-256', data);
+
+  return Array.from(new Uint8Array(hash))
+    .map((byte) => byte.toString(16).padStart(2, '0'))
+    .join('');
+};
+
+const normalizeEmail = (value: unknown): string => {
+  return String(value ?? '')
+    .trim()
+    .toLowerCase();
+};
+
+const normalizePhone = (value: unknown): string => {
+  return String(value ?? '')
+    .replace(/\D/g, '')
+    .replace(/^0+/, '');
+};
+
+// One stable event ID per order.
+// The same ID must be used by the browser Meta Pixel.
+const getPurchaseEventId = (order: any): string => {
+  return `saj_purchase_${order.id}`;
+};
+
+// --------------------------------------------------
+// SEND META PURCHASE EVENT
+// --------------------------------------------------
+
+const sendMetaPurchase = async (
+  order: any,
+  request: Request,
+): Promise<boolean> => {
+  const pixelId = Deno.env.get('META_PIXEL_ID');
+  const accessToken = Deno.env.get('META_ACCESS_TOKEN');
+
+  if (!pixelId || !accessToken) {
+    console.error(
+      'Meta Purchase skipped: META_PIXEL_ID or META_ACCESS_TOKEN is missing.',
+    );
+    return false;
+  }
+
+  const apiVersion = Deno.env.get('META_API_VERSION') || 'v25.0';
+
+  const eventId = getPurchaseEventId(order);
+
+  const email = normalizeEmail(order.customer_email);
+  const phone = normalizePhone(order.customer_phone);
+
+  const userData: Record<string, unknown> = {};
+
+  if (email) {
+    userData.em = [await sha256(email)];
+  }
+
+  if (phone) {
+    userData.ph = [await sha256(phone)];
+  }
+
+  const customerName = String(order.customer_name ?? '')
+    .trim()
+    .toLowerCase()
+    .split(/\s+/)
+    .filter(Boolean);
+
+  if (customerName[0]) {
+    userData.fn = [await sha256(customerName[0])];
+  }
+
+  if (customerName.length > 1) {
+    userData.ln = [await sha256(customerName.slice(1).join(' '))];
+  }
+
+  // These values are not hashed.
+  const clientIp =
+    request.headers.get('cf-connecting-ip') ||
+    request.headers.get('x-forwarded-for')?.split(',')[0]?.trim();
+
+  const userAgent = request.headers.get('user-agent');
+
+  if (clientIp) {
+    userData.client_ip_address = clientIp;
+  }
+
+  if (userAgent) {
+    userData.client_user_agent = userAgent;
+  }
+
+  const contents = (order.items || []).map((item: any) => ({
+    id: String(item.id ?? item.name),
+    quantity: Number(item.quantity),
+    item_price: Number(item.unitPrice),
+  }));
+
+  const contentIds = (order.items || []).map((item: any) =>
+    String(item.id ?? item.name),
+  );
+
+  const origin = request.headers.get('origin');
+
+  const eventSourceUrl =
+    origin && /^https?:\/\//i.test(origin) ? origin : 'https://www.saja.lk';
+
+  const event = {
+    event_name: 'Purchase',
+    event_time: Math.floor(Date.now() / 1000),
+    event_id: eventId,
+    action_source: 'website',
+    event_source_url: eventSourceUrl,
+    user_data: userData,
+    custom_data: {
+      currency: 'LKR',
+      value: Number(order.total_amount),
+      order_id: String(order.order_number),
+      content_type: 'product',
+      content_ids: contentIds,
+      contents,
+      num_items: (order.items || []).reduce(
+        (total: number, item: any) => total + Number(item.quantity || 0),
+        0,
+      ),
+    },
+  };
+
+  const payload: Record<string, unknown> = {
+    data: [event],
+  };
+
+  const testEventCode = Deno.env.get('META_TEST_EVENT_CODE');
+
+  if (testEventCode) {
+    payload.test_event_code = testEventCode;
+  }
+
+  const response = await fetch(
+    `https://graph.facebook.com/${apiVersion}/${pixelId}/events?access_token=${encodeURIComponent(accessToken)}`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    },
+  );
+
+  const result = await response.json().catch(() => ({}));
+
+  if (!response.ok || Number(result?.events_received ?? 0) < 1) {
+    console.error('Meta Purchase API error:', {
+      status: response.status,
+      result,
+      orderNumber: order.order_number,
+    });
+
+    return false;
+  }
+
+  console.log('Meta Purchase event accepted:', {
+    eventId,
+    orderNumber: order.order_number,
+    eventsReceived: result.events_received,
+  });
+
+  return true;
+};
+
+// --------------------------------------------------
+// CLAIM AND SEND META EVENT
+// --------------------------------------------------
+
+const attemptMetaPurchase = async (
+  order: any,
+  request: Request,
+): Promise<string> => {
+  const eventId = getPurchaseEventId(order);
+
+  if (order.payment_status !== 'paid') {
+    return eventId;
+  }
+
+  const now = new Date().toISOString();
+
+  // Allow recovery if a previous invocation crashed
+  // while holding the claim for more than 10 minutes.
+  const staleTime = new Date(Date.now() - 10 * 60 * 1000).toISOString();
+
+  // Atomic claim: only one invocation can send this
+  // order's server-side Purchase event at a time.
+  const { data: claim, error: claimError } = await supabase
+    .from('orders')
+    .update({
+      meta_purchase_claimed_at: now,
+    })
+    .eq('id', order.id)
+    .eq('payment_status', 'paid')
+    .or(
+      `meta_purchase_claimed_at.is.null,meta_purchase_claimed_at.lt.${staleTime}`,
+    )
+    .select('id')
+    .maybeSingle();
+
+  if (claimError) {
+    console.error('Meta Purchase claim failed:', claimError);
+    return eventId;
+  }
+
+  if (!claim) {
+    console.log(
+      'Meta Purchase already sent or currently being processed:',
+      eventId,
+    );
+
+    return eventId;
+  }
+
+  try {
+    const sent = await sendMetaPurchase(order, request);
+
+    if (!sent) {
+      throw new Error('Meta Purchase event was not accepted.');
+    }
+  } catch (error) {
+    console.error('Meta Purchase sending failed:', error);
+
+    // Release the claim so a later payment-result
+    // verification request can retry the event.
+    const { error: releaseError } = await supabase
+      .from('orders')
+      .update({
+        meta_purchase_claimed_at: null,
+      })
+      .eq('id', order.id)
+      .eq('meta_purchase_claimed_at', now);
+
+    if (releaseError) {
+      console.error('Failed to release Meta Purchase claim:', releaseError);
+    }
+  }
+
+  return eventId;
+};
+
+// --------------------------------------------------
+// MAIN PAYMENT VERIFICATION
+// --------------------------------------------------
+
 Deno.serve(async (request) => {
   if (request.method === 'OPTIONS') {
     return new Response('ok', {
@@ -109,7 +371,7 @@ Deno.serve(async (request) => {
       return json({ error: 'Invalid payment references.' }, 400);
     }
 
-    // Find the order using the merchant reference.
+    // Find order using merchant reference.
     const { data: order, error: orderError } = await supabase
       .from('orders')
       .select('*')
@@ -137,12 +399,17 @@ Deno.serve(async (request) => {
       );
     }
 
-    // Prevent duplicate verification and email notifications.
+    // Already paid: do not verify or email again.
+    // Retry Meta only if its previous attempt failed
+    // and the claim has been released.
     if (order.payment_status === 'paid') {
+      const eventId = await attemptMetaPurchase(order, request);
+
       return json({
         success: true,
         paid: true,
         orderNumber: order.order_number,
+        eventId,
         message: 'Payment already verified.',
       });
     }
@@ -158,8 +425,7 @@ Deno.serve(async (request) => {
       return json({ error: 'Payment gateway is not configured.' }, 500);
     }
 
-    // Verify the transaction directly with MarxPay.
-    // The UUID is retained as a string in the URL path.
+    // Verify directly with MarxPay.
     const marxResponse = await fetch(
       `${marxBaseUrl}/${encodeURIComponent(trId)}`,
       {
@@ -213,8 +479,7 @@ Deno.serve(async (request) => {
       'APPROVED_PENDING_SETTLEMENT',
     ]);
 
-    // Do not trust the browser redirect alone.
-    // Confirm gateway status, both references, and amount.
+    // Validate gateway status, references and amount.
     const paid =
       marxResult?.status === 0 &&
       summaryResult === 'SUCCESS' &&
@@ -236,7 +501,7 @@ Deno.serve(async (request) => {
         response: marxResult,
       });
 
-      // Store the gateway response for troubleshooting.
+      // Store response for troubleshooting.
       await supabase
         .from('orders')
         .update({
@@ -267,15 +532,41 @@ Deno.serve(async (request) => {
       })
       .eq('id', order.id)
       .neq('payment_status', 'paid')
-      .select('id')
+      .select('*')
       .maybeSingle();
 
     if (updateError) {
       throw updateError;
     }
 
-    // If another request already marked it paid,
-    // do not send a duplicate notification.
+    // Handle another simultaneous request winning
+    // the payment-status update.
+    let paidOrder = updatedOrder;
+
+    if (!paidOrder) {
+      const { data: latestOrder, error: latestError } = await supabase
+        .from('orders')
+        .select('*')
+        .eq('id', order.id)
+        .maybeSingle();
+
+      if (latestError) {
+        throw latestError;
+      }
+
+      if (!latestOrder || latestOrder.payment_status !== 'paid') {
+        throw new Error('Unable to confirm the final paid order status.');
+      }
+
+      paidOrder = latestOrder;
+    }
+
+    // Send Meta Purchase after successful payment.
+    // Meta failure must never undo the payment.
+    const eventId = await attemptMetaPurchase(paidOrder, request);
+
+    // Send Web3Forms email only for the request
+    // that successfully changed the order to paid.
     if (updatedOrder && !order.email_sent_at) {
       try {
         await sendWeb3Forms(
@@ -304,6 +595,7 @@ Deno.serve(async (request) => {
       success: true,
       paid: true,
       orderNumber: order.order_number,
+      eventId,
       message: 'Payment verified successfully.',
     });
   } catch (error) {
