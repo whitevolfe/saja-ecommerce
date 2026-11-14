@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { ArrowLeft, CreditCard, Truck, Banknote } from 'lucide-react';
@@ -99,18 +98,14 @@ const Checkout = () => {
     // 5. CITY VALIDATION
     if (!formData.city.trim()) {
       newErrors.city = 'City is required.';
-    } else if (
-      !/^[\p{L}\p{M}\s'.-]+$/u.test(formData.city.trim())
-    ) {
+    } else if (!/^[\p{L}\p{M}\s'.-]+$/u.test(formData.city.trim())) {
       newErrors.city = 'Please enter a valid city.';
     }
 
     // 6. DISTRICT VALIDATION
     if (!formData.district.trim()) {
       newErrors.district = 'District is required.';
-    } else if (
-      !/^[\p{L}\p{M}\s'.-]+$/u.test(formData.district.trim())
-    ) {
+    } else if (!/^[\p{L}\p{M}\s'.-]+$/u.test(formData.district.trim())) {
       newErrors.district = 'Please enter a valid district.';
     }
 
@@ -120,8 +115,7 @@ const Checkout = () => {
     if (!postalCode) {
       newErrors.postalCode = 'Postal code is required.';
     } else if (!/^\d{5}$/.test(postalCode)) {
-      newErrors.postalCode =
-        'Please enter a valid 5-digit postal code.';
+      newErrors.postalCode = 'Please enter a valid 5-digit postal code.';
     }
 
     return newErrors;
@@ -166,6 +160,7 @@ const Checkout = () => {
         success: boolean;
         orderNumber: string;
         payUrl?: string;
+        eventId?: string;
         message?: string;
       }>('create-order', {
         paymentMethod,
@@ -186,6 +181,35 @@ const Checkout = () => {
         // Customer returns to /payment-result afterwards.
         window.location.assign(result.payUrl);
         return;
+      }
+
+      // Browser Pixel Purchase for COD. eventID must match the server CAPI event.
+      if (paymentMethod === 'cod' && result.eventId) {
+        const pixel = (window as any).fbq;
+        const storageKey = `meta_purchase_${result.eventId}`;
+
+        if (
+          typeof pixel === 'function' &&
+          !sessionStorage.getItem(storageKey)
+        ) {
+          pixel(
+            'track',
+            'Purchase',
+            {
+              currency: 'LKR',
+              value: total,
+              content_type: 'product',
+              contents: cart.map((item) => ({
+                id: String(item.id),
+                quantity: item.quantity,
+                item_price: item.price,
+              })),
+            },
+            { eventID: result.eventId },
+          );
+
+          sessionStorage.setItem(storageKey, '1');
+        }
       }
 
       clearCart();
@@ -213,7 +237,7 @@ const Checkout = () => {
   // Reusable error message
   const showError = (field: string) =>
     errors[field] ? (
-      <p className="text-red-600 text-sm mt-1" role="alert">
+      <p className='text-red-600 text-sm mt-1' role='alert'>
         {errors[field]}
       </p>
     ) : null;
@@ -221,20 +245,18 @@ const Checkout = () => {
   // Reusable input styling
   const inputClass = (field: string) =>
     `text-black ${
-      errors[field]
-        ? 'border-red-500 focus-visible:ring-red-500'
-        : ''
+      errors[field] ? 'border-red-500 focus-visible:ring-red-500' : ''
     }`;
 
   if (cart.length === 0) {
     return (
-      <div className="min-h-screen flex items-center justify-center text-center px-4">
+      <div className='min-h-screen flex items-center justify-center text-center px-4'>
         <div>
-          <h1 className="text-3xl font-bold text-white mb-4">
+          <h1 className='text-3xl font-bold text-white mb-4'>
             Your cart is empty
           </h1>
           <Button asChild>
-            <Link to="/products">Continue Shopping</Link>
+            <Link to='/products'>Continue Shopping</Link>
           </Button>
         </div>
       </div>
@@ -242,34 +264,32 @@ const Checkout = () => {
   }
 
   return (
-    <div className="min-h-screen py-10 px-4">
-      <div className="container mx-auto max-w-6xl">
+    <div className='min-h-screen py-10 px-4'>
+      <div className='container mx-auto max-w-6xl'>
         <Button
-          variant="ghost"
+          variant='ghost'
           onClick={() => navigate(-1)}
-          className="mb-6 text-white gap-2"
+          className='mb-6 text-white gap-2'
         >
-          <ArrowLeft className="w-4 h-4" />
+          <ArrowLeft className='w-4 h-4' />
           Back
         </Button>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <div className="lg:col-span-2 space-y-6">
-            <form onSubmit={onSubmit} noValidate className="space-y-6">
-
+        <div className='grid grid-cols-1 lg:grid-cols-3 gap-8'>
+          <div className='lg:col-span-2 space-y-6'>
+            <form onSubmit={onSubmit} noValidate className='space-y-6'>
               {/* CONTACT */}
-              <div className="bg-white text-black border border-gray-200 rounded-xl p-6">
-                <h2 className="text-xl font-semibold mb-4">Contact</h2>
+              <div className='bg-white text-black border border-gray-200 rounded-xl p-6'>
+                <h2 className='text-xl font-semibold mb-4'>Contact</h2>
 
-                <div className="grid md:grid-cols-2 gap-4">
-
+                <div className='grid md:grid-cols-2 gap-4'>
                   {/* EMAIL */}
                   <div>
                     <Input
-                      id="email"
+                      id='email'
                       required
-                      type="email"
-                      placeholder="Email address *"
+                      type='email'
+                      placeholder='Email address *'
                       value={formData.email}
                       onChange={(e) =>
                         handleInputChange('email', e.target.value)
@@ -283,10 +303,10 @@ const Checkout = () => {
                   {/* PHONE */}
                   <div>
                     <Input
-                      id="phone"
+                      id='phone'
                       required
-                      type="tel"
-                      placeholder="Phone number *"
+                      type='tel'
+                      placeholder='Phone number *'
                       value={formData.phone}
                       onChange={(e) =>
                         handleInputChange('phone', e.target.value)
@@ -300,17 +320,16 @@ const Checkout = () => {
               </div>
 
               {/* DELIVERY */}
-              <div className="bg-white text-black border border-gray-200 rounded-xl p-6">
-                <h2 className="text-xl font-semibold mb-4">Delivery</h2>
+              <div className='bg-white text-black border border-gray-200 rounded-xl p-6'>
+                <h2 className='text-xl font-semibold mb-4'>Delivery</h2>
 
-                <div className="grid md:grid-cols-2 gap-4">
-
+                <div className='grid md:grid-cols-2 gap-4'>
                   {/* FIRST NAME */}
                   <div>
                     <Input
-                      id="firstName"
+                      id='firstName'
                       required
-                      placeholder="First name *"
+                      placeholder='First name *'
                       value={formData.firstName}
                       className={inputClass('firstName')}
                       onChange={(e) =>
@@ -324,9 +343,9 @@ const Checkout = () => {
                   {/* LAST NAME */}
                   <div>
                     <Input
-                      id="lastName"
+                      id='lastName'
                       required
-                      placeholder="Last name *"
+                      placeholder='Last name *'
                       value={formData.lastName}
                       className={inputClass('lastName')}
                       onChange={(e) =>
@@ -339,12 +358,12 @@ const Checkout = () => {
                 </div>
 
                 {/* ADDRESS */}
-                <div className="mt-4">
+                <div className='mt-4'>
                   <Input
-                    id="address"
+                    id='address'
                     required
                     className={inputClass('address')}
-                    placeholder="Delivery address *"
+                    placeholder='Delivery address *'
                     value={formData.address}
                     onChange={(e) =>
                       handleInputChange('address', e.target.value)
@@ -355,14 +374,13 @@ const Checkout = () => {
                 </div>
 
                 {/* CITY, DISTRICT, POSTAL CODE */}
-                <div className="grid md:grid-cols-3 gap-4 mt-4">
-
+                <div className='grid md:grid-cols-3 gap-4 mt-4'>
                   {/* CITY */}
                   <div>
                     <Input
-                      id="city"
+                      id='city'
                       required
-                      placeholder="City *"
+                      placeholder='City *'
                       value={formData.city}
                       className={inputClass('city')}
                       onChange={(e) =>
@@ -376,9 +394,9 @@ const Checkout = () => {
                   {/* DISTRICT */}
                   <div>
                     <Input
-                      id="district"
+                      id='district'
                       required
-                      placeholder="District *"
+                      placeholder='District *'
                       value={formData.district}
                       className={inputClass('district')}
                       onChange={(e) =>
@@ -392,12 +410,12 @@ const Checkout = () => {
                   {/* POSTAL CODE */}
                   <div>
                     <Input
-                      id="postalCode"
+                      id='postalCode'
                       required
-                      type="text"
-                      inputMode="numeric"
+                      type='text'
+                      inputMode='numeric'
                       maxLength={5}
-                      placeholder="Postal code *"
+                      placeholder='Postal code *'
                       value={formData.postalCode}
                       className={inputClass('postalCode')}
                       onChange={(e) =>
@@ -415,32 +433,32 @@ const Checkout = () => {
                   onChange={(e) =>
                     handleInputChange('deliveryNote', e.target.value)
                   }
-                  placeholder="Delivery note (optional)"
-                  className="mt-4 w-full min-h-24 rounded-md border border-input bg-background px-3 py-2 text-sm text-black outline-none focus:ring-2 focus:ring-ring"
+                  placeholder='Delivery note (optional)'
+                  className='mt-4 w-full min-h-24 rounded-md border border-input bg-background px-3 py-2 text-sm text-black outline-none focus:ring-2 focus:ring-ring'
                 />
               </div>
 
               {/* SHIPPING METHOD */}
-              <div className="bg-white text-black border border-gray-200 rounded-xl p-6">
-                <h2 className="text-xl font-semibold flex items-center gap-2 mb-4">
-                  <Truck className="w-5 h-5 text-primary" />
+              <div className='bg-white text-black border border-gray-200 rounded-xl p-6'>
+                <h2 className='text-xl font-semibold flex items-center gap-2 mb-4'>
+                  <Truck className='w-5 h-5 text-primary' />
                   Shipping Method
                 </h2>
 
-                <div className="p-4 rounded-lg border border-gray-300 bg-gray-50 flex justify-between">
+                <div className='p-4 rounded-lg border border-gray-300 bg-gray-50 flex justify-between'>
                   <span>Standard Delivery</span>
                   <strong>Rs. {shippingCost.toLocaleString()}</strong>
                 </div>
 
-                <p className="text-xs text-gray-500 mt-2">
+                <p className='text-xs text-gray-500 mt-2'>
                   Colombo: Rs. 400 | Other districts: Rs. 500
                 </p>
               </div>
 
               {/* PAYMENT */}
-              <div className="bg-white text-black border border-gray-200 rounded-xl p-6">
-                <h2 className="text-xl font-semibold flex items-center gap-2 mb-4">
-                  <CreditCard className="w-5 h-5 text-primary" />
+              <div className='bg-white text-black border border-gray-200 rounded-xl p-6'>
+                <h2 className='text-xl font-semibold flex items-center gap-2 mb-4'>
+                  <CreditCard className='w-5 h-5 text-primary' />
                   Payment
                 </h2>
 
@@ -450,30 +468,28 @@ const Checkout = () => {
                     setPaymentMethod(value as 'cod' | 'online')
                   }
                 >
-                  <label className="flex items-start gap-3 rounded-lg border border-gray-200 p-4 cursor-pointer hover:bg-gray-50">
-                    <RadioGroupItem value="cod" className="mt-1" />
+                  <label className='flex items-start gap-3 rounded-lg border border-gray-200 p-4 cursor-pointer hover:bg-gray-50'>
+                    <RadioGroupItem value='cod' className='mt-1' />
 
                     <span>
-                      <span className="font-medium flex items-center gap-2">
-                        <Banknote className="w-4 h-4" />
+                      <span className='font-medium flex items-center gap-2'>
+                        <Banknote className='w-4 h-4' />
                         Cash on Delivery
                       </span>
 
-                      <span className="text-sm text-gray-500 block mt-1">
+                      <span className='text-sm text-gray-500 block mt-1'>
                         Pay when your order is delivered.
                       </span>
                     </span>
                   </label>
 
-                  <label className="flex items-start gap-3 rounded-lg border border-gray-200 p-4 mt-3 cursor-pointer hover:bg-gray-50">
-                    <RadioGroupItem value="online" className="mt-1" />
+                  <label className='flex items-start gap-3 rounded-lg border border-gray-200 p-4 mt-3 cursor-pointer hover:bg-gray-50'>
+                    <RadioGroupItem value='online' className='mt-1' />
 
                     <span>
-                      <span className="font-medium">
-                        Pay Online by Card
-                      </span>
+                      <span className='font-medium'>Pay Online by Card</span>
 
-                      <span className="text-sm text-gray-500 block mt-1">
+                      <span className='text-sm text-gray-500 block mt-1'>
                         Secure payment through MarxPay. Visa, Mastercard,
                         UnionPay and supported cards.
                       </span>
@@ -484,10 +500,10 @@ const Checkout = () => {
 
               {/* SUBMIT ORDER */}
               <Button
-                type="submit"
-                className="w-full text-white"
+                type='submit'
+                className='w-full text-white'
                 disabled={isSubmitting}
-                size="lg"
+                size='lg'
               >
                 {isSubmitting
                   ? 'Processing...'
@@ -497,7 +513,7 @@ const Checkout = () => {
               </Button>
 
               {paymentMethod === 'online' && (
-                <p className="text-center text-white/80 text-sm">
+                <p className='text-center text-white/80 text-sm'>
                   You will be redirected to MarxPay's secure payment page.
                 </p>
               )}
@@ -505,55 +521,51 @@ const Checkout = () => {
           </div>
 
           {/* ORDER SUMMARY */}
-          <div className="bg-white text-black border border-gray-200 rounded-xl p-6 sticky top-6 h-fit">
-            <h2 className="text-xl font-semibold mb-4">
-              Order Summary
-            </h2>
+          <div className='bg-white text-black border border-gray-200 rounded-xl p-6 sticky top-6 h-fit'>
+            <h2 className='text-xl font-semibold mb-4'>Order Summary</h2>
 
-            <div className="space-y-4">
+            <div className='space-y-4'>
               {cart.map((item) => (
-                <div key={item.id} className="flex items-center gap-3">
+                <div key={item.id} className='flex items-center gap-3'>
                   <img
                     src={item.image}
                     alt={item.name}
-                    className="w-14 h-14 object-cover rounded-lg border"
+                    className='w-14 h-14 object-cover rounded-lg border'
                   />
 
-                  <div className="flex-1">
-                    <p className="text-sm font-medium">{item.name}</p>
-                    <p className="text-xs text-gray-600">
+                  <div className='flex-1'>
+                    <p className='text-sm font-medium'>{item.name}</p>
+                    <p className='text-xs text-gray-600'>
                       Qty: {item.quantity}
                     </p>
                   </div>
 
-                  <p className="text-sm font-semibold">
+                  <p className='text-sm font-semibold'>
                     Rs. {(item.price * item.quantity).toLocaleString()}
                   </p>
                 </div>
               ))}
             </div>
 
-            <hr className="border-gray-200 my-4" />
+            <hr className='border-gray-200 my-4' />
 
-            <div className="space-y-2 text-sm">
-              <div className="flex justify-between">
+            <div className='space-y-2 text-sm'>
+              <div className='flex justify-between'>
                 <span>Subtotal</span>
                 <span>Rs. {subtotal.toLocaleString()}</span>
               </div>
 
-              <div className="flex justify-between">
+              <div className='flex justify-between'>
                 <span>Delivery</span>
                 <span>Rs. {shippingCost.toLocaleString()}</span>
               </div>
             </div>
 
-            <hr className="border-gray-200 my-4" />
+            <hr className='border-gray-200 my-4' />
 
-            <div className="flex justify-between font-bold text-lg">
+            <div className='flex justify-between font-bold text-lg'>
               <span>Total</span>
-              <span className="text-primary">
-                Rs. {total.toLocaleString()}
-              </span>
+              <span className='text-primary'>Rs. {total.toLocaleString()}</span>
             </div>
           </div>
         </div>
