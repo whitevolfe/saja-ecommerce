@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -47,7 +48,9 @@
       );
 
       fbq('init', '1748497573061787');
-      fbq('track', 'PageView');
+
+      // PageView is handled by MetaPixelTracker.tsx
+      // Do not add fbq('track', 'PageView') here.
     </script>
     <!-- End Meta Pixel Code -->
 

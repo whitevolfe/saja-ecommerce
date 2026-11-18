@@ -18,7 +18,7 @@ import About from './pages/About';
 import OtherBrands from './pages/OtherBrands';
 import NotFound from './pages/NotFound';
 import ScrollToTop from './components/ScrollToTop';
-import Achivement from './pages/Publicity';
+import MetaPixelTracker from '@/components/MetaPixelTracker';
 
 const queryClient = new QueryClient();
 
@@ -29,6 +29,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <MetaPixelTracker />
           <div className='flex flex-col min-h-screen'>
             <Navbar />
             <main className='flex-1'>
@@ -44,7 +45,6 @@ const App = () => (
                 <Route path='/publicity' element={<Publicity />} />
                 <Route path='/other-brands' element={<OtherBrands />} />
                 <Route path='/about' element={<About />} />
-                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path='*' element={<NotFound />} />
               </Routes>
             </main>

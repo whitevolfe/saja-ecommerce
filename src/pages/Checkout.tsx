@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useNavigate, Link } from 'react-router-dom';
 import { ArrowLeft, CreditCard, Truck, Banknote } from 'lucide-react';
 import { useCart } from '@/contexts/CartContext';
@@ -8,8 +9,15 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { toast } from '@/hooks/use-toast';
 import { invokeFunction } from '@/lib/supabase';
 
+declare global {
+  interface Window {
+    fbq?: (...args: any[]) => void;
+  }
+}
+
 const Checkout = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { cart, getTotalAmount, clearCart } = useCart();
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -38,6 +46,29 @@ const Checkout = () => {
 
   const subtotal = getTotalAmount();
   const total = subtotal + shippingCost;
+
+  // Fire InitiateCheckout once for this React Router checkout visit.
+  useEffect(() => {
+    if (!cart.length || typeof window.fbq !== 'function') return;
+
+    const eventKey = `meta_initiate_checkout_${location.key}`;
+    try {
+      if (sessionStorage.getItem(eventKey)) return;
+      sessionStorage.setItem(eventKey, '1');
+    } catch {
+      // Tracking storage failure must not interrupt checkout.
+    }
+
+    window.fbq('track', 'InitiateCheckout', {
+      value: total,
+      currency: 'LKR',
+      num_items: cart.reduce((sum, item) => sum + item.quantity, 0),
+      content_ids: cart.map((item) => String(item.id)),
+      content_type: 'product',
+    });
+
+    console.log('[Meta] InitiateCheckout:', window.location.href);
+  }, [cart, location.key, total]);
 
   // Handle input changes
   const handleInputChange = (field: string, value: string) => {
@@ -159,6 +190,8 @@ const Checkout = () => {
       const result = await invokeFunction<{
         success: boolean;
         orderNumber: string;
+        orderId?: string;
+        value?: number;
         payUrl?: string;
         eventId?: string;
         message?: string;
@@ -183,32 +216,52 @@ const Checkout = () => {
         return;
       }
 
-      // Browser Pixel Purchase for COD. eventID must match the server CAPI event.
+      // Browser COD Purchase. eventID exactly matches the server CAPI event.
       if (paymentMethod === 'cod' && result.eventId) {
-        const pixel = (window as any).fbq;
+        const pixel = window.fbq;
         const storageKey = `meta_purchase_${result.eventId}`;
+        const serverValue = Number(result.value);
 
-        if (
-          typeof pixel === 'function' &&
-          !sessionStorage.getItem(storageKey)
-        ) {
-          pixel(
-            'track',
-            'Purchase',
-            {
-              currency: 'LKR',
-              value: total,
-              content_type: 'product',
-              contents: cart.map((item) => ({
-                id: String(item.id),
-                quantity: item.quantity,
-                item_price: item.price,
-              })),
-            },
-            { eventID: result.eventId },
+        if (!Number.isFinite(serverValue) || serverValue <= 0) {
+          console.error(
+            'Invalid server-calculated COD order value:',
+            result.value,
           );
-
-          sessionStorage.setItem(storageKey, '1');
+        } else if (typeof pixel === 'function') {
+          try {
+            if (!sessionStorage.getItem(storageKey)) {
+              pixel(
+                'track',
+                'Purchase',
+                {
+                  value: serverValue,
+                  currency: 'LKR',
+                  order_id: String(result.orderId || result.orderNumber),
+                  content_type: 'product',
+                  content_ids: cart.map((item) => String(item.id)),
+                  contents: cart.map((item) => ({
+                    id: String(item.id),
+                    quantity: item.quantity,
+                    item_price: item.price,
+                  })),
+                },
+                { eventID: result.eventId },
+              );
+              sessionStorage.setItem(storageKey, '1');
+              console.log('[Meta] COD Purchase:', {
+                eventId: result.eventId,
+                orderId: result.orderId || result.orderNumber,
+                value: serverValue,
+                currency: 'LKR',
+                url: window.location.href,
+              });
+            }
+          } catch (trackingError) {
+            console.error(
+              'COD browser Purchase tracking failed:',
+              trackingError,
+            );
+          }
         }
       }
 

@@ -183,10 +183,10 @@ const sendCodMetaPurchase = async (
       event_time: Math.floor(Date.now() / 1000),
       event_id: eventId,
       action_source: 'website',
-      event_source_url:
-        request.headers.get('origin') ||
-        Deno.env.get('PUBLIC_SITE_URL') ||
-        'https://www.saja.lk',
+      event_source_url: new URL(
+        '/checkout',
+        Deno.env.get('PUBLIC_SITE_URL') || 'https://www.saja.lk',
+      ).toString(),
       user_data: userData,
       custom_data: {
         currency: 'LKR',
@@ -273,7 +273,7 @@ Deno.serve(async (request) => {
     const phone = clean(customer.phone, 40);
     const address = clean(customer.address, 500);
     const city = clean(customer.city, 100);
-    const province = clean(customer.province, 100);
+    const province = clean(customer.district || customer.province, 100);
     const postalCode = clean(customer.postalCode, 30);
     const deliveryNote = clean(customer.deliveryNote, 500);
 
@@ -409,7 +409,9 @@ Deno.serve(async (request) => {
 
       return json({
         success: true,
-        orderNumber,
+        orderNumber: insertedOrder.order_number,
+        orderId: String(insertedOrder.order_number),
+        value: Number(insertedOrder.total_amount),
         eventId,
         message: 'Order placed successfully.',
       });

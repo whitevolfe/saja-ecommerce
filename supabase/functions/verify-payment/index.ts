@@ -200,10 +200,10 @@ const sendMetaPurchase = async (
     String(item.id ?? item.name),
   );
 
-  const origin = request.headers.get('origin');
-
-  const eventSourceUrl =
-    origin && /^https?:\/\//i.test(origin) ? origin : 'https://www.saja.lk';
+  const eventSourceUrl = new URL(
+    '/payment-result',
+    Deno.env.get('PUBLIC_SITE_URL') || 'https://www.saja.lk',
+  ).toString();
 
   const event = {
     event_name: 'Purchase',
@@ -409,6 +409,8 @@ Deno.serve(async (request) => {
         success: true,
         paid: true,
         orderNumber: order.order_number,
+        orderId: String(order.order_number),
+        value: Number(order.total_amount),
         eventId,
         message: 'Payment already verified.',
       });
@@ -595,6 +597,8 @@ Deno.serve(async (request) => {
       success: true,
       paid: true,
       orderNumber: order.order_number,
+      orderId: String(order.order_number),
+      value: Number(order.total_amount),
       eventId,
       message: 'Payment verified successfully.',
     });

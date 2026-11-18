@@ -1,22 +1,42 @@
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ArrowLeft, ShoppingCart, Star, Plus, Minus } from 'lucide-react';
 import { useCart } from '@/contexts/CartContext';
-import { products, Product } from '@/data/products';
+import { products } from '@/data/products';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/hooks/use-toast';
 import ProductCard from '@/components/ProductCard';
+
+declare global {
+  interface Window {
+    fbq?: (...args: any[]) => void;
+  }
+}
 
 const ProductDetail = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { addToCart } = useCart();
   const [quantity, setQuantity] = useState(1);
-
-  // Find the product by ID
   const product = products.find((p) => p.id === id);
 
-  // Get featured products (excluding current product)
+  useEffect(() => {
+    if (!product || typeof window.fbq !== 'function') return;
+
+    window.fbq('track', 'ViewContent', {
+      content_name: product.name,
+      content_ids: [String(product.id)],
+      content_type: 'product',
+      value: Number(product.price),
+      currency: 'LKR',
+    });
+    console.log('[Meta] ViewContent:', {
+      product: product.name,
+      url: window.location.href,
+      value: product.price,
+    });
+  }, [product]);
+
   const featuredProducts = products
     .filter((p) => p.featured && p.id !== id)
     .slice(0, 4);
@@ -38,9 +58,7 @@ const ProductDetail = () => {
   }
 
   const handleAddToCart = () => {
-    for (let i = 0; i < quantity; i++) {
-      addToCart(product);
-    }
+    for (let i = 0; i < quantity; i++) addToCart(product);
     toast({
       title: 'Added to cart',
       description: `${quantity} x ${product.name} has been added to your cart.`,
@@ -48,19 +66,13 @@ const ProductDetail = () => {
   };
 
   const handleBuyNow = () => {
-    // Add to cart first
-    for (let i = 0; i < quantity; i++) {
-      addToCart(product);
-    }
-
-    // Navigate to checkout page
+    for (let i = 0; i < quantity; i++) addToCart(product);
     navigate('/checkout');
   };
 
   return (
     <div className='min-h-screen py-8 px-4'>
       <div className='container mx-auto max-w-6xl'>
-        {/* Back Button */}
         <Button
           variant='ghost'
           onClick={() => navigate(-1)}
@@ -69,10 +81,7 @@ const ProductDetail = () => {
           <ArrowLeft className='w-4 h-4' />
           Back
         </Button>
-
-        {/* Product Details */}
         <div className='grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16'>
-          {/* Product Image */}
           <div className='space-y-4'>
             <div className='aspect-square bg-card rounded-xl overflow-hidden border border-border'>
               <img
@@ -88,8 +97,6 @@ const ProductDetail = () => {
               </div>
             )}
           </div>
-
-          {/* Product Info */}
           <div className='space-y-6'>
             <div>
               <h1 className='text-4xl font-bold mb-4'>{product.name}</h1>
@@ -100,8 +107,6 @@ const ProductDetail = () => {
                 {product.description}
               </p>
             </div>
-
-            {/* Quantity Selector */}
             <div className='space-y-4'>
               <div className='flex items-center gap-4'>
                 <span className='font-medium'>Quantity:</span>
@@ -125,8 +130,6 @@ const ProductDetail = () => {
                   </Button>
                 </div>
               </div>
-
-              {/* Action Buttons */}
               <div className='space-y-3'>
                 <Button
                   onClick={handleAddToCart}
@@ -136,7 +139,6 @@ const ProductDetail = () => {
                   <ShoppingCart className='w-5 h-5' />
                   Add to Cart
                 </Button>
-
                 <div className='grid grid-cols-1 gap-3'>
                   <Button
                     onClick={handleBuyNow}
@@ -148,8 +150,6 @@ const ProductDetail = () => {
                   </Button>
                 </div>
               </div>
-
-              {/* Product Details */}
               <div className='space-y-3 pt-6 border-t border-border'>
                 <div className='flex justify-between'>
                   <span className='text-muted-foreground'>Category:</span>
@@ -165,8 +165,6 @@ const ProductDetail = () => {
             </div>
           </div>
         </div>
-
-        {/* Featured Products Section */}
         {featuredProducts.length > 0 && (
           <div className='space-y-8'>
             <div className='text-center'>
@@ -175,10 +173,12 @@ const ProductDetail = () => {
                 Discover more amazing products from our collection
               </p>
             </div>
-
             <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6'>
-              {featuredProducts.map((product) => (
-                <ProductCard key={product.id} product={product} />
+              {featuredProducts.map((featuredProduct) => (
+                <ProductCard
+                  key={featuredProduct.id}
+                  product={featuredProduct}
+                />
               ))}
             </div>
           </div>

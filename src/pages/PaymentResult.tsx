@@ -6,7 +6,6 @@ import { useCart } from '@/contexts/CartContext';
 import { invokeFunction } from '@/lib/supabase';
 
 type ResultState = 'loading' | 'success' | 'failed';
-
 type MetaPixel = (...args: any[]) => void;
 
 declare global {
@@ -18,7 +17,6 @@ declare global {
 const PaymentResult = () => {
   const [searchParams] = useSearchParams();
   const { clearCart } = useCart();
-
   const [state, setState] = useState<ResultState>('loading');
   const [message, setMessage] = useState('Verifying your payment...');
   const [orderNumber, setOrderNumber] = useState('');
@@ -26,45 +24,41 @@ const PaymentResult = () => {
   useEffect(() => {
     let cancelled = false;
 
-    const trackPurchase = (eventId: string) => {
-      if (!eventId) return;
-
-      // Pixel must be loaded before attempting tracking.
+    const trackPurchase = (eventId: string, value: number, orderId: string) => {
+      if (!eventId || !Number.isFinite(value) || value <= 0) return;
       if (typeof window.fbq !== 'function') {
         console.warn('Meta Pixel is not available. Purchase event skipped.');
         return;
       }
 
-      // Prevent duplicate browser Purchase events
-      // when the payment result page is refreshed.
       const storageKey = `meta_purchase_${eventId}`;
-
       try {
         if (sessionStorage.getItem(storageKey)) {
           console.log('Meta Purchase already tracked:', eventId);
           return;
         }
 
-        // Save before firing to prevent duplicate calls.
-        sessionStorage.setItem(storageKey, 'true');
-      } catch (error) {
-        console.warn('Unable to access session storage:', error);
-        return;
-      }
-
-      // Same event ID as the Supabase Conversions API.
-      window.fbq(
-        'track',
-        'Purchase',
-        {
+        window.fbq(
+          'track',
+          'Purchase',
+          {
+            value,
+            currency: 'LKR',
+            order_id: orderId,
+          },
+          { eventID: eventId },
+        );
+        sessionStorage.setItem(storageKey, '1');
+        console.log('[Meta] MarxPay Purchase:', {
+          eventId,
+          orderId,
+          value,
           currency: 'LKR',
-        },
-        {
-          eventID: eventId,
-        },
-      );
-
-      console.log('Meta Pixel Purchase event fired:', eventId);
+          url: window.location.href,
+        });
+      } catch (error) {
+        console.error('Unable to track MarxPay browser Purchase:', error);
+      }
     };
 
     const verify = async () => {
@@ -73,7 +67,6 @@ const PaymentResult = () => {
 
       if (!trId || !merchantRID) {
         if (cancelled) return;
-
         setState('failed');
         setMessage(
           'The payment return information is incomplete. Please contact us if your card was charged.',
@@ -86,27 +79,27 @@ const PaymentResult = () => {
           success: boolean;
           paid: boolean;
           orderNumber?: string;
+          orderId?: string;
+          value?: number;
           eventId?: string;
           message?: string;
-        }>('verify-payment', {
-          trId,
-          merchantRID,
-        });
+        }>('verify-payment', { trId, merchantRID });
 
         if (cancelled) return;
 
         if (result.success && result.paid) {
           setState('success');
-
           setOrderNumber(result.orderNumber || '');
-
           setMessage(
             'Your payment was successfully verified and your order has been confirmed.',
           );
 
-          // Track Purchase only after server verification.
           if (result.eventId) {
-            trackPurchase(result.eventId);
+            trackPurchase(
+              result.eventId,
+              Number(result.value),
+              String(result.orderId || result.orderNumber || ''),
+            );
           } else {
             console.warn('Purchase event ID was not returned by Supabase.');
           }
@@ -114,7 +107,6 @@ const PaymentResult = () => {
           clearCart();
         } else {
           setState('failed');
-
           setMessage(
             result.message ||
               'The payment was not completed. You can return to checkout and try again.',
@@ -122,9 +114,7 @@ const PaymentResult = () => {
         }
       } catch (error) {
         if (cancelled) return;
-
         setState('failed');
-
         setMessage(
           error instanceof Error
             ? error.message
@@ -134,7 +124,6 @@ const PaymentResult = () => {
     };
 
     void verify();
-
     return () => {
       cancelled = true;
     };
@@ -146,15 +135,12 @@ const PaymentResult = () => {
         {state === 'loading' && (
           <Loader2 className='w-14 h-14 mx-auto mb-5 text-primary animate-spin' />
         )}
-
         {state === 'success' && (
           <CheckCircle2 className='w-16 h-16 mx-auto mb-5 text-green-600' />
         )}
-
         {state === 'failed' && (
           <XCircle className='w-16 h-16 mx-auto mb-5 text-red-600' />
         )}
-
         <h1 className='text-2xl font-bold mb-3'>
           {state === 'loading'
             ? 'Verifying Payment'
@@ -162,13 +148,10 @@ const PaymentResult = () => {
               ? 'Payment Successful'
               : 'Payment Not Completed'}
         </h1>
-
         <p className='text-gray-600 mb-5'>{message}</p>
-
         {orderNumber && (
           <p className='font-semibold mb-6'>Order: {orderNumber}</p>
         )}
-
         {state === 'success' ? (
           <Button asChild className='text-white'>
             <Link to='/products'>Continue Shopping</Link>
@@ -178,7 +161,6 @@ const PaymentResult = () => {
             <Button asChild variant='outline'>
               <Link to='/checkout'>Return to Checkout</Link>
             </Button>
-
             <Button asChild className='text-white'>
               <Link to='/products'>Browse Products</Link>
             </Button>
