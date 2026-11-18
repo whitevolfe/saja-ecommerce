@@ -7,7 +7,7 @@ const categories = [
   {
     name: 'SOAP',
     description: 'Natural soaps for gentle cleansing',
-    image: '/assets/Neem.png',
+    image: '/assets/Neem.jpeg',
   },
   {
     name: 'SHAMPOO',
@@ -32,13 +32,21 @@ const categories = [
   {
     name: 'MASSAGE OILS',
     description: 'Massage oils for relaxation',
-    image: '/assets/cinnamon body massage oil.png',
+    image: '/assets/cinnamon body massage oil.jpeg',
   },
   {
     name: 'DOGGY PRODUCTS',
     description: 'Pet care products for your furry friends',
     image: '/assets/Doggy soap.JPG',
   },
+];
+
+const outOfStockCategories = [
+  'SHAMPOO',
+  'CONDITIONER',
+  'LIQUID SOAP',
+  'FACECREAMS',
+  'DOGGY PRODUCTS',
 ];
 
 const Products = () => {
@@ -64,16 +72,15 @@ const Products = () => {
             );
 
             const isOpen = openCategory === cat.name;
+            const isOutOfStock = outOfStockCategories.includes(cat.name);
 
             return (
               <div key={cat.name}>
-                {/* Category Card */}
                 <CategoryCard
                   category={cat}
                   onClick={() => handleToggle(cat.name)}
                 />
 
-                {/* Dropdown Products */}
                 <div
                   className={`overflow-hidden transition-all duration-500 ${
                     isOpen
@@ -83,7 +90,17 @@ const Products = () => {
                 >
                   <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'>
                     {categoryProducts.map((product) => (
-                      <ProductCard key={product.id} product={product} />
+                      <div key={product.id} className='relative'>
+                        {isOutOfStock && (
+                          <div className='absolute top-3 left-3 z-20'>
+                            <span className='bg-red-600 text-white text-xs font-bold px-3 py-1.5 rounded-md shadow-lg tracking-wider'>
+                              OUT OF STOCK
+                            </span>
+                          </div>
+                        )}
+
+                        <ProductCard product={product} />
+                      </div>
                     ))}
                   </div>
                 </div>
