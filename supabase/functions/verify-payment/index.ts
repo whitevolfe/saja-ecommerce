@@ -37,6 +37,7 @@ const sendWeb3Forms = async (
   }
 
   const body = new FormData();
+
   body.append('access_key', accessKey);
   body.append('subject', subject);
   body.append('from_name', 'SAJ Associates Website');
@@ -108,23 +109,17 @@ const sha256 = async (value: string): Promise<string> => {
     .join('');
 };
 
-const normalizeEmail = (value: unknown): string => {
-  return String(value ?? '')
+const normalizeEmail = (value: unknown): string =>
+  String(value ?? '')
     .trim()
     .toLowerCase();
-};
 
-const normalizePhone = (value: unknown): string => {
-  return String(value ?? '')
+const normalizePhone = (value: unknown): string =>
+  String(value ?? '')
     .replace(/\D/g, '')
     .replace(/^0+/, '');
-};
 
-// One stable event ID per order.
-// The same ID must be used by the browser Meta Pixel.
-const getPurchaseEventId = (order: any): string => {
-  return `saj_purchase_${order.id}`;
-};
+const getPurchaseEventId = (order: any): string => `saj_purchase_${order.id}`;
 
 // --------------------------------------------------
 // SEND META PURCHASE EVENT
@@ -175,7 +170,6 @@ const sendMetaPurchase = async (
     userData.ln = [await sha256(customerName.slice(1).join(' '))];
   }
 
-  // These values are not hashed.
   const clientIp =
     request.headers.get('cf-connecting-ip') ||
     request.headers.get('x-forwarded-for')?.split(',')[0]?.trim();
@@ -200,10 +194,11 @@ const sendMetaPurchase = async (
     String(item.id ?? item.name),
   );
 
-  const eventSourceUrl = new URL(
-    '/payment-result',
-    Deno.env.get('PUBLIC_SITE_URL') || 'https://www.saja.lk',
-  ).toString();
+  const siteUrl = (
+    Deno.env.get('PUBLIC_SITE_URL') || 'https://www.saja.lk'
+  ).replace(/\/$/, '');
+
+  const eventSourceUrl = new URL('/payment-result', siteUrl).toString();
 
   const event = {
     event_name: 'Purchase',
@@ -284,12 +279,10 @@ const attemptMetaPurchase = async (
 
   const now = new Date().toISOString();
 
-  // Allow recovery if a previous invocation crashed
-  // while holding the claim for more than 10 minutes.
+  // Recover abandoned claims after 10 minutes.
   const staleTime = new Date(Date.now() - 10 * 60 * 1000).toISOString();
 
-  // Atomic claim: only one invocation can send this
-  // order's server-side Purchase event at a time.
+  // Atomic claim prevents simultaneous duplicate events.
   const { data: claim, error: claimError } = await supabase
     .from('orders')
     .update({
@@ -309,10 +302,7 @@ const attemptMetaPurchase = async (
   }
 
   if (!claim) {
-    console.log(
-      'Meta Purchase already sent or currently being processed:',
-      eventId,
-    );
+    console.log('Meta Purchase already sent or currently processing:', eventId);
 
     return eventId;
   }
@@ -326,8 +316,7 @@ const attemptMetaPurchase = async (
   } catch (error) {
     console.error('Meta Purchase sending failed:', error);
 
-    // Release the claim so a later payment-result
-    // verification request can retry the event.
+    // Release claim to allow a later retry.
     const { error: releaseError } = await supabase
       .from('orders')
       .update({
@@ -363,7 +352,6 @@ Deno.serve(async (request) => {
     const body = await request.json();
 
     // MarxPay transaction IDs can be UUID strings.
-    // Never convert them to numbers.
     const trId = String(body?.trId ?? '').trim();
     const merchantRID = String(body?.merchantRID ?? '').trim();
 
@@ -399,9 +387,8 @@ Deno.serve(async (request) => {
       );
     }
 
-    // Already paid: do not verify or email again.
-    // Retry Meta only if its previous attempt failed
-    // and the claim has been released.
+    // Already paid: retry Meta only if its previous
+    // event claim has been released.
     if (order.payment_status === 'paid') {
       const eventId = await attemptMetaPurchase(order, request);
 
@@ -481,7 +468,7 @@ Deno.serve(async (request) => {
       'APPROVED_PENDING_SETTLEMENT',
     ]);
 
-    // Validate gateway status, references and amount.
+    // Validate payment status, references and amount.
     const paid =
       marxResult?.status === 0 &&
       summaryResult === 'SUCCESS' &&
@@ -500,10 +487,8 @@ Deno.serve(async (request) => {
         responseRIDMatches: responseRID === merchantRID,
         capturedAmount,
         expectedAmount: Number(order.total_amount),
-        response: marxResult,
       });
 
-      // Store response for troubleshooting.
       await supabase
         .from('orders')
         .update({
@@ -523,7 +508,7 @@ Deno.serve(async (request) => {
       });
     }
 
-    // Mark as paid only after server-side verification.
+    // Mark paid only after server-side verification.
     const { data: updatedOrder, error: updateError } = await supabase
       .from('orders')
       .update({
@@ -541,8 +526,7 @@ Deno.serve(async (request) => {
       throw updateError;
     }
 
-    // Handle another simultaneous request winning
-    // the payment-status update.
+    // Handle another simultaneous request.
     let paidOrder = updatedOrder;
 
     if (!paidOrder) {
@@ -563,12 +547,12 @@ Deno.serve(async (request) => {
       paidOrder = latestOrder;
     }
 
-    // Send Meta Purchase after successful payment.
+    // Meta Purchase after verified payment.
     // Meta failure must never undo the payment.
     const eventId = await attemptMetaPurchase(paidOrder, request);
 
-    // Send Web3Forms email only for the request
-    // that successfully changed the order to paid.
+    // Send email only for the request that changed
+    // the order from pending to paid.
     if (updatedOrder && !order.email_sent_at) {
       try {
         await sendWeb3Forms(

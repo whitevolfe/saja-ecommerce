@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import { useNavigate, Link } from 'react-router-dom';
+import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { ArrowLeft, CreditCard, Truck, Banknote } from 'lucide-react';
 import { useCart } from '@/contexts/CartContext';
 import { Button } from '@/components/ui/button';
@@ -35,10 +34,9 @@ const Checkout = () => {
     deliveryNote: '',
   });
 
-  // Validation errors
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  // DELIVERY CHARGE BASED ON DISTRICT
+  // DELIVERY CHARGE
   const isColomboDistrict =
     formData.district.trim().toLowerCase() === 'colombo';
 
@@ -47,34 +45,56 @@ const Checkout = () => {
   const subtotal = getTotalAmount();
   const total = subtotal + shippingCost;
 
-  // Fire InitiateCheckout once for this React Router checkout visit.
+  // META INITIATE CHECKOUT
+  // Fire once per checkout navigation.
+  // Do not depend on cart, total, or formData.
   useEffect(() => {
     if (!cart.length || typeof window.fbq !== 'function') return;
 
     const eventKey = `meta_initiate_checkout_${location.key}`;
+
     try {
-      if (sessionStorage.getItem(eventKey)) return;
+      if (sessionStorage.getItem(eventKey)) {
+        console.log('[Meta] InitiateCheckout already tracked:', eventKey);
+        return;
+      }
+
+      // Save before sending to prevent duplicate events.
       sessionStorage.setItem(eventKey, '1');
     } catch {
-      // Tracking storage failure must not interrupt checkout.
+      console.warn('Meta checkout tracking storage unavailable.');
     }
 
-    window.fbq('track', 'InitiateCheckout', {
+    const eventId = `saj_checkout_${location.key}`;
+
+    window.fbq(
+      'track',
+      'InitiateCheckout',
+      {
+        value: total,
+        currency: 'LKR',
+        num_items: cart.reduce((sum, item) => sum + item.quantity, 0),
+        content_ids: cart.map((item) => String(item.id)),
+        content_type: 'product',
+      },
+      { eventID: eventId },
+    );
+
+    console.log('[Meta] InitiateCheckout:', {
+      eventId,
       value: total,
       currency: 'LKR',
-      num_items: cart.reduce((sum, item) => sum + item.quantity, 0),
-      content_ids: cart.map((item) => String(item.id)),
-      content_type: 'product',
+      url: window.location.href,
     });
+  }, [location.key]);
 
-    console.log('[Meta] InitiateCheckout:', window.location.href);
-  }, [cart, location.key, total]);
-
-  // Handle input changes
+  // HANDLE INPUT CHANGES
   const handleInputChange = (field: string, value: string) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
+    setFormData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
 
-    // Clear the error when the customer edits the field
     setErrors((prev) => ({
       ...prev,
       [field]: '',
@@ -85,7 +105,7 @@ const Checkout = () => {
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
 
-    // 1. EMAIL VALIDATION
+    // EMAIL
     const email = formData.email.trim();
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
@@ -95,7 +115,7 @@ const Checkout = () => {
       newErrors.email = 'Please enter a valid email address.';
     }
 
-    // 2. SRI LANKAN PHONE NUMBER VALIDATION
+    // PHONE
     const phone = formData.phone.replace(/[\s-]/g, '');
     const phonePattern = /^(?:0\d{9}|\+94\d{9})$/;
 
@@ -106,7 +126,7 @@ const Checkout = () => {
         'Enter a valid Sri Lankan phone number (0771234567 or +94771234567).';
     }
 
-    // 3. FIRST NAME AND LAST NAME VALIDATION
+    // FIRST NAME AND LAST NAME
     const namePattern = /^[\p{L}\p{M}][\p{L}\p{M}\s'.-]*$/u;
 
     if (!formData.firstName.trim()) {
@@ -121,26 +141,26 @@ const Checkout = () => {
       newErrors.lastName = 'Please enter a valid last name.';
     }
 
-    // 4. ADDRESS VALIDATION
+    // ADDRESS
     if (formData.address.trim().length < 5) {
       newErrors.address = 'Please enter a valid delivery address.';
     }
 
-    // 5. CITY VALIDATION
+    // CITY
     if (!formData.city.trim()) {
       newErrors.city = 'City is required.';
     } else if (!/^[\p{L}\p{M}\s'.-]+$/u.test(formData.city.trim())) {
       newErrors.city = 'Please enter a valid city.';
     }
 
-    // 6. DISTRICT VALIDATION
+    // DISTRICT
     if (!formData.district.trim()) {
       newErrors.district = 'District is required.';
     } else if (!/^[\p{L}\p{M}\s'.-]+$/u.test(formData.district.trim())) {
       newErrors.district = 'Please enter a valid district.';
     }
 
-    // 7. POSTAL CODE VALIDATION (REQUIRED)
+    // POSTAL CODE
     const postalCode = formData.postalCode.trim();
 
     if (!postalCode) {
@@ -152,10 +172,10 @@ const Checkout = () => {
     return newErrors;
   };
 
+  // SUBMIT ORDER
   const onSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    // Validate customer details before submitting
     const validationErrors = validateForm();
 
     setErrors(validationErrors);
@@ -184,6 +204,8 @@ const Checkout = () => {
       return;
     }
 
+    if (isSubmitting) return;
+
     setIsSubmitting(true);
 
     try {
@@ -209,17 +231,22 @@ const Checkout = () => {
         throw new Error(result.message || 'Unable to create your order.');
       }
 
-      if (paymentMethod === 'online' && result.payUrl) {
-        // MarxPay handles card entry and 3DS.
-        // Customer returns to /payment-result afterwards.
+      // MARXPAY ONLINE PAYMENT
+      if (paymentMethod === 'online') {
+        if (!result.payUrl) {
+          throw new Error('Payment gateway did not return a payment URL.');
+        }
+
         window.location.assign(result.payUrl);
         return;
       }
 
-      // Browser COD Purchase. eventID exactly matches the server CAPI event.
+      // COD BROWSER PURCHASE
+      // Same event ID as the server-side Meta CAPI event.
       if (paymentMethod === 'cod' && result.eventId) {
         const pixel = window.fbq;
         const storageKey = `meta_purchase_${result.eventId}`;
+
         const serverValue = Number(result.value);
 
         if (!Number.isFinite(serverValue) || serverValue <= 0) {
@@ -245,9 +272,13 @@ const Checkout = () => {
                     item_price: item.price,
                   })),
                 },
-                { eventID: result.eventId },
+                {
+                  eventID: result.eventId,
+                },
               );
+
               sessionStorage.setItem(storageKey, '1');
+
               console.log('[Meta] COD Purchase:', {
                 eventId: result.eventId,
                 orderId: result.orderId || result.orderNumber,
@@ -287,7 +318,7 @@ const Checkout = () => {
     }
   };
 
-  // Reusable error message
+  // REUSABLE ERROR MESSAGE
   const showError = (field: string) =>
     errors[field] ? (
       <p className='text-red-600 text-sm mt-1' role='alert'>
@@ -295,7 +326,7 @@ const Checkout = () => {
       </p>
     ) : null;
 
-  // Reusable input styling
+  // INPUT STYLING
   const inputClass = (field: string) =>
     `text-black ${
       errors[field] ? 'border-red-500 focus-visible:ring-red-500' : ''
@@ -308,6 +339,7 @@ const Checkout = () => {
           <h1 className='text-3xl font-bold text-white mb-4'>
             Your cart is empty
           </h1>
+
           <Button asChild>
             <Link to='/products'>Continue Shopping</Link>
           </Button>
@@ -336,7 +368,6 @@ const Checkout = () => {
                 <h2 className='text-xl font-semibold mb-4'>Contact</h2>
 
                 <div className='grid md:grid-cols-2 gap-4'>
-                  {/* EMAIL */}
                   <div>
                     <Input
                       id='email'
@@ -353,7 +384,6 @@ const Checkout = () => {
                     {showError('email')}
                   </div>
 
-                  {/* PHONE */}
                   <div>
                     <Input
                       id='phone'
@@ -377,7 +407,6 @@ const Checkout = () => {
                 <h2 className='text-xl font-semibold mb-4'>Delivery</h2>
 
                 <div className='grid md:grid-cols-2 gap-4'>
-                  {/* FIRST NAME */}
                   <div>
                     <Input
                       id='firstName'
@@ -393,7 +422,6 @@ const Checkout = () => {
                     {showError('firstName')}
                   </div>
 
-                  {/* LAST NAME */}
                   <div>
                     <Input
                       id='lastName'
@@ -410,7 +438,6 @@ const Checkout = () => {
                   </div>
                 </div>
 
-                {/* ADDRESS */}
                 <div className='mt-4'>
                   <Input
                     id='address'
@@ -426,9 +453,7 @@ const Checkout = () => {
                   {showError('address')}
                 </div>
 
-                {/* CITY, DISTRICT, POSTAL CODE */}
                 <div className='grid md:grid-cols-3 gap-4 mt-4'>
-                  {/* CITY */}
                   <div>
                     <Input
                       id='city'
@@ -444,7 +469,6 @@ const Checkout = () => {
                     {showError('city')}
                   </div>
 
-                  {/* DISTRICT */}
                   <div>
                     <Input
                       id='district'
@@ -460,7 +484,6 @@ const Checkout = () => {
                     {showError('district')}
                   </div>
 
-                  {/* POSTAL CODE */}
                   <div>
                     <Input
                       id='postalCode'
@@ -480,7 +503,6 @@ const Checkout = () => {
                   </div>
                 </div>
 
-                {/* DELIVERY NOTE */}
                 <textarea
                   value={formData.deliveryNote}
                   onChange={(e) =>
@@ -491,7 +513,7 @@ const Checkout = () => {
                 />
               </div>
 
-              {/* SHIPPING METHOD */}
+              {/* SHIPPING */}
               <div className='bg-white text-black border border-gray-200 rounded-xl p-6'>
                 <h2 className='text-xl font-semibold flex items-center gap-2 mb-4'>
                   <Truck className='w-5 h-5 text-primary' />
@@ -551,7 +573,7 @@ const Checkout = () => {
                 </RadioGroup>
               </div>
 
-              {/* SUBMIT ORDER */}
+              {/* SUBMIT */}
               <Button
                 type='submit'
                 className='w-full text-white'
@@ -588,6 +610,7 @@ const Checkout = () => {
 
                   <div className='flex-1'>
                     <p className='text-sm font-medium'>{item.name}</p>
+
                     <p className='text-xs text-gray-600'>
                       Qty: {item.quantity}
                     </p>
@@ -618,6 +641,7 @@ const Checkout = () => {
 
             <div className='flex justify-between font-bold text-lg'>
               <span>Total</span>
+
               <span className='text-primary'>Rs. {total.toLocaleString()}</span>
             </div>
           </div>

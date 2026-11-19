@@ -23,6 +23,21 @@ const clean = (value: unknown, max = 500) =>
     .trim()
     .slice(0, max);
 
+const sha256 = async (value: string) => {
+  const data = new TextEncoder().encode(value);
+  const digest = await crypto.subtle.digest('SHA-256', data);
+
+  return Array.from(new Uint8Array(digest))
+    .map((byte) => byte.toString(16).padStart(2, '0'))
+    .join('');
+};
+
+const normalizeMetaValue = (value: unknown) =>
+  String(value ?? '')
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, ' ');
+
 const sendWeb3Forms = async (
   subject: string,
   message: string,
@@ -40,9 +55,7 @@ const sendWeb3Forms = async (
   body.append('from_name', 'SAJ Associates Website');
   body.append('message', message);
 
-  if (email) {
-    body.append('email', email);
-  }
+  if (email) body.append('email', email);
 
   const response = await fetch('https://api.web3forms.com/submit', {
     method: 'POST',
@@ -60,7 +73,10 @@ const formatOrderMessage = (order: any) => {
   const itemLines = (order.items || [])
     .map(
       (item: any) =>
-        `• ${item.name}\n  Qty: ${item.quantity}\n  Unit Price: Rs. ${Number(item.unitPrice).toLocaleString()}\n  Line Total: Rs. ${Number(item.lineTotal).toLocaleString()}`,
+        `• ${item.name}\n` +
+        `Qty: ${item.quantity}\n` +
+        `Unit Price: Rs. ${Number(item.unitPrice).toLocaleString()}\n` +
+        `Line Total: Rs. ${Number(item.lineTotal).toLocaleString()}`,
     )
     .join('\n\n');
 
@@ -87,26 +103,12 @@ Email: ${order.customer_email}
 
 Delivery Address:
 ${order.address}
-${order.city}${order.province ? `, ${order.province}` : ''}${
-    order.postal_code ? ` ${order.postal_code}` : ''
-  }${order.delivery_note ? `\n\nDelivery Note: ${order.delivery_note}` : ''}`;
+${order.city}${order.province ? `, ${order.province}` : ''}${order.postal_code ? ` ${order.postal_code}` : ''}${order.delivery_note ? `\n\nDelivery Note: ${order.delivery_note}` : ''}`;
 };
 
-// Send a server-side Meta Purchase event for a newly placed COD order.
-// The same event ID is returned to the browser Pixel for event deduplication.
-const sha256 = async (value: string) => {
-  const data = new TextEncoder().encode(value);
-  const digest = await crypto.subtle.digest('SHA-256', data);
-  return Array.from(new Uint8Array(digest))
-    .map((byte) => byte.toString(16).padStart(2, '0'))
-    .join('');
-};
-
-const normalizeMetaValue = (value: unknown) =>
-  String(value ?? '')
-    .trim()
-    .toLowerCase()
-    .replace(/\s+/g, ' ');
+// --------------------------------------------------
+// COD META CONVERSIONS API PURCHASE
+// --------------------------------------------------
 
 const sendCodMetaPurchase = async (
   request: Request,
@@ -117,23 +119,23 @@ const sendCodMetaPurchase = async (
   const accessToken = Deno.env.get('META_ACCESS_TOKEN');
 
   if (!pixelId || !accessToken) {
-    console.warn(
-      'Meta Purchase skipped: META_PIXEL_ID or META_ACCESS_TOKEN is missing.',
-    );
+    console.warn('Meta Purchase credentials are missing.');
     return;
   }
 
-  // Claim this order once. The database column was added for Purchase deduplication.
+  // Atomic claim prevents concurrent duplicate server events.
   const { data: claimedOrder, error: claimError } = await supabase
     .from('orders')
-    .update({ meta_purchase_claimed_at: new Date().toISOString() })
+    .update({
+      meta_purchase_claimed_at: new Date().toISOString(),
+    })
     .eq('id', order.id)
     .is('meta_purchase_claimed_at', null)
     .select('id')
     .maybeSingle();
 
   if (claimError) {
-    console.error('Could not claim COD Meta Purchase event:', claimError);
+    console.error('COD Meta Purchase claim failed:', claimError);
     return;
   }
 
@@ -146,26 +148,33 @@ const sendCodMetaPurchase = async (
     const nameParts = String(order.customer_name || '')
       .trim()
       .split(/\s+/);
+
     const firstName = normalizeMetaValue(nameParts.shift() || '');
     const lastName = normalizeMetaValue(nameParts.join(' '));
     const email = normalizeMetaValue(order.customer_email);
+
     const rawPhone = String(order.customer_phone || '').replace(/\D/g, '');
+
     const phone = rawPhone.startsWith('0')
       ? `94${rawPhone.slice(1)}`
       : rawPhone.startsWith('7')
         ? `94${rawPhone}`
         : rawPhone;
+
     const ip =
       request.headers.get('cf-connecting-ip') ||
       request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
       '';
+
     const userAgent = request.headers.get('user-agent') || '';
 
     const userData: Record<string, unknown> = {};
+
     if (email) userData.em = [await sha256(email)];
     if (phone) userData.ph = [await sha256(phone)];
     if (firstName) userData.fn = [await sha256(firstName)];
     if (lastName) userData.ln = [await sha256(lastName)];
+
     if (ip) userData.client_ip_address = ip;
     if (userAgent) userData.client_user_agent = userAgent;
 
@@ -178,15 +187,16 @@ const sendCodMetaPurchase = async (
     const apiVersion = Deno.env.get('META_API_VERSION') || 'v25.0';
     const testEventCode = Deno.env.get('META_TEST_EVENT_CODE');
 
-    const event: Record<string, unknown> = {
+    const siteUrl = (
+      Deno.env.get('PUBLIC_SITE_URL') || 'https://www.saja.lk'
+    ).replace(/\/$/, '');
+
+    const event = {
       event_name: 'Purchase',
       event_time: Math.floor(Date.now() / 1000),
       event_id: eventId,
       action_source: 'website',
-      event_source_url: new URL(
-        '/checkout',
-        Deno.env.get('PUBLIC_SITE_URL') || 'https://www.saja.lk',
-      ).toString(),
+      event_source_url: new URL('/checkout', siteUrl).toString(),
       user_data: userData,
       custom_data: {
         currency: 'LKR',
@@ -198,44 +208,53 @@ const sendCodMetaPurchase = async (
       },
     };
 
-    const payload: Record<string, unknown> = { data: [event] };
-    if (testEventCode) payload.test_event_code = testEventCode;
+    const payload: Record<string, unknown> = {
+      data: [event],
+    };
+
+    if (testEventCode) {
+      payload.test_event_code = testEventCode;
+    }
 
     const response = await fetch(
       `https://graph.facebook.com/${apiVersion}/${pixelId}/events?access_token=${encodeURIComponent(accessToken)}`,
       {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify(payload),
       },
     );
 
     const result = await response.json().catch(() => ({}));
 
-    if (!response.ok || result?.error) {
-      await supabase
-        .from('orders')
-        .update({ meta_purchase_claimed_at: null })
-        .eq('id', order.id);
-
-      console.error('COD Meta Purchase API error:', result);
-      return;
+    if (!response.ok || Number(result?.events_received ?? 0) < 1) {
+      throw new Error(
+        result?.error?.message || 'Meta did not accept the Purchase event.',
+      );
     }
 
-    console.log('COD Meta Purchase sent:', {
+    console.log('COD Meta Purchase accepted:', {
       eventId,
-      eventsReceived: result?.events_received,
+      eventsReceived: result.events_received,
     });
   } catch (error) {
-    // Meta tracking errors must never prevent a valid COD order from succeeding.
+    // Release claim so a later safe retry is possible.
     await supabase
       .from('orders')
-      .update({ meta_purchase_claimed_at: null })
+      .update({
+        meta_purchase_claimed_at: null,
+      })
       .eq('id', order.id);
 
     console.error('COD Meta Purchase failed:', error);
   }
 };
+
+// --------------------------------------------------
+// MAIN CREATE ORDER FUNCTION
+// --------------------------------------------------
 
 Deno.serve(async (request) => {
   if (request.method === 'OPTIONS') {
@@ -253,6 +272,7 @@ Deno.serve(async (request) => {
 
     const customer = body?.customer || {};
     const rawItems = Array.isArray(body?.items) ? body.items : [];
+
     const shippingCost = Number(body?.shippingCost ?? 400);
 
     if (!rawItems.length || rawItems.length > 30) {
@@ -277,7 +297,16 @@ Deno.serve(async (request) => {
     const postalCode = clean(customer.postalCode, 30);
     const deliveryNote = clean(customer.deliveryNote, 500);
 
-    if (!firstName || !lastName || !email || !phone || !address || !city) {
+    if (
+      !firstName ||
+      !lastName ||
+      !email ||
+      !phone ||
+      !address ||
+      !city ||
+      !province ||
+      !postalCode
+    ) {
       return json(
         {
           error: 'Please complete all required customer and delivery fields.',
@@ -290,6 +319,11 @@ Deno.serve(async (request) => {
       return json({ error: 'Please enter a valid email address.' }, 400);
     }
 
+    if (!/^\d{5}$/.test(postalCode)) {
+      return json({ error: 'Please enter a valid 5-digit postal code.' }, 400);
+    }
+
+    // Validate quantities and product IDs.
     const normalizedItems = rawItems.map((item: any) => ({
       id: clean(item?.id, 100),
       quantity: Math.floor(Number(item?.quantity)),
@@ -309,15 +343,14 @@ Deno.serve(async (request) => {
 
     const ids = [...new Set(normalizedItems.map((item: any) => item.id))];
 
+    // Always obtain prices from Supabase, not browser values.
     const { data: products, error: productsError } = await supabase
       .from('products')
       .select('id,name,price,active')
       .in('id', ids)
       .eq('active', true);
 
-    if (productsError) {
-      throw productsError;
-    }
+    if (productsError) throw productsError;
 
     if (!products || products.length !== ids.length) {
       return json({ error: 'One or more products are unavailable.' }, 400);
@@ -380,11 +413,12 @@ Deno.serve(async (request) => {
       .select('*')
       .single();
 
-    if (insertError) {
-      throw insertError;
-    }
+    if (insertError) throw insertError;
 
-    // Cash on delivery order
+    // --------------------------------------------------
+    // CASH ON DELIVERY
+    // --------------------------------------------------
+
     if (paymentMethod === 'cod') {
       try {
         await sendWeb3Forms(
@@ -395,16 +429,18 @@ Deno.serve(async (request) => {
 
         await supabase
           .from('orders')
-          .update({ email_sent_at: new Date().toISOString() })
+          .update({
+            email_sent_at: new Date().toISOString(),
+          })
           .eq('id', insertedOrder.id);
       } catch (emailError) {
         console.error('COD email notification failed:', emailError);
       }
 
-      // Stable ID shared by the server Conversions API and browser Pixel.
       const eventId = `saj_purchase_${insertedOrder.id}`;
 
-      // A Meta tracking failure must not make the COD order fail.
+      // Server Purchase event.
+      // Failure must not invalidate the COD order.
       await sendCodMetaPurchase(request, insertedOrder, eventId);
 
       return json({
@@ -417,7 +453,10 @@ Deno.serve(async (request) => {
       });
     }
 
-    // MarxPay configuration
+    // --------------------------------------------------
+    // MARXPAY ONLINE PAYMENT
+    // --------------------------------------------------
+
     const marxApiKey = Deno.env.get('MARX_API_KEY');
 
     const marxBaseUrl = (
@@ -436,8 +475,9 @@ Deno.serve(async (request) => {
       return json({ error: 'Online payment is not configured yet.' }, 500);
     }
 
-    // Normalize Sri Lankan mobile number
+    // Normalize Sri Lankan mobile number.
     const mobileInput = phone.replace(/[\s()-]/g, '');
+
     let customerMobile: string;
 
     if (/^07\d{8}$/.test(mobileInput)) {
@@ -512,9 +552,7 @@ Deno.serve(async (request) => {
       );
     }
 
-    // IMPORTANT:
-    // MarxPay returns trId as a UUID string, not a number.
-    // Do not convert it with Number() or validate it as an integer.
+    // MarxPay transaction IDs may be UUID strings.
     const marxTrId = String(marxResult.data.trId).trim();
 
     const returnedRID = String(marxResult.data.merchantRID || '').trim();
@@ -542,8 +580,7 @@ Deno.serve(async (request) => {
       );
     }
 
-    // Save the UUID transaction ID as a string.
-    // The marx_transaction_id database column must support text/UUID values.
+    // Save transaction ID as text.
     const { error: updateError } = await supabase
       .from('orders')
       .update({
