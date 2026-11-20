@@ -98,7 +98,7 @@ export const products: Product[] = [
   {
     id: 'c3',
     name: 'Moringa Night Cream ',
-    price: 2750,
+    price: 3500,
     category: 'FACECREAMS',
     image: '/assets/Morin Night Cream .jpeg',
     description:
@@ -107,7 +107,7 @@ export const products: Product[] = [
   {
     id: 'c4',
     name: 'Moringa Day cream ',
-    price: 2750,
+    price: 3500,
     category: 'FACECREAMS',
     image: '/assets/Moringa Day cream .jpg',
     description:
@@ -304,7 +304,7 @@ export const products: Product[] = [
   {
     id: 'm1',
     name: 'cinnamon body massage oil',
-    price: 2950,
+    price: 3500,
     category: 'MASSAGE OILS',
     image: '/assets/cinnamon body massage oil.jpeg',
     description: 'Cooling massage oil for muscle relief',
@@ -313,7 +313,7 @@ export const products: Product[] = [
   {
     id: 'm2',
     name: 'relaxa body massage oil',
-    price: 2950,
+    price: 3500,
     category: 'MASSAGE OILS',
     image: '/assets/relaxa body massage oil.jpeg',
     description: 'Relaxing massage oil for stress relief',
